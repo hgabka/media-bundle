@@ -1,0 +1,42 @@
+{
+    "name": "hgabka/media-bundle",
+    "type": "Symfony bundle",
+    "description": "Media bundle",
+    "keywords": [
+    ],
+    "homepage": "https://github.com/hgabka/media-bundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Gabe",
+            "email": "hgabka@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "~5.6|~7.0",
+        "symfony/symfony": "~3.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "mockery/mockery": "^0.9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hgabka\\MediaBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hgabka\\MediaBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
