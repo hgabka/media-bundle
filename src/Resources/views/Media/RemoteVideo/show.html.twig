@@ -1,0 +1,5 @@
+{% extends '@HgabkaMedia/Media/show.html.twig' %}
+
+{% block preview %}
+    {% include '@HgabkaMedia/Media/RemoteVideo/preview.html.twig' with {'media': media} %}
+{% endblock %}

@@ -1,0 +1,62 @@
+<?php
+
+namespace Hgabka\MediaBundle\Helper\IconFont;
+
+/**
+ * IconFontManager.
+ */
+class IconFontManager
+{
+    /**
+     * @var IconFontLoaderInterface[]
+     */
+    protected $loaders = [];
+
+    /**
+     * @var IconFontLoaderInterface
+     */
+    protected $defaultLoader;
+
+    /**
+     * @param IconFontLoaderInterface $loader
+     * @param string                  $serviceId
+     */
+    public function addLoader(IconFontLoaderInterface $loader, $serviceId)
+    {
+        $this->loaders[$serviceId] = $loader;
+    }
+
+    /**
+     * @param IconFontLoaderInterface $loader
+     */
+    public function setDefaultLoader(IconFontLoaderInterface $loader)
+    {
+        $this->defaultLoader = $loader;
+    }
+
+    /**
+     * @param string $serviceId
+     *
+     * @return IconFontLoaderInterface
+     */
+    public function getLoader($serviceId)
+    {
+        return $this->loaders[$serviceId];
+    }
+
+    /**
+     * @return IconFontLoaderInterface[]
+     */
+    public function getLoaders()
+    {
+        return $this->loaders;
+    }
+
+    /**
+     * @return null|IconFontLoaderInterface
+     */
+    public function getDefaultLoader()
+    {
+        return $this->defaultLoader;
+    }
+}

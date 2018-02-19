@@ -1,0 +1,49 @@
+parameters:
+    hgabka_media.media_handler.remote_slide.class: 'Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler'
+    hgabka_media.media_handler.remote_video.class: 'Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler'
+    hgabka_media.media_handler.remote_audio.class: 'Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler'
+    hgabka_media.media_handler.image.class: 'Hgabka\MediaBundle\Helper\Image\ImageHandler'
+    hgabka_media.media_handler.file.class: 'Hgabka\MediaBundle\Helper\File\FileHandler'
+    aviary_api_key: null
+    hgabka_media.media_path: '/uploads/media/'
+
+services:
+    hgabka_media.media_handlers.remote_slide:
+        class: '%hgabka_media.media_handler.remote_slide.class%'
+        arguments: [1]
+        tags:
+            -  { name: 'hgabka_media.media_handler' }
+
+    hgabka_media.media_handlers.remote_video:
+        class: '%hgabka_media.media_handler.remote_video.class%'
+        arguments: [1, '%hgabka_media.remote_video%']
+        tags:
+            -  { name: 'hgabka_media.media_handler' }
+
+    hgabka_media.media_handlers.remote_audio:
+        class: '%hgabka_media.media_handler.remote_audio.class%'
+        arguments: [1, '%hgabka_media.soundcloud_api_key%']
+        tags:
+            -  { name: 'hgabka_media.media_handler' }
+
+    hgabka_media.media_handlers.image:
+        class: '%hgabka_media.media_handler.image.class%'
+        arguments: [1, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory', '%aviary_api_key%']
+        calls:
+            - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
+            - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
+            - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
+            - [ setSlugifier, ['@hgabka_utilities.slugifier']]
+        tags:
+            -  { name: 'hgabka_media.media_handler' }
+
+    hgabka_media.media_handlers.file:
+        class: '%hgabka_media.media_handler.file.class%'
+        arguments: [0, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory']
+        calls:
+            - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
+            - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
+            - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
+            - [ setSlugifier, ['@hgabka_utilities.slugifier']]
+        tags:
+            -  { name: 'hgabka_media.media_handler' }

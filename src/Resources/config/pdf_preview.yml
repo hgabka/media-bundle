@@ -1,0 +1,26 @@
+parameters:
+    hgabka_media.pdf_transformer.class: 'Hgabka\MediaBundle\Helper\Transformer\PdfTransformer'
+    hgabka_media.media_handler.pdf.class: 'Hgabka\MediaBundle\Helper\File\PdfHandler'
+
+services:
+    hgabka_media.imagick:
+        class: 'Imagick'
+
+    hgabka_media.pdf_transformer:
+        class: '%hgabka_media.pdf_transformer.class%'
+        arguments: ['@hgabka_media.imagick']
+
+    hgabka_media.command.createpdfpreview:
+        class: Hgabka\MediaBundle\Command\CreatePdfPreviewCommand
+        calls:
+            - [setContainer, ['@service_container'] ]
+
+    hgabka_media.media_handlers.pdf:
+        class: '%hgabka_media.media_handler.pdf.class%'
+        parent: hgabka_media.media_handlers.file
+        arguments: [1, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory']
+        calls:
+            - [ setMediaPath, [ '%kernel.root_dir%' ] ]
+            - [ setPdfTransformer, [ '@hgabka_media.pdf_transformer' ]]
+        tags:
+            -  { name: 'hgabka_media.media_handler' }
