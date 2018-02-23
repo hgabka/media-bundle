@@ -7,8 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Node as GedmoNode;
 use Symfony\Component\Validator\Constraints as Assert;
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
+use Prezent\Doctrine\Translatable\TranslatableInterface;
 
 /**
  * Class that defines a folder from the MediaBundle in the database.
@@ -16,12 +18,11 @@ use Hgabka\UtilsBundle\Traits\TimestampableEntity;
  * @ORM\Entity(repositoryClass="Hgabka\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="hg_media_folders", indexes={
  *      @ORM\Index(name="idx_folder_internal_name", columns={"internal_name"}),
- *      @ORM\Index(name="idx_folder_name", columns={"name"}),
  *      @ORM\Index(name="idx_folder_deleted", columns={"deleted"})
  * })
  * @Gedmo\Tree(type="nested")
  */
-class Folder
+class Folder implements TranslatableInterface
 {
     use TranslatableTrait;
     use TimestampableEntity;
@@ -62,20 +63,6 @@ class Folder
      * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $media;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", name="created_at")
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", name="updated_at")
-     */
-    protected $updatedAt;
 
     /**
      * @var string
@@ -357,26 +344,6 @@ class Folder
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return Folder
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
      * @param int $lft
      *
      * @return Folder
@@ -445,5 +412,15 @@ class Folder
     public function getLevel()
     {
         return $this->lvl;
+    }
+
+    public static function getTranslationEntityClass()
+    {
+        return FolderTranslation::class;
+    }
+
+    public function getName($locale = null)
+    {
+        return $this->translate($locale)->getName();
     }
 }

@@ -1,0 +1,5 @@
+hg_media:
+    group:  Médiatár
+    admin:
+        model_name: Média
+        label: Média

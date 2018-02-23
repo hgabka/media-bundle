@@ -11,7 +11,7 @@ use Prezent\Doctrine\Translatable\TranslationInterface;
  * @ORM\Table(name="hg_media_media_translation")
  * @ORM\Entity
  */
-class MediaTranslation
+class MediaTranslation implements TranslationInterface
 {
     use TranslationTrait;
 

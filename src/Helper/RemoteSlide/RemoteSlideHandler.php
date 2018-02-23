@@ -200,7 +200,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
         return [
             self::TYPE => [
                 'type' => self::TYPE,
-                'name' => 'media.slide.add',
+                'name' => 'hg_media.slide.add',
             ],
         ];
     }

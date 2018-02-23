@@ -9,6 +9,7 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -87,7 +88,6 @@ class ChooserController extends Controller
      * @param int     $folderId The folder id
      *
      * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_chooser_show_folder")
-     * @Template()
      *
      * @return array
      */
@@ -126,12 +126,13 @@ class ChooserController extends Controller
         // @var MediaManager $mediaManager
         $mediaManager = $this->get('hgabka_media.media_manager');
 
-        $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
+ /*       $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
         $adminList = $this->get('hgabka_adminlist.factory')->createList($adminListConfigurator);
-        $adminList->bindRequest($request);
+        $adminList->bindRequest($request);*/
 
         $sub = new Folder();
         $sub->setParent($folder);
+        $sub->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
         $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
 
         $linkChooserLink = null;
@@ -155,7 +156,7 @@ class ChooserController extends Controller
             'handler' => $handler,
             'type' => $type,
             'folder' => $folder,
-            'adminlist' => $adminList,
+   //         'adminlist' => $adminList,
             'subform' => $subForm->createView(),
         ];
 
@@ -168,7 +169,7 @@ class ChooserController extends Controller
 
         $viewVariabels['forms'] = $forms;
 
-        return $viewVariabels;
+        return $this->render('@HgabkaMedia/Chooser/chooserShowFolder.html.twig', $viewVariabels);
     }
 
     /**

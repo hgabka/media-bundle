@@ -224,6 +224,8 @@ class FolderRepository extends NestedTreeRepository
     ) {
         /** @var QueryBuilder $qb */
         $qb = parent::getNodesHierarchyQueryBuilder($node, $direct, $options, $includeNode);
+        $qb->leftJoin($qb->getRootAliases()[0].'.translations', 'ft');
+        $qb->addSelect('ft');
         $qb->andWhere('node.deleted != true');
 
         return $qb;

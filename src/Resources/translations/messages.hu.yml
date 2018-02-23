@@ -1,5 +1,9 @@
 # Media
-media:
+hg_media:
+    label:
+        search: Keresés
+    admin:
+        label: Média
     aviary:
         title: Aviary
         nothing: Nincs megjeleníthető elem
@@ -131,6 +135,9 @@ media:
                 filesize:   Fájlméret (byte-ban)
 
     form:
+        button:
+            dropdown:
+                more: Továbbiak
         remote:
             name:
                 label: Név

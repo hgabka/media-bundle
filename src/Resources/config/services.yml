@@ -4,6 +4,7 @@ parameters:
     hgabka_media.menu.adaptor.class: 'Hgabka\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     hgabka_media.listener.doctrine.class: 'Hgabka\MediaBundle\EventListener\DoctrineMediaListener'
     hgabka_media.form.type.media.class: 'Hgabka\MediaBundle\Form\Type\MediaType'
+    hgabka_media.form.type.folder.class: 'Hgabka\MediaBundle\Form\FolderType'
     hgabka_media.form.type.iconfont.class: 'Hgabka\MediaBundle\Form\Type\IconFontType'
     hgabka_media.icon_font_manager.class: 'Hgabka\MediaBundle\Helper\IconFont\IconFontManager'
     hgabka_media.icon_font.default_loader.class: 'Hgabka\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
@@ -33,6 +34,13 @@ services:
         arguments:
             - '@hgabka_media.media_manager'
             - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type}
+
+    form.type.folder:
+        class: '%hgabka_media.form.type.folder.class%'
+        arguments:
+            - '@hgabka_utils.hgabka_utils'
         tags:
             - { name: form.type}
 
@@ -106,3 +114,15 @@ services:
         calls:
             - [setMimeTypeGuesser, ['@hgabka_media.mimetype_guesser.factory']]
             - [setExtensionGuesser, ['@hgabka_media.extension_guesser.factory']]
+
+    hg_media.admin.media:
+        class: Hgabka\MediaBundle\Admin\MediaAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: hg_media.group, icon: '<i class="fa fa-image"></i>', label: hg_media.admin.label, label_catalogue: 'HgabkaMediaBundle', label_translator_strategy: 'sonata.admin.label.strategy.underscore' }
+        arguments: [null, Hgabka\MediaBundle\Entity\Media, HgabkaMediaBundle:MediaAdmin]
+        calls:
+          - [setManager, ["@hgabka_media.media_manager"]]
+
+    Hgabka\MediaBundle\DataFixtures\ORM\FolderFixtures:
+        tags:
+            - { name: doctrine.fixture.orm }

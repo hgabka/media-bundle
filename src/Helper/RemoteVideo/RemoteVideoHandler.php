@@ -280,7 +280,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         return [
             self::TYPE => [
                 'type' => self::TYPE,
-                'name' => 'media.video.add',
+                'name' => 'hg_media.video.add',
             ],
         ];
     }

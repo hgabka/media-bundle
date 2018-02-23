@@ -9,6 +9,7 @@ use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Hgabka\UtilitiesBundle\Helper\SlugifierInterface;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
@@ -52,9 +53,9 @@ class FileHandler extends AbstractMediaHandler
     private $blacklistedExtensions = [];
 
     /**
-     * @var SlugifierInterface
+     * @var HgabkaUtils
      */
-    private $slugifier;
+    private $utils;
 
     /**
      * Constructor.
@@ -71,11 +72,11 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param SlugifierInterface $slugifier
+     * @param SlugifierInterface $utils
      */
-    public function setSlugifier(SlugifierInterface $slugifier)
+    public function setUtils(HgabkaUtils $utils)
     {
-        $this->slugifier = $slugifier;
+        $this->utils = $utils;
     }
 
     /**
@@ -188,7 +189,7 @@ class FileHandler extends AbstractMediaHandler
                 $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
             }
 
-            $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
+            $media->setOriginalFilename($this->utils->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
             $name = $media->getName();
 
             if (empty($name)) {
@@ -291,7 +292,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'HgabkaMediaBundle:Media\File:show.html.twig';
+        return '@HgabkaMedia/Media/File/show.html.twig';
     }
 
     /**
@@ -302,7 +303,7 @@ class FileHandler extends AbstractMediaHandler
         return [
             self::TYPE => [
                 'type' => self::TYPE,
-                'name' => 'media.file.add',
+                'name' => 'hg_media.file.add',
             ],
         ];
     }
@@ -322,7 +323,7 @@ class FileHandler extends AbstractMediaHandler
         }
 
         $parts = pathinfo($filename);
-        $filename = $this->slugifier->slugify($parts['filename']);
+        $filename = $this->utils->slugify($parts['filename']);
         if (array_key_exists('extension', $parts)) {
             $filename .= '.'.strtolower($parts['extension']);
         }

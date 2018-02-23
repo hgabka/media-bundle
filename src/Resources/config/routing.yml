@@ -1,7 +1,7 @@
 HgabkaMediaBundle_media:
     resource: '@HgabkaMediaBundle/Controller/MediaController.php'
     type:     annotation
-    prefix:   '/%hgabka_admin.admin_prefix%/media'
+    prefix:   '/media'
         
 HgabkaMediaBundle_aviary:
     resource: '@HgabkaMediaBundle/Controller/AviaryController.php'
@@ -11,14 +11,14 @@ HgabkaMediaBundle_aviary:
 HgabkaMediaBundle_media_chooser:
     resource: '@HgabkaMediaBundle/Controller/ChooserController.php'
     type:     annotation
-    prefix:   '/%hgabka_admin.admin_prefix%/media'
+    prefix:   '/media'
         
 HgabkaMediaBundle_media_folder:
     resource: '@HgabkaMediaBundle/Controller/FolderController.php'
     type:     annotation
-    prefix:   '/%hgabka_admin.admin_prefix%/media/folder'
+    prefix:   '/media/folder'
 
 HgabkaMediaBundle_icon_font:
     resource: '@HgabkaMediaBundle/Controller/IconFontController.php'
     type:     annotation
-    prefix:   '/%hgabka_admin.admin_prefix%/media/icon-font'
+    prefix:   '/media/icon-font'

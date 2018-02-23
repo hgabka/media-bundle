@@ -33,7 +33,7 @@ services:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
-            - [ setSlugifier, ['@hgabka_utilities.slugifier']]
+            - [ setUtils, ['@hgabka_utils.hgabka_utils']]
         tags:
             -  { name: 'hgabka_media.media_handler' }
 
@@ -44,6 +44,6 @@ services:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
-            - [ setSlugifier, ['@hgabka_utilities.slugifier']]
+            - [ setUtils, ['@hgabka_utils.hgabka_utils']]
         tags:
             -  { name: 'hgabka_media.media_handler' }

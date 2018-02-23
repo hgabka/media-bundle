@@ -8,18 +8,18 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
+use Prezent\Doctrine\Translatable\TranslatableInterface;
 
 /**
  * Media.
  *
  * @ORM\Entity(repositoryClass="Hgabka\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="hg_media_media", indexes={
- *      @ORM\Index(name="idx_media_name", columns={"name"}),
  *      @ORM\Index(name="idx_media_deleted", columns={"deleted"})
  * })
  * @ORM\HasLifecycleCallbacks
  */
-class Media
+class Media implements TranslatableInterface
 {
     use TranslatableTrait;
     use TimestampableEntity;
@@ -489,5 +489,13 @@ class Media
     public static function getTranslationEntityClass()
     {
         return MediaTranslation::class;
+    }
+    public function getName($locale = null)
+    {
+        return $this->translate('hu')->getName();
+    }
+    public function getDescription($locale = null)
+    {
+        return $this->translate('hu')->getName();
     }
 }

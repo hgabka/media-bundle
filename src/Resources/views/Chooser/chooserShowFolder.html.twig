@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% include '@KunstmaanMedia/Chooser/breadcrumbs.html.twig' %}
+    {% include '@HgabkaMedia/Chooser/breadcrumbs.html.twig' %}
 {% endblock %}
 
 {% block appHeader %}
@@ -60,10 +60,6 @@
                     </ul>
 
                     <!-- Navigation - Right -->
-                    <ul class="nav navbar-nav navbar-right">
-                        {% set route = app.request.attributes.get('_route') %}
-                        {{ localeswitcher_widget(get_backend_locales(), route) }}
-                    </ul>
                 </div>
             </div>
         </nav>
@@ -93,7 +89,7 @@
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
+                {% include '@HgabkaMedia/Chooser/chooserShowRecTreeView.html.twig' %}
             {% endfor %}
         </ul>
     </nav>
@@ -168,7 +164,7 @@
     <!-- Subfolders Map list -->
     <nav class="list-group" role="navigation">
         {% for child in folder.children %}
-            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}" class="list-group-item">
+            <a href="{{ path('HgabkaMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}" class="list-group-item">
                 {{ child.name | trans }}
             </a>
         {% else %}
@@ -252,9 +248,9 @@
 
     <!-- Modals -->
     {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
-    {% include '@KunstmaanMedia/Media/addType-modal.html.twig' %}
-    {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
-    {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
+    {% include '@HgabkaMedia/Media/addType-modal.html.twig' %}
+    {% include '@HgabkaMedia/Folder/addsub-modal.html.twig' %}
+    {% include '@HgabkaMedia/Folder/delete-modal.html.twig' %}
 
 {% endblock %}
 

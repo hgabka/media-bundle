@@ -178,7 +178,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
         return [
             self::TYPE => [
                 'type' => self::TYPE,
-                'name' => 'media.audio.add',
+                'name' => 'hg_media.audio.add',
             ],
         ];
     }

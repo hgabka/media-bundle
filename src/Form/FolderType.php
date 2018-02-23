@@ -2,7 +2,10 @@
 
 namespace Hgabka\MediaBundle\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
+use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Repository\FolderRepository;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,6 +15,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FolderType extends AbstractType
 {
+    /** @var HgabkaUtils $utils */
+    protected $utils;
+
+    /**
+     * FolderType constructor.
+     *
+     * @param HgabkaUtils $utils
+     */
+    public function __construct(HgabkaUtils $utils)
+    {
+        $this->utils = $utils;
+    }
+
     /**
      * Builds the form.
      *
@@ -27,13 +43,18 @@ class FolderType extends AbstractType
     {
         $folder = $options['folder'];
         $builder
-            ->add(
-                'name',
-                null,
-                [
-                    'label' => 'media.folder.addsub.form.name',
-                ]
-            )
+            ->add('translations', TranslationsType::class, [
+                'label' => false,
+                'locales' => $this->utils->getAvailableLocales(),
+                'required' => false,
+                'fields' => [
+                    'name' => [
+                        'label' => 'media.folder.addsub.form.name',
+                        'required' => false,
+                        'field_type' => TextType::class,
+                    ],
+                ],
+            ])
             ->add(
                 'rel',
                 ChoiceType::class,
@@ -51,7 +72,7 @@ class FolderType extends AbstractType
                 'parent',
                 EntityType::class,
                 [
-                    'class' => 'HgabkaMediaBundle:Folder',
+                    'class' => Folder::class,
                     'choice_label' => 'optionLabel',
                     'label' => 'media.folder.addsub.form.parent',
                     'required' => true,
@@ -89,7 +110,7 @@ class FolderType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Hgabka\MediaBundle\Entity\Folder',
+                'data_class' => Folder::class,
                 'folder' => null,
             ]
         );

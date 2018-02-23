@@ -1,16 +1,103 @@
-{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+{% extends base_template %}
+        {% block stylesheets %}
+            {{ parent() }}
+            <link rel="stylesheet" href="{{ asset('bundles/hgabkamedia/css/hg_media.css') }}">
+        {% endblock %}
 
-{% block extrajavascript %}
-    {{ parent() }}
+{% block sonata_wrapper %}
 
-    {% javascripts
-    "@KunstmaanMediaBundle/Resources/ui/vendor_bower/plupload/js/plupload.full.min.js"
-    "@KunstmaanMediaBundle/Resources/ui/vendor_bower/picturefill/dist/picturefill.min.js"
-    "@KunstmaanMediaBundle/Resources/ui/js/_bulk-upload.js"
-    "@KunstmaanMediaBundle/Resources/ui/js/_dnd-upload.js"
-    "@KunstmaanMediaBundle/Resources/ui/js/app.js"
-    output="KunstmaanMediaBundleAssets/js/mediaFooter.min.js" filter="uglifyjs2"
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <!-- Main Content -->
+    <main role="main" id="app__main" style="padding-top:50px;min-height:500px" class="container-fluid app__main app__main--has-sidebar">
+
+        <div class="row">
+
+
+            <!-- App Sidebar -->
+            <aside id="app__sidebar" class="col-md-3 app__sidebar">
+                {% block sidebar %}
+                    <!-- Search -->
+                    <button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
+                        <i class="fa fa-search"></i>
+                    </button>
+
+                    <div id="sidebar-search-toggle" class="toggle-item">
+                        <div class="toggle-item__content">
+                            <div class="app__sidebar__search-toggle-item">
+                                <input type="text" placeholder="{{ 'hg_media.label.search' | trans }}" id="app__sidebar__search" class="form-control">
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tree -->
+                    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('HgabkaMediaBundle_folder_reorder') }}">
+                        <ul>
+                            {% set parentIds = foldermanager.getParentIds(folder) %}
+                            {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
+                            {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
+                            {% for mediaFolder in folders %}
+                                {% include '@HgabkaMedia/Folder/foldertreeview.html.twig' %}
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                {% endblock %}
+            </aside>
+
+
+            <!-- App Content - with sidebar -->
+            <div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
+
+                <!-- App Sidebar Toggle -->
+                <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle" title="toggle sidebar">
+                        <span class="app__sidebar-toggle__show-icon">
+                            <i class="fa fa-caret-right"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                    <span class="app__sidebar-toggle__hide-icon">
+                            <i class="fa fa-caret-left"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                </button>
+                <ul class="breadcrumb app__content__breadcrumb"></ul>
+                {% block notice %}
+                    {% include '@SonataCore/FlashMessage/render.html.twig' %}
+                {% endblock notice %}
+
+                <!-- App Content - General Messages -->
+                {% block messages %}{% endblock %}
+
+
+                <!-- App Content - Header -->
+                {% block header %}
+                    <header class="app__content__header">
+                        <div class="row">
+                            {% block media_title %}
+                                <div class="col-sm-6 col-md-8">
+                                    <h1 class="app__content__header__title">
+                                        {% block content_title %}{% endblock %}
+                                    </h1>
+                                </div>
+                            {% endblock %}
+
+                            {% block extra_actions_header %}{% endblock %}
+                        </div>
+                    </header>
+                {% endblock %}
+
+
+                <!-- App Content - Content -->
+                {% block content %}{% endblock %}
+
+            </div>
+        </div>
+
+    </main>
+    <script src="{{ asset('bundles/hgabkamedia/picturefill/dist/picturefill.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkamedia/plupload/js/plupload.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkamedia/jstree/dist/jstree.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkamedia/velocity/velocity.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkamedia/cargobay/src/toggle/js/jquery.toggle.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkamedia/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.min.js') }}"></script>
+    <script src="{{ asset('bundles/hgabkamedia/js/hg_media.js') }}"></script>
+
 {% endblock %}
