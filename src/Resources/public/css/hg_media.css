@@ -600,6 +600,10 @@ a.list-group-item:hover, a.list-group-item:focus {
     -moz-osx-font-smoothing: grayscale;
     transform: translate(0, 0);
 }
+.fa-unsorted::before, .fa-sort::before, .table--sortable__th:hover:not(.table--sortable__th--up)::before, .table--sortable__th:hover:not(.table--sortable__th--down)::before {
+    content: "\f0dc";
+}
+
 .media-thumbnail__icon {
     display: block;
     margin: 2rem 0;
@@ -717,18 +721,6 @@ input[type="file"].form-control, .fos_user_change_password .form-group > input[t
 }
 .link--text {
     color: #333333;
-}
-.fa, .glyphicon, .table--sortable__th::before, .sortable-item--error {
-    display: inline-block;
-    font: normal normal normal 16px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transform: translate(0, 0);
-}
-.fa-unsorted::before, .fa-sort::before, .table--sortable__th:hover:not(.table--sortable__th--up)::before, .table--sortable__th:hover:not(.table--sortable__th--down)::before {
-    content: "\f0dc";
 }
 .app__content .table-responsive {
     margin-top: 2rem;
