@@ -26,6 +26,13 @@ class MediaTranslation implements TranslationInterface
     protected $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="copyright", type="string", nullable=true)
+     */
+    protected $copyright;
+
+    /**
      * @Prezent\Translatable(targetEntity="Hgabka\MediaBundle\Entity\Media")
      */
     private $translatable;
@@ -68,4 +75,22 @@ class MediaTranslation implements TranslationInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getCopyright()
+    {
+        return $this->copyright;
+    }
+
+    /**
+     * @param string $copyright
+     * @return MediaTranslation
+     */
+    public function setCopyright($copyright)
+    {
+        $this->copyright = $copyright;
+
+        return $this;
+    }
 }

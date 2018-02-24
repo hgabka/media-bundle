@@ -4,6 +4,7 @@ namespace Hgabka\MediaBundle\Helper;
 
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
@@ -11,6 +12,9 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class MediaManager
 {
+    /** @var HgabkaUtils $utils */
+    protected $utils;
+
     /**
      * @var AbstractMediaHandler[]
      */
@@ -22,12 +26,23 @@ class MediaManager
     protected $defaultHandler;
 
     /**
+     * MediaManager constructor.
+     *
+     * @param HgabkaUtils $utils
+     */
+    public function __construct(HgabkaUtils $utils)
+    {
+        $this->utils = $utils;
+    }
+
+    /**
      * @param AbstractMediaHandler $handler Media handler
      *
      * @return MediaManager
      */
     public function addHandler(AbstractMediaHandler $handler)
     {
+        $handler->setHgabkaUtils($this->utils);
         $this->handlers[$handler->getName()] = $handler;
 
         return $this;

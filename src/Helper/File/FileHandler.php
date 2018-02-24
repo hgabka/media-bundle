@@ -8,7 +8,6 @@ use Hgabka\MediaBundle\Form\File\FileType;
 use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
-use Hgabka\UtilitiesBundle\Helper\SlugifierInterface;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
@@ -53,11 +52,6 @@ class FileHandler extends AbstractMediaHandler
     private $blacklistedExtensions = [];
 
     /**
-     * @var HgabkaUtils
-     */
-    private $utils;
-
-    /**
      * Constructor.
      *
      * @param int                              $priority
@@ -69,14 +63,6 @@ class FileHandler extends AbstractMediaHandler
         parent::__construct($priority);
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
         $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
-    }
-
-    /**
-     * @param SlugifierInterface $utils
-     */
-    public function setUtils(HgabkaUtils $utils)
-    {
-        $this->utils = $utils;
     }
 
     /**
@@ -280,6 +266,7 @@ class FileHandler extends AbstractMediaHandler
 
             $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
             $media->setContentType($contentType);
+            $media->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
 
             return $media;
         }
@@ -323,7 +310,7 @@ class FileHandler extends AbstractMediaHandler
         }
 
         $parts = pathinfo($filename);
-        $filename = $this->utils->slugify($parts['filename']);
+        $filename = $this->hgabkaUtils->slugify($parts['filename']);
         if (array_key_exists('extension', $parts)) {
             $filename .= '.'.strtolower($parts['extension']);
         }

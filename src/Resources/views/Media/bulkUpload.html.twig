@@ -1,20 +1,15 @@
 {% extends '@HgabkaMedia/Default/layout.html.twig' %}
 
-{% block title %}
-    {% set title = 'media.media.bulkupload.addto' %}
-    {{ title | trans({'%folder%': folder.name|trans }) }}
-{% endblock%}
-
 {% block header %}
     <header class="app__content__header">
-        {% set title = 'media.media.bulkupload.addto' %}
+        {% set title = 'hg_media.media.bulkupload.addto' %}
         <h1 class="app__content__header__title">
             {{ title | trans({'%folder%': folder.name|trans }) | capitalize | raw }}
         </h1>
     </header>
 {% endblock %}
 
-{% block content %}
+{% block media_content %}
     <div class="row row--padded">
         <div class="col-md-12">
             <div id="bulk-upload" data-url="{{ path('HgabkaMediaBundle_media_bulk_upload_submit', { 'folderId' : folder.id }) }}">
@@ -29,26 +24,26 @@
                     <!-- Actions - Upload -->
                     <div id="bulk-button-wrapper--upload" class="form-actions form-actions--padded">
                         <button type="button" id="bulk-button--pick-files" class="btn btn-primary btn--raise-on-hover">
-                            {{ 'media.bulkupload.select_files' | trans }}
+                            {{ 'hg_media.bulkupload.select_files' | trans }}
                         </button>
                         <button type="button" id="bulk-button--upload-files" class="btn btn-default btn--raise-on-hover btn-disabled" disabled>
-                            {{ 'media.bulkupload.upload' | trans }}
+                            {{ 'hg_media.bulkupload.upload' | trans }}
                         </button>
-                        <a href="{{ path('HgabkaMediaBundle_folder_show', { 'folderId' : folder.id }) }}" class="btn btn-default btn--raise-on-hover">
-                            {{ 'form.cancel' | trans }}
+                        <a href="{{ path('admin_hgabka_media_media_list', { 'folderId' : folder.id }) }}" class="btn btn-default btn--raise-on-hover">
+                            {{ 'hg_media.form.cancel' | trans }}
                         </a>
                     </div>
 
                     <!-- Actions - Completed -->
                     <div id="bulk-button-wrapper--completed" class="form-actions form-actions--padded hidden">
                         <p>
-                            <strong>{{ 'media.bulkupload.upload_finished' | trans }}</strong>
+                            <strong>{{ 'hg_media.bulkupload.upload_finished' | trans }}</strong>
                         </p>
                         <a href="{{ path('HgabkaMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn btn-default btn--raise-on-hover">
-                            {{ 'media.bulkupload.upload_more' | trans }}
+                            {{ 'hg_media.bulkupload.upload_more' | trans }}
                         </a>
-                        <a href="{{ path('HgabkaMediaBundle_folder_show', { 'folderId' : folder.id }) }}" class="btn btn-primary btn--raise-on-hover">
-                            {{ 'media.bulkupload.back_to_folder' | trans }}
+                        <a href="{{ path('admin_hgabka_media_media_list', { 'folderId' : folder.id }) }}" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'hg_media.bulkupload.back_to_folder' | trans }}
                         </a>
                     </div>
                 </div>

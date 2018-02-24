@@ -1,28 +1,9 @@
 {% extends '@HgabkaMedia/Default/layout.html.twig' %}
 {% block content_title %}{{ folder.name }}{% endblock %}
-{% block breadcrumb %}
-    <div class="hidden-xs">
-        <ol class="nav navbar-top-links breadcrumb">
-            <li>
-                <a href="{{ path('sonata_admin_dashboard') }}">{{ 'link_breadcrumb_dashboard' | trans({}, 'SonataAdminBundle') | raw }}</a>
-            </li>
-            {% for parent in foldermanager.parents(folder) %}
-                {% if block('breadcrumb_between') is defined %}
-                    {{ block('breadcrumb_between') }}
-                {% endif %}
-                <li>
-                    {% if loop.last %}
-                        <span>{{ parent.name }}</span>
-                    {% else %}
-                        <a href="{{ path('admin_hgabka_media_media_list', { folderId: parent.id }) }}">{{ parent.name }}</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ol>
-    </div>
-{% endblock %}
 
-{% block content %}
+
+{% block media_content %}
+
     <!-- Sub-actions -->
     <div class="page-sub-actions page-sub-actions--has-buttons">
         <div class="btn-group">
@@ -127,10 +108,10 @@
 
             <!-- Files -->
             <section id="dnd-container" class="dnd-container">
-                <div id="dnd-area" class="dnd-area" data-drop-url="{{ path('HgabkaMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}" data-current-url="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}">
+                <div id="dnd-area" class="dnd-area" data-drop-url="{{ path('HgabkaMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}" data-current-url="{{ path('admin_hgabka_media_media_list', { 'folderId' :folder.id }) }}">
                     <div class="dnd-area__drop-alert">
                         <figure class="dnd-area__drop-alert__figure">
-                            <img src="/bundles/kunstmaanadmin/default-theme/img/dnd/dnd_img.svg" alt="dnd" class="dnd-area__drop-alert__figure__img">
+                            <img src="/bundles/hgabkamedia/default-theme/img/dnd/dnd_img.svg" alt="dnd" class="dnd-area__drop-alert__figure__img">
                             <figcaption class="dnd-area__drop-alert__figure__caption">
                                 <h4 class="dnd-area__drop-alert__figure__caption__header">
                                     {{ 'hg_media.media.dnd.alert.title' |trans }}
@@ -146,7 +127,7 @@
                 <ul id="dnd-area__upload-status" class="list-group dnd-area__upload-status"></ul>
 
                 {% if app.session.get('media-list-view') %}
-                    {% if adminlist.count > 0 %}
+                    {% if pagerfanta.nbResults|length > 0 %}
                         {{ parent() }}
                     {% else %}
                         <p class="text--muted">
@@ -166,8 +147,8 @@
                                 <ul class="dropdown-menu" role="menu">
                                     {% for field in orderByFields %}
                                         <li>
-                                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': app.request.get('orderDirection') != 'DESC' ? 'DESC': 'ASC'})) }}">
-                                                {{ field.header | trans }}
+                                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field, 'folderId' : folder.id})|merge({'orderDirection': app.request.get('orderDirection') != 'DESC' ? 'DESC': 'ASC'})) }}">
+                                                {{ ('hg_media.field.'~field)| trans }}
                                             </a>
                                         </li>
                                     {% endfor %}
@@ -175,12 +156,12 @@
                             </div>
                         </div>
                     </div>
-                    {% if adminlist.count > 0 %}
-                        {% if adminlist.pagerfanta.haveToPaginate() %}
-                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+                    {% if pagerfanta.nbResults|length > 0 %}
+                        {% if pagerfanta.haveToPaginate() %}
+                            {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated') }}
                         {% endif %}
                         <div class="row">
-                            {% for media in adminlist.items %}
+                            {% for media in pagerfanta.currentPageResults %}
                                 {% set handler = mediamanager.getHandler(media) %}
                                 {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                                 {% if imageurl is not empty and media.location == 'local' %}
@@ -193,7 +174,7 @@
                                 {% endif %}
 
                                 <div class="js-can-have-dnd col-sm-6 col-md-4 col-lg-3">
-                                    <a class="thumbnail media-thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
+                                    <a class="thumbnail media-thumbnail" href="{{ path('HgabkaMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                         <figure>
                                             {% if imageurl %}
                                                 <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">
@@ -205,7 +186,7 @@
                                             </figcaption>
                                         </figure>
                                         <span class="media-thumbnail__helper">
-                                            Click to edit
+                                            {{ 'hg_media.helper.edit'|trans }}
                                         </span>
                                     </a>
 
@@ -213,10 +194,10 @@
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                     <span class="media-thumbnail-del-helper">
-                                        Delete
+                                        {{ 'hg_media.helper.delete'|trans }}
                                     </span>
                                     <!-- Modals -->
-                                    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
+                                    {% include 'HgabkaMediaBundle:Media:delete-modal.html.twig' %}
                                 </div>
 
                                 {# Clearfixes #}
@@ -231,18 +212,18 @@
                                 {% endif %}
                             {% endfor %}
                         </div>
-                        {% if adminlist.pagerfanta.haveToPaginate() %}
-                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+                        {% if pagerfanta.haveToPaginate() %}
+                            {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated') }}
                         {% endif %}
                         <p id="dnd-area-link" class="text--muted">
-                            <strong>{{ 'media.media.dnd.tip' |trans }}</strong> {{ 'media.media.dnd.tiptext' |trans }}
+                            <strong>{{ 'hg_media.media.dnd.tip' |trans }}</strong> {{ 'hg_media.media.dnd.tiptext' |trans }}
                         </p>
                     {% else %}
                         <p class="text--muted">
-                            {{ 'media.media.no' |trans }}
+                            {{ 'hg_media.media.no' |trans }}
                         </p>
                         <p id="dnd-area-link" class="text--muted">
-                            <strong>{{ 'media.media.dnd.tip' |trans }}</strong> {{ 'media.media.dnd.tiptext' |trans }}
+                            <strong>{{ 'hg_media.media.dnd.tip' |trans }}</strong> {{ 'hg_media.media.dnd.tiptext' |trans }}
                         </p>
                     {% endif %}
                 {% endif %}
@@ -252,19 +233,18 @@
 
         <!-- TAB - Properties -->
         <div class="tab-pane" id="properties">
-
-            {% form_theme editform '@KunstmaanAdmin/Form/fields.html.twig' %}
-            {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) ~ '#properties'}) }}
+            {% form_theme editform '@HgabkaMedia/Form/fields.html.twig' %}
+            {{ form_start(editform, {'method': 'POST', 'action': path('admin_hgabka_media_media_list', { 'folderId' : folder.id }) ~ '#properties'}) }}
             <fieldset class="panel panel-default form-properties">
                 <div class="panel-body">
                     {{ form_widget(editform) }}
 
                     <div class="form-actions form-actions--padded">
                         <button class="btn btn-primary btn--raise-on-hover" type="submit">
-                            {{ 'media.folder.save' |trans }}
+                            {{ 'hg_media.folder.save' |trans }}
                         </button>
-                        <button class="btn btn-default btn--raise-on-hover" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">
-                            {{ 'form.cancel' |trans }}
+                        <button class="btn btn-default btn--raise-on-hover" onclick="window.location = '{{ path('admin_hgabka_media_media_list', { 'folderId' : folder.id } ) }}'" type="reset">
+                            {{ 'hg_media.form.cancel' |trans }}
                         </button>
                     </div>
                 </div>

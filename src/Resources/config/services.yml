@@ -16,6 +16,7 @@ parameters:
 services:
     hgabka_media.media_manager:
         class: '%hgabka_media.media_manager.class%'
+        arguments: ['@hgabka_utils.hgabka_utils']
         calls:
             - [ setDefaultHandler, [ '@hgabka_media.media_handlers.file' ] ]
 

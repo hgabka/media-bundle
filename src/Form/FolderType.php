@@ -45,11 +45,11 @@ class FolderType extends AbstractType
         $builder
             ->add('translations', TranslationsType::class, [
                 'label' => false,
-                'locales' => $this->utils->getAvailableLocales(),
+                'locales' => [$this->utils->getCurrentLocale()],
                 'required' => false,
                 'fields' => [
                     'name' => [
-                        'label' => 'media.folder.addsub.form.name',
+                        'label' => 'hg_media.folder.addsub.form.name',
                         'required' => false,
                         'field_type' => TextType::class,
                     ],
@@ -60,12 +60,12 @@ class FolderType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices' => [
-                        'media' => 'media',
+                        'media' => 'hg_media',
                         'image' => 'image',
                         'slideshow' => 'slideshow',
                         'video' => 'video',
                     ],
-                    'label' => 'media.folder.addsub.form.rel',
+                    'label' => 'hg_media.folder.addsub.form.rel',
                 ]
             )
             ->add(
@@ -74,7 +74,7 @@ class FolderType extends AbstractType
                 [
                     'class' => Folder::class,
                     'choice_label' => 'optionLabel',
-                    'label' => 'media.folder.addsub.form.parent',
+                    'label' => 'hg_media.folder.addsub.form.parent',
                     'required' => true,
                     'query_builder' => function (FolderRepository $er) use ($folder) {
                         return $er->selectFolderQueryBuilder($folder);
@@ -85,7 +85,7 @@ class FolderType extends AbstractType
                 'internalName',
                 TextType::class,
                 [
-                    'label' => 'media.folder.addsub.form.internal_name',
+                    'label' => 'hg_media.folder.addsub.form.internal_name',
                     'required' => false,
                 ]
             );

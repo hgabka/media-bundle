@@ -3,6 +3,36 @@
             {{ parent() }}
             <link rel="stylesheet" href="{{ asset('bundles/hgabkamedia/css/hg_media.css') }}">
         {% endblock %}
+            {% block body_attributes -%}
+                class="sonata-bc skin-black fixed app
+                {% if app.request.cookies.get('sonata_sidebar_hide') -%}
+                    sidebar-collapse
+                {%- endif -%}"
+            {%- endblock -%}
+
+{% block breadcrumb %}
+    <div class="hidden-xs">
+        <ol class="nav navbar-top-links breadcrumb">
+            <li>
+                <a href="{{ path('sonata_admin_dashboard') }}">{{ 'link_breadcrumb_dashboard' | trans({}, 'SonataAdminBundle') | raw }}</a>
+            </li>
+            {% for parent in foldermanager.parents(folder) %}
+                {% if block('breadcrumb_between') is defined %}
+                    {{ block('breadcrumb_between') }}
+                {% endif %}
+                <li>
+                    {% if loop.last %}
+                        <span>{{ parent.name }}</span>
+                    {% else %}
+                        <a href="{{ path('admin_hgabka_media_media_list', { folderId: parent.id }) }}">{{ parent.name }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+{% endblock %}
+
+
 
 {% block sonata_wrapper %}
 
@@ -86,7 +116,7 @@
 
 
                 <!-- App Content - Content -->
-                {% block content %}{% endblock %}
+                {% block media_content %}{% endblock %}
 
             </div>
         </div>

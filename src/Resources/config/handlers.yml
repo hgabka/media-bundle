@@ -11,18 +11,24 @@ services:
     hgabka_media.media_handlers.remote_slide:
         class: '%hgabka_media.media_handler.remote_slide.class%'
         arguments: [1]
+        calls:
+            - [ setHgabkaUtils, [ '@hgabka_utils.hgabka_utils' ] ]
         tags:
             -  { name: 'hgabka_media.media_handler' }
 
     hgabka_media.media_handlers.remote_video:
         class: '%hgabka_media.media_handler.remote_video.class%'
         arguments: [1, '%hgabka_media.remote_video%']
+        calls:
+            - [ setHgabkaUtils, [ '@hgabka_utils.hgabka_utils' ] ]
         tags:
             -  { name: 'hgabka_media.media_handler' }
 
     hgabka_media.media_handlers.remote_audio:
         class: '%hgabka_media.media_handler.remote_audio.class%'
         arguments: [1, '%hgabka_media.soundcloud_api_key%']
+        calls:
+            - [ setHgabkaUtils, [ '@hgabka_utils.hgabka_utils' ] ]
         tags:
             -  { name: 'hgabka_media.media_handler' }
 
@@ -33,7 +39,7 @@ services:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
-            - [ setUtils, ['@hgabka_utils.hgabka_utils']]
+            - [ setHgabkaUtils, ['@hgabka_utils.hgabka_utils']]
         tags:
             -  { name: 'hgabka_media.media_handler' }
 
@@ -44,6 +50,6 @@ services:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
-            - [ setUtils, ['@hgabka_utils.hgabka_utils']]
+            - [ setHgabkaUtils, ['@hgabka_utils.hgabka_utils']]
         tags:
             -  { name: 'hgabka_media.media_handler' }

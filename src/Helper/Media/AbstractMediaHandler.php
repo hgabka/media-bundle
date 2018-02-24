@@ -3,10 +3,14 @@
 namespace Hgabka\MediaBundle\Helper\Media;
 
 use Hgabka\MediaBundle\Entity\Media;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 
 abstract class AbstractMediaHandler
 {
     private $priority;
+
+    /** @var HgabkaUtils $utils */
+    protected $hgabkaUtils;
 
     /**
      * @param int $priority
@@ -22,6 +26,11 @@ abstract class AbstractMediaHandler
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    public function setHgabkaUtils(HgabkaUtils $utils)
+    {
+        $this->hgabkaUtils = $utils;
     }
 
     /**

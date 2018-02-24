@@ -2,7 +2,7 @@
 
 {% block extraactions %}
     <a href="{{ asset(media.url) }}" class="btn btn-primary btn--raise-on-hover">
-        {{ 'media.media.download.action'|trans }}
+        {{ 'hg_media.media.download.action'|trans }}
     </a>
 {% endblock %}
 
@@ -11,7 +11,7 @@
 {% block mediainfo %}
     {{ parent() }}
     <dt>
-        {{ 'media.media.mediainfo.downloadlink'|trans }}:
+        {{ 'hg_media.media.mediainfo.downloadlink'|trans }}:
     </dt>
     <dd>
         <a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}" target="_blank">

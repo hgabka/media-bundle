@@ -2,6 +2,7 @@
 
 namespace Hgabka\MediaBundle\Form;
 
+use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Repository\FolderRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -36,7 +37,7 @@ abstract class AbstractRemoteType extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    'label' => 'media.form.remote.name.label',
+                    'label' => 'hg_media.form.remote.name.label',
                     'constraints' => [new NotBlank()],
                     'required' => true,
                 ]
@@ -45,7 +46,7 @@ abstract class AbstractRemoteType extends AbstractType
                 'code',
                 TextType::class,
                 [
-                    'label' => 'media.form.remote.code.label',
+                    'label' => 'hg_media.form.remote.code.label',
                     'constraints' => [new NotBlank()],
                     'required' => true,
                 ]
@@ -54,7 +55,7 @@ abstract class AbstractRemoteType extends AbstractType
                 'type',
                 ChoiceType::class,
                 [
-                    'label' => 'media.form.remote.type.label',
+                    'label' => 'hg_media.form.remote.type.label',
                     'choices' => [],
                     'constraints' => [new NotBlank()],
                     'required' => true,
@@ -64,7 +65,7 @@ abstract class AbstractRemoteType extends AbstractType
                 'copyright',
                 TextType::class,
                 [
-                    'label' => 'media.form.remote.copyright.label',
+                    'label' => 'hg_media.form.remote.copyright.label',
                     'required' => false,
                 ]
             )
@@ -72,7 +73,7 @@ abstract class AbstractRemoteType extends AbstractType
                 'description',
                 TextareaType::class,
                 [
-                    'label' => 'media.form.remote.description.label',
+                    'label' => 'hg_media.form.remote.description.label',
                     'required' => false,
                 ]
             );
@@ -90,7 +91,7 @@ abstract class AbstractRemoteType extends AbstractType
                         'folder',
                         EntityType::class,
                         [
-                            'class' => 'HgabkaMediaBundle:Folder',
+                            'class' => Folder::class,
                             'choice_label' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
                                 return $er->selectFolderQueryBuilder()

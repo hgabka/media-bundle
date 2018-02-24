@@ -2,6 +2,7 @@
 
 namespace Hgabka\MediaBundle\Controller;
 
+use AppBundle\Form\ProfileType;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
@@ -12,6 +13,9 @@ use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
 use Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
 use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Symfony\Component\HttpFoundation\Request;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MediaAdminController extends CRUDController
 {
@@ -60,7 +64,7 @@ class MediaAdminController extends CRUDController
                 $repo->save($folder);
 
                 $this->addFlash(
-                    FlashTypes::SUCCESS,
+                    'sonata_flash_success',
                     $this->get('translator')->trans('hg_media.folder.show.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
@@ -68,7 +72,7 @@ class MediaAdminController extends CRUDController
 
                 return new RedirectResponse(
                     $this->generateUrl(
-                        'HgabkaMediaBundle_folder_show',
+                        'admin_hgabka_media_media_list',
                         ['folderId' => $folderId]
                     )
                 );
@@ -83,8 +87,8 @@ class MediaAdminController extends CRUDController
             'editform' => $editForm->createView(),
             'folder' => $folder,
             'type' => null,
-            'adminlist' => $this->getAdminList($request),
-            'orderByFields' => ['name']
+            'pagerfanta' => $this->getPager($request, $folder),
+            'orderByFields' => ['name', 'contentType', 'updatedAt', 'filesize'],
             'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
         ];
 
@@ -95,28 +99,33 @@ class MediaAdminController extends CRUDController
     {
         $defaultData = ['checked' => false];
         $form = $this->createFormBuilder($defaultData)
-                     ->add('checked', CheckboxType::class, ['required' => false, 'label' => 'media.folder.empty.modal.checkbox'])
+                     ->add('checked', CheckboxType::class, ['required' => false, 'label' => 'hg_media.folder.empty.modal.checkbox'])
                      ->getForm();
 
         return $form;
     }
 
-    private function getAdminList(Request $request)
+    private function getPager(Request $request, $folder)
     {
         $queryBuilder = $this
             ->getDoctrine()
             ->getRepository(Media::class)
             ->createQueryBuilder('b')
-            ->leftJoin('b.translations bt WITH bt.lang = :lang')
+            ->leftJoin('b.translations','bt', 'WITH', 'bt.locale = :locale')
             ->andWhere('b.folder = :folder')
-            ->setParameter('folder', $this->folder->getId())
-            ->setParameter('lang', $this->get(HgabkaUtils::class)->getCurrentLocale())
+            ->setParameter('folder', $folder->getId())
+            ->setParameter('locale', $this->get(HgabkaUtils::class)->getCurrentLocale())
             ->andWhere('b.deleted = 0')
         ;
         $orderBy = $request->query->get('orderBy', 'updatedAt');
         $orderDirection = $request->query->get('orderDirection','DESC');
+        if ($orderBy === 'name') {
+            $orderBy = 'bt.name';
+        } else {
+            $orderBy = 'b.'.$orderBy;
+        }
         $queryBuilder->orderBy($orderBy, $orderDirection);
-        $type = $this->request->query->get('type');
+        $type = $request->query->get('type');
         if ($type) {
             switch ($type) {
                 case 'file':
@@ -146,7 +155,13 @@ class MediaAdminController extends CRUDController
                     break;
             }
         }
+        $adapter = new DoctrineORMAdapter($queryBuilder->getQuery());
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setNormalizeOutOfRangePages(true);
+        $pagerfanta->setMaxPerPage(250);
+        $pagerfanta->setCurrentPage($request->query->get('page', 1));
 
-        return $queryBuilder->getQuery()->getResult();
+
+        return $pagerfanta;
     }
 }

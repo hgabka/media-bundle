@@ -7,7 +7,7 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
-use Hgabka\UtilitiesBundle\Helper\ClassLookup;
+use Hgabka\UtilsBundle\Helper\ClassLookup;
 
 /**
  * DoctrineMediaListener.

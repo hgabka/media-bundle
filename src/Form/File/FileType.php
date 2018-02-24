@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Hgabka\MediaBundle\Entity\Folder;
 
 /**
  * FileType.
@@ -38,7 +39,7 @@ class FileType extends AbstractType
             'name',
             TextType::class,
             [
-                'label' => 'media.form.file.name.label',
+                'label' => 'hg_media.form.file.name.label',
                 'required' => false,
             ]
         );
@@ -46,7 +47,7 @@ class FileType extends AbstractType
             'file',
             BaseFileType::class,
             [
-                'label' => 'media.form.file.file.label',
+                'label' => 'hg_media.form.file.file.label',
                 'constraints' => [new File(), new HasGuessableExtension()],
                 'required' => false,
             ]
@@ -55,7 +56,7 @@ class FileType extends AbstractType
             'copyright',
             TextType::class,
             [
-                'label' => 'media.form.file.copyright.label',
+                'label' => 'hg_media.form.file.copyright.label',
                 'required' => false,
             ]
         );
@@ -63,7 +64,7 @@ class FileType extends AbstractType
             'description',
             TextareaType::class,
             [
-                'label' => 'media.form.file.description.label',
+                'label' => 'hg_media.form.file.description.label',
                 'required' => false,
             ]
         );
@@ -80,7 +81,7 @@ class FileType extends AbstractType
                         'file',
                         BaseFileType::class,
                         [
-                            'label' => 'media.form.file.file.label',
+                            'label' => 'hg_media.form.file.file.label',
                             'constraints' => [new NotBlank(), new File(), new HasGuessableExtension()],
                             'required' => true,
                         ]
@@ -91,7 +92,7 @@ class FileType extends AbstractType
                         'originalFilename',
                         TextType::class,
                         [
-                            'label' => 'media.form.file.originalFilename.label',
+                            'label' => 'hg_media.form.file.originalFilename.label',
                             'required' => false,
                             'attr' => [
                                 'readonly' => 'readonly',
@@ -103,7 +104,7 @@ class FileType extends AbstractType
                         'folder',
                         EntityType::class,
                         [
-                            'class' => 'HgabkaMediaBundle:Folder',
+                            'class' => Folder::class,
                             'choice_label' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
                                 return $er->selectFolderQueryBuilder()

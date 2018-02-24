@@ -43,14 +43,6 @@ class Media implements TranslatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="copyright", type="string", nullable=true)
-     * @Gedmo\Translatable
-     */
-    protected $copyright;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="string", name="location", nullable=true)
      */
     protected $location;
@@ -425,9 +417,9 @@ class Media implements TranslatableInterface
      *
      * @return Media
      */
-    public function setCopyright($copyright)
+    public function setCopyright($copyright, $locale = null)
     {
-        $this->copyright = $copyright;
+        $this->translate($locale)->setCopyright($copyright);
 
         return $this;
     }
@@ -435,9 +427,9 @@ class Media implements TranslatableInterface
     /**
      * @return string
      */
-    public function getCopyright()
+    public function getCopyright($locale = null)
     {
-        return $this->copyright;
+        return $this->translate($locale)->getCopyright();
     }
 
     /**
@@ -481,7 +473,7 @@ class Media implements TranslatableInterface
      */
     public function prePersist()
     {
-        if (empty($this->name)) {
+        if (empty($this->getName())) {
             $this->setName($this->getOriginalFilename());
         }
     }
@@ -490,12 +482,28 @@ class Media implements TranslatableInterface
     {
         return MediaTranslation::class;
     }
+
     public function getName($locale = null)
     {
-        return $this->translate('hu')->getName();
+        return $this->translate($locale)->getName();
     }
+
+    public function setName($name, $locale = null)
+    {
+        $this->translate($locale)->setName($name);
+
+        return $this;
+    }
+
     public function getDescription($locale = null)
     {
-        return $this->translate('hu')->getName();
+        return $this->translate($locale)->getDescription();
+    }
+
+    public function setDescription($description, $locale = null)
+    {
+        $this->translate($locale)->setDescription($description);
+
+        return $this;
     }
 }

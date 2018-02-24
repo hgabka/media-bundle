@@ -60,7 +60,6 @@ class Folder implements TranslatableInterface
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Media", mappedBy="folder", fetch="LAZY")
-     * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $media;
 

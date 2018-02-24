@@ -1,5 +1,13 @@
 # Media
 hg_media:
+    field:
+        name: Név
+        updatedAt: Utolsó frissítés
+        contentType: Típus
+        filesize: Méret
+    helper:
+        edit: Kattintson a szerkesztéshez
+        delete: Törlés
     label:
         search: Keresés
     admin:
@@ -12,10 +20,10 @@ hg_media:
         no: Még nincs fájl ebben a könyvtárban.
         dnd:
             tip: "Tipp:"
-            tiptext: Tudtad, hogy a fájlokat egyből ebbe a mappába is feltöltheted?
+            tiptext: Húzzon ide fájlokat az azonnali feltöltéshez
             alert:
-                title: Érkezik!
-                text: Húzd ide a fájlokat az azonnali feltöltéshez ebbe a könyvtárba.
+                title: Fájlfeltöltés
+                text: Húzzon ide a fájlokat az azonnali feltöltéshez ebbe a könyvtárba.
         bulkupload:
             addto: 'Fájlok feltöltése a "%folder%" mappába'
         contenttab:
@@ -35,7 +43,7 @@ hg_media:
             createdat: Létrehozva
             updatedat: Frissítve
             downloadlink: "Letölthető innen:"
-        addto: ehhez
+        addto: Feltöltés
         deletesure: Biztos, hogy törölni szeretné?
         new: Új hozzáadása
 
@@ -135,6 +143,9 @@ hg_media:
                 filesize:   Fájlméret (byte-ban)
 
     form:
+        delete: Törlés
+        cancel: Mégsem
+        save: Mentés
         button:
             dropdown:
                 more: Továbbiak

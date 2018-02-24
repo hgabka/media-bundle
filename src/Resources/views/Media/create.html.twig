@@ -1,41 +1,37 @@
 {% extends '@HgabkaMedia/Default/layout.html.twig' %}
-{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
+{% form_theme form '@HgabkaMedia/Form/fields.html.twig' %}
 
-{% block title %}
-    {{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}
-{% endblock %}
+       {% block header %}
+           <!-- Header -->
+           <header class="app__content__header">
+               <div class="row">
+                   <div class="col-sm-6 col-md-8">
+                       <h1 class="app__content__header__title">
+                           {{ 'hg_media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}
+                       </h1>
+                   </div>
+                   <div class="col-sm-6 col-md-4">
+                       <!-- Main-actions -->
+                       <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+                           <div class="btn-group">
+                               {% block actions %}
+                                   <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                                       {{ 'hg_media.file.add' | trans }}
+                                   </button>
+                                   <a class="btn btn-default btn--raise-on-hover" href="{{ path('HgabkaMediaBundle_folder_show', { 'folderId' : folder.id } ) }}">
+                                       {{ 'hg_media.form.cancel' | trans }}
+                                   </a>
+                               {% endblock %}
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </header>
+       {% endblock %}
 
-{% block header %}{% endblock %}
 
-{% block content %}
-    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type }), 'attr': {'novalidate': 'novalidate'}}) }}
-
-        <!-- Header -->
-        <header class="app__content__header">
-            <div class="row">
-                <div class="col-sm-6 col-md-8">
-                    <h1 class="app__content__header__title">
-                        {{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}
-                    </h1>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <!-- Main-actions -->
-                    <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
-                        <div class="btn-group">
-                            {% block actions %}
-                                <button type="submit" class="btn btn-primary btn--raise-on-hover">
-                                    {{ 'media.file.add' | trans }}
-                                </button>
-                                <a class="btn btn-default btn--raise-on-hover" href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}">
-                                    {{ 'form.cancel' | trans }}
-                                </a>
-                            {% endblock %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
+{% block media_content %}
+    {{ form_start(form, {'method': 'POST', 'action': path('HgabkaMediaBundle_media_create', { 'folderId' : folder.id, 'type': type }), 'attr': {'novalidate': 'novalidate'}}) }}
         <!-- Scroll-actions -->
         <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
             <div class="btn-group">

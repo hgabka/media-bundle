@@ -1,54 +1,14 @@
 {% extends '@HgabkaMedia/Default/layout.html.twig' %}
 
 
-{% block body %}
-    {% set lowestTopChild = foldermanager.getRootFolderFor(folder) %}
-    {% if lowestTopChild %}
-        {% set navigationChildren = foldermanager.getFolderHierarchy(lowestTopChild) %}
-    {% endif %}
-    {{ parent() }}
-{% endblock %}
+{% block content_title %}{{ media.name }}{% endblock %}
 
-
-
-{% block sidebar %}
-    <!-- Search -->
-    <button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
-        <i class="fa fa-search"></i>
-    </button>
-    <div id="sidebar-search-toggle" class="toggle-item">
-        <div class="toggle-item__content">
-            <div class="app__sidebar__search-toggle-item">
-                <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
-                <hr>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tree -->
-    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('HgabkaMediaBundle_folder_reorder') }}">
-        <ul>
-            {% set parentIds = foldermanager.getParentIds(folder) %}
-            {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
-            {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
-            {% for mediaFolder in folders %}
-                {% include '@KunstmaanMedia/Folder/foldertreeview.html.twig' %}
-            {% endfor %}
-        </ul>
-    </nav>
-{% endblock %}
-
-
-
-{% block breadcrumb %}
-    {% include '@KunstmaanMedia/Folder/breadcrumbs.html.twig' %}
-{% endblock %}
 
 
 
 {% block header %}
     <h1 class="app__content__header__title">
-        {{ 'media.media.title'|trans }}
+        {{ 'hg_media.media.title'|trans }}
         <small class="app__content__header__title__small">
             {{ media.name }}
         </small>
@@ -57,14 +17,14 @@
 
 
 
-{% block content %}
+{% block media_content %}
     <!-- Main-actions -->
     <div class="page-main-actions js-auto-collapse-buttons">
         <div class="btn-group" role="group">
             {% block extraactions %}{% endblock %}
             {% block actions %}
                 <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
-                    {{ 'form.delete'|trans }}
+                    {{ 'hg_media.form.delete'|trans }}
                 </button>
             {% endblock %}
         </div>
@@ -87,17 +47,17 @@
     <ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
         <li class="active">
             <a href="#imagegallery" data-toggle="tab">
-                {{ 'media.media.contenttab.title'|trans|capitalize }}
+                {{ 'hg_media.media.contenttab.title'|trans|capitalize }}
             </a>
         </li>
         <li>
             <a href="#properties" data-toggle="tab">
-                {{ 'media.media.propertiestab.title' | trans }}
+                {{ 'hg_media.media.propertiestab.title' | trans }}
             </a>
         </li>
         <li class="tab__more dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                {{ 'form.button.dropdown.more' | trans }} <span class="caret"></span>
+                {{ 'hg_media.form.button.dropdown.more' | trans }} <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
         </li>
@@ -112,13 +72,13 @@
                 <div class="col-md-6 col-lg-5">
                     <dl>
                         {% block mediainfo %}
-                            <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
+                            <dt>{{ 'hg_media.media.mediainfo.name'|trans }}:</dt>
                             <dd>{{ media.name }}</dd>
-                            <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
+                            <dt>{{ 'hg_media.media.mediainfo.contenttype'|trans }}:</dt>
                             <dd>{{ media.contentType }}</dd>
-                            <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
+                            <dt>{{ 'hg_media.media.mediainfo.createdat'|trans }}:</dt>
                             <dd>{{ media.createdat|date|escape }}</dd>
-                            <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
+                            <dt>{{ 'hg_media.media.mediainfo.updatedat'|trans }}:</dt>
                             <dd>{{ media.updatedat|date|escape }}</dd>
                         {% endblock %}
                     </dl>
@@ -134,7 +94,7 @@
         <!-- TAB - Properties -->
         <div class="tab-pane" id="properties">
 
-            {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+            {% form_theme editform '@HgabkaMedia/Form/fields.html.twig' %}
             {{ form_start(editform, {'method': 'POST', 'action': path('HgabkaMediaBundle_media_show', { 'mediaId' : media.id }) }) }}
                 <fieldset class="panel panel-default form-properties">
                     <div class="panel-body">
@@ -143,10 +103,10 @@
 
                         <div class="form-actions form-actions--padded">
                             <button type="submit" class="btn btn-primary btn--raise-on-hover">
-                                {{ 'form.save' |trans }}
+                                {{ 'hg_media.form.save' |trans }}
                             </button>
                             <button type="reset" class="btn btn-default btn--raise-on-hover">
-                                {{ 'form.cancel' |trans }}
+                                {{ 'hg_media.form.cancel' |trans }}
                             </button>
                         </div>
                     </div>

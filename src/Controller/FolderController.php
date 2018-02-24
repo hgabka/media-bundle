@@ -8,6 +8,7 @@ use Hgabka\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Helper\MediaManager;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -116,16 +117,16 @@ class FolderController extends Controller
 
         if (null === $parentFolder) {
             $this->addFlash(
-                FlashTypes::ERROR,
-                $this->get('translator')->trans('media.folder.delete.failure.text', [
+                'sonata_flash_error',
+                $this->get('translator')->trans('hg_media.folder.delete.failure.text', [
                     '%folder%' => $folderName,
                 ])
             );
         } else {
             $em->getRepository('HgabkaMediaBundle:Folder')->delete($folder);
             $this->addFlash(
-                FlashTypes::SUCCESS,
-                $this->get('translator')->trans('media.folder.delete.success.text', [
+                'sonata_flash_success',
+                $this->get('translator')->trans('hg_media.folder.delete.success.text', [
                     '%folder%' => $folderName,
                 ])
             );
@@ -134,7 +135,7 @@ class FolderController extends Controller
         if (strpos($_SERVER['HTTP_REFERER'], 'chooser')) {
             $redirect = 'HgabkaMediaBundle_chooser_show_folder';
         } else {
-            $redirect = 'HgabkaMediaBundle_folder_show';
+            $redirect = 'admin_hgabka_media_media_list';
         }
 
         $type = $this->get('request_stack')->getCurrentRequest()->get('type');
@@ -169,21 +170,22 @@ class FolderController extends Controller
         $parent = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
+        $folder->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
         $form = $this->createForm(FolderType::class, $folder);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $em->getRepository('HgabkaMediaBundle:Folder')->save($folder);
                 $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.addsub.success.text', [
+                    'sonata_flash_success',
+                    $this->get('translator')->trans('hg_media.folder.addsub.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );
                 if (false !== strpos($_SERVER['HTTP_REFERER'], 'chooser')) {
                     $redirect = 'HgabkaMediaBundle_chooser_show_folder';
                 } else {
-                    $redirect = 'HgabkaMediaBundle_folder_show';
+                    $redirect = 'admin_hgabka_media_media_list';
                 }
 
                 $type = $request->get('type');
@@ -242,15 +244,15 @@ class FolderController extends Controller
                 $em->getRepository('HgabkaMediaBundle:Folder')->emptyFolder($folder, $alsoDeleteFolders);
 
                 $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.empty.success.text', [
+                    'sonata_flash_success',
+                    $this->get('translator')->trans('hg_media.folder.empty.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );
                 if (false !== strpos($_SERVER['HTTP_REFERER'], 'chooser')) {
                     $redirect = 'HgabkaMediaBundle_chooser_show_folder';
                 } else {
-                    $redirect = 'HgabkaMediaBundle_folder_show';
+                    $redirect = 'admin_hgabka_media_media_list';
                 }
 
                 return new RedirectResponse(
@@ -286,7 +288,7 @@ class FolderController extends Controller
         $nodeIds = $request->get('nodes');
 
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('HgabkaMediaBundle:Folder');
+        $repository = $em->getRepository(Folder::class);
 
         foreach ($nodeIds as $id) {
             // @var Folder $folder

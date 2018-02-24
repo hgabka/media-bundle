@@ -6,6 +6,7 @@ use Hgabka\AdminBundle\FlashMessages\FlashTypes;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -68,6 +69,7 @@ class MediaController extends Controller
                 'media' => $media,
                 'helper' => $helper,
                 'folder' => $folder,
+                'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
             ]
         );
     }
@@ -92,7 +94,7 @@ class MediaController extends Controller
         $em->getRepository('HgabkaMediaBundle:Media')->delete($media);
 
         $this->addFlash(
-            FlashTypes::SUCCESS,
+            'sonata_flash_success',
             $this->get('translator')->trans('kuma_admin.media.flash.deleted_success.%medianame%', [
                 '%medianame%' => $medianame,
             ])
@@ -102,7 +104,7 @@ class MediaController extends Controller
         $redirectUrl = $request->query->get('redirectUrl');
         if (empty($redirectUrl) || (0 !== strpos($redirectUrl, $request->getSchemeAndHttpHost()) && 0 !== strpos($redirectUrl, '/'))) {
             $redirectUrl = $this->generateUrl(
-                'HgabkaMediaBundle_folder_show',
+                'admin_hgabka_media_media_list',
                 ['folderId' => $folder->getId()]
             );
         }
@@ -123,16 +125,19 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
-        return ['folder' => $folder];
+        return $this->render('@HgabkaMedia/Media/bulkUpload.html.twig',[
+            'folder' => $folder,
+            'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
+            'foldermanager' => $this->get('hgabka_media.folder_manager'),
+        ]);
     }
 
     /**
      * @param int $folderId
      *
      * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_media_bulk_upload_submit")
-     * @Template()
      *
      * @return array|RedirectResponse
      */
@@ -240,16 +245,18 @@ class MediaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
 
         try {
+            $handler = $this->get('hgabka_media.media_manager')->getHandler($file);
+            $handler->setHgabkaUtils($this->get(HgabkaUtils::class));
             // @var Media $media
             $media = $this->get('hgabka_media.media_manager')->getHandler($file)->createNew($file);
             $media->setFolder($folder);
-            $em->getRepository('HgabkaMediaBundle:Media')->save($media);
+            $em->getRepository(Media::class)->save($media);
         } catch (\Exception $e) {
-            return $this->returnJsonError('104', 'Failed performing save on media-manager');
+            return $this->returnJsonError('104', 'Failed performing save on media-manager'.$e->getMessage());
         }
 
         $success = unlink($filePath);
@@ -313,13 +320,20 @@ class MediaController extends Controller
      *
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_create")
      * @Method({"GET", "POST"})
-     * @Template()
      *
      * @return array|RedirectResponse
      */
     public function createAction(Request $request, $folderId, $type)
     {
-        return $this->createAndRedirect($request, $folderId, $type, 'HgabkaMediaBundle_folder_show');
+        $params = $this->createAndRedirect($request, $folderId, $type, 'admin_hgabka_media_media_list');
+        if ($params instanceof Response) {
+            return $params;
+        }
+
+        $params['base_template'] = $this->getParameter('sonata.admin.configuration.templates')['layout'];
+        $params['foldermanager'] = $this->get('hgabka_media.folder_manager');
+
+        return $this->render('@HgabkaMedia/Media/create.html.twig', $params);
     }
 
     /**
@@ -412,12 +426,13 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         // @var MediaManager $mediaManager
         $mediaManager = $this->get('hgabka_media.media_manager');
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();
+        $media->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
         $helper = $handler->getFormHelper($media);
 
         $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
@@ -434,8 +449,8 @@ class MediaController extends Controller
                 $em->getRepository('HgabkaMediaBundle:Media')->save($media);
 
                 $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.flash.created', [
+                    'sonata_flash_success',
+                    $this->get('translator')->trans('hg_media.flash.created', [
                         '%medianame%' => $media->getName(),
                     ])
                 );
@@ -445,8 +460,8 @@ class MediaController extends Controller
 
             if ($isInModal) {
                 $this->addFlash(
-                    FlashTypes::ERROR,
-                    $this->get('translator')->trans('media.flash.not_created', [
+                    'sonata_flash_error',
+                    $this->get('translator')->trans('hg_media.flash.not_created', [
                         '%mediaerrors%' => $form->getErrors(true, true),
                     ])
                 );

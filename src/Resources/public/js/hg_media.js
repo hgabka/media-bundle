@@ -633,6 +633,7 @@ kunstmaanMediaBundle.dndUpload = (function(window, undefined) {
 
     // Init
     init = function() {
+
         var $area = $('#dnd-area');
 
         if($area.length) {
@@ -663,6 +664,7 @@ kunstmaanMediaBundle.dndUpload = (function(window, undefined) {
                                                     init: {
                                                         PostInit: function() {
                                                             $(window).on('dragenter', function(e) {
+                                                                console.log(e.originalEvent.dataTransfer.types);
                                                                 if($.inArray('text/html', e.originalEvent.dataTransfer.types) === -1 && $.inArray('text/plain', e.originalEvent.dataTransfer.types) === -1) {
                                                                     $area.addClass('dnd-area--dragover');
                                                                 }

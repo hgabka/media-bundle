@@ -70,7 +70,7 @@ class ImageHandler extends FileHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'HgabkaMediaBundle:Media\Image:show.html.twig';
+        return '@HgabkaMedia/Media/Image/show.html.twig';
     }
 
     /**

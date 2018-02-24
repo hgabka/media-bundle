@@ -167,6 +167,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                     break;
             }
         }
+        $result->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
 
         return $result;
     }
