@@ -3,9 +3,15 @@
 namespace Hgabka\MediaBundle\Controller;
 
 use Hgabka\MediaBundle\Entity\Folder;
+use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
+use Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
+use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
+use Symfony\Component\HttpFoundation\Request;
 
 class MediaAdminController extends CRUDController
 {
@@ -77,6 +83,8 @@ class MediaAdminController extends CRUDController
             'editform' => $editForm->createView(),
             'folder' => $folder,
             'type' => null,
+            'adminlist' => $this->getAdminList($request),
+            'orderByFields' => ['name']
             'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
         ];
 
@@ -91,5 +99,54 @@ class MediaAdminController extends CRUDController
                      ->getForm();
 
         return $form;
+    }
+
+    private function getAdminList(Request $request)
+    {
+        $queryBuilder = $this
+            ->getDoctrine()
+            ->getRepository(Media::class)
+            ->createQueryBuilder('b')
+            ->leftJoin('b.translations bt WITH bt.lang = :lang')
+            ->andWhere('b.folder = :folder')
+            ->setParameter('folder', $this->folder->getId())
+            ->setParameter('lang', $this->get(HgabkaUtils::class)->getCurrentLocale())
+            ->andWhere('b.deleted = 0')
+        ;
+        $orderBy = $request->query->get('orderBy', 'updatedAt');
+        $orderDirection = $request->query->get('orderDirection','DESC');
+        $queryBuilder->orderBy($orderBy, $orderDirection);
+        $type = $this->request->query->get('type');
+        if ($type) {
+            switch ($type) {
+                case 'file':
+                    $queryBuilder->andWhere('b.location = :location')
+                                 ->setParameter('location', 'local');
+
+                    break;
+                case 'image':
+                    $queryBuilder->andWhere('b.contentType LIKE :ctype')
+                                 ->setParameter('ctype', '%image%');
+
+                    break;
+                case RemoteAudioHandler::TYPE:
+                    $queryBuilder->andWhere('b.contentType = :ctype')
+                                 ->setParameter('ctype', RemoteAudioHandler::CONTENT_TYPE);
+
+                    break;
+                case RemoteSlideHandler::TYPE:
+                    $queryBuilder->andWhere('b.contentType = :ctype')
+                                 ->setParameter('ctype', RemoteSlideHandler::CONTENT_TYPE);
+
+                    break;
+                case RemoteVideoHandler::TYPE:
+                    $queryBuilder->andWhere('b.contentType = :ctype')
+                                 ->setParameter('ctype', RemoteVideoHandler::CONTENT_TYPE);
+
+                    break;
+            }
+        }
+
+        return $queryBuilder->getQuery()->getResult();
     }
 }
