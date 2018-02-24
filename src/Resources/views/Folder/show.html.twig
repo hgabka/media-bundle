@@ -1,8 +1,12 @@
 {% extends '@HgabkaMedia/Default/layout.html.twig' %}
-{% block content_title %}{{ folder.name }}{% endblock %}
 
+{% block header %}
+    <h1 class="app__content__header__title">
+        {{ folder.name }}
+    </h1>
+{% endblock %}
 
-{% block media_content %}
+{% block admin_content %}
 
     <!-- Sub-actions -->
     <div class="page-sub-actions page-sub-actions--has-buttons">
