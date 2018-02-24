@@ -715,3 +715,120 @@ input[type="file"].form-control, .fos_user_change_password .form-group > input[t
     font-size: .5em;
     color: #999999;
 }
+.link--text {
+    color: #333333;
+}
+.fa, .glyphicon, .table--sortable__th::before, .sortable-item--error {
+    display: inline-block;
+    font: normal normal normal 16px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+}
+.fa-unsorted::before, .fa-sort::before, .table--sortable__th:hover:not(.table--sortable__th--up)::before, .table--sortable__th:hover:not(.table--sortable__th--down)::before {
+    content: "\f0dc";
+}
+.app__content .table-responsive {
+    margin-top: 2rem;
+}
+.table__actions__item {
+    display: inline-block;
+    margin: 0 .8rem 0 0;
+    white-space: nowrap;
+    transition: color .3s ease;
+}
+.table--sortable__th {
+    position: relative;
+    transition: background .3s ease;
+    cursor: pointer;
+}
+.table--sortable__th--up, .table--sortable__th--down {
+    background: #eeeeee;
+}
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+    padding: 8px;
+    line-height: 1.4;
+    vertical-align: top;
+    border-top: 1px solid #dddddd;
+}
+.table > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dddddd;
+}
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > tfoot > tr > td {
+    border: 1px solid #dddddd;
+}
+.table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+    border-bottom-width: 1px;
+}
+.table--sortable__th:not(.table--sortable__th--up):hover, .table--sortable__th:not(.table--sortable__th--down):hover {
+    background: #eeeeee;
+}
+.fa-caret-down::before, .table--sortable__th--down::before {
+    content: "\f0d7";
+}
+.table--sortable__th::before {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+.pager-count .counter {
+    float: right;
+}
+.pagination, .pagination ul {
+    display: inline-block;
+    padding-left: 0;
+    margin: 19px 0;
+    border-radius: 3px;
+}
+div.pagination {
+    margin-bottom: 1rem;
+    display: block;
+    text-align: right;
+}
+.pagination ul {
+    margin: 0;
+}
+.pagination > li, .pagination ul > li {
+    display: inline;
+}
+.pagination > li > a, .pagination ul > li > a, .pagination > li > span, .pagination ul > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 20px;
+    line-height: 1.4;
+    text-decoration: none;
+    color: #2997ce;
+    background-color: white;
+    border: 1px solid #dddddd;
+    margin-left: -1px;
+}
+.pagination > .active > a, .pagination ul > .active > a, .pagination > .active > a:hover, .pagination ul > .active > a:hover, .pagination > .active > a:focus, .pagination ul > .active > a:focus, .pagination > .active > span, .pagination ul > .active > span, .pagination > .active > span:hover, .pagination ul > .active > span:hover, .pagination > .active > span:focus, .pagination ul > .active > span:focus {
+    z-index: 2;
+    color: white;
+    background-color: #2997ce;
+    border-color: #2997ce;
+    cursor: default;
+}
+.pagination ul > li > span, .pagination ul ul > li > span {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.pagination > .disabled > span, .pagination ul > .disabled > span, .pagination > .disabled > span:hover, .pagination ul > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination ul > .disabled > span:focus, .pagination > .disabled > a, .pagination ul > .disabled > a, .pagination > .disabled > a:hover, .pagination ul > .disabled > a:hover, .pagination > .disabled > a:focus, .pagination ul > .disabled > a:focus {
+    color: #999999;
+    background-color: white;
+    border-color: #dddddd;
+    cursor: not-allowed;
+}
+.pagination > li:first-child > a, .pagination ul > li:first-child > a, .pagination > li:first-child > span, .pagination ul > li:first-child > span {
+    margin-left: 0;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.pager-count::after {
+    content: "";
+    display: block;
+    clear: both;
+}

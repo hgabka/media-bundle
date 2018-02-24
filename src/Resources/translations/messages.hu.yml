@@ -143,6 +143,7 @@ hg_media:
                 filesize:   Fájlméret (byte-ban)
 
     form:
+        actions: Műveletek
         delete: Törlés
         cancel: Mégsem
         save: Mentés
@@ -183,3 +184,16 @@ hg_media:
         remote_video:
             type:
                 label: Típus
+
+    list:
+        title: "%entity% lista"
+        edit: Szerkesztés
+        delete: Törlés
+        view: Megtekintés
+        pager: '%from% - %to% a(z) %count% elemből'
+        pagesize: elem oldalanként
+        no_item: Nincs megjelenítendő elem
+
+    pagerfanta:
+        prev_message: '&larr; Előző'
+        next_message: 'Következő &rarr;'

@@ -78,6 +78,8 @@ class MediaAdminController extends CRUDController
                 );
             }
         }
+        $orderBy = $request->query->get('orderBy', 'updatedAt');
+        $orderDirection = $request->query->get('orderDirection','DESC');
 
         $params = [
             'foldermanager' => $this->get('hgabka_media.folder_manager'),
@@ -90,6 +92,8 @@ class MediaAdminController extends CRUDController
             'pagerfanta' => $this->getPager($request, $folder),
             'orderByFields' => ['name', 'contentType', 'updatedAt', 'filesize'],
             'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
+            'orderBy' => $orderBy,
+            'orderDirection' => $orderDirection,
         ];
 
         return $this->render('@HgabkaMedia/Folder/show.html.twig', $params);

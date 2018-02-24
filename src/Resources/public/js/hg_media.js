@@ -732,4 +732,8 @@ kunstmaanMediaBundle.app = (function($, window, undefined) {
 $(function() {
     kunstmaanbundles.app.init();
     kunstmaanMediaBundle.app.init();
+    $(".js-sortable-link").on("click",function() {
+        var href = $(this).data('order-url');
+        window.location.href = href;
+    });
 });
