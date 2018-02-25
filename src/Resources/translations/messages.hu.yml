@@ -1,5 +1,8 @@
 # Media
 hg_media:
+    flash:
+        created: Az elem sikeresen feltöltve.
+        not_created: A fájlt nem sikerült feltölteni.
     field:
         name: Név
         updatedAt: Utolsó frissítés

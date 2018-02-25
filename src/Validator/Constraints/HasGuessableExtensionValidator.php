@@ -7,6 +7,7 @@ use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
@@ -42,6 +43,15 @@ class HasGuessableExtensionValidator extends ConstraintValidator
             return;
         }
 
+        if ($value->getError() != UPLOAD_ERR_OK) {
+            $this->context
+                ->getValidator()
+                ->inContext($this->context)
+                ->validate($value, new File())
+            ;
+
+            return;
+        }
         $contentType = $this->mimeTypeGuesser->guess($value->getPathname());
         $pathInfo = pathinfo($value->getClientOriginalName());
         if (!array_key_exists('extension', $pathInfo)) {

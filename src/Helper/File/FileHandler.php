@@ -174,7 +174,7 @@ class FileHandler extends AbstractMediaHandler
                 $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
             }
 
-            $media->setOriginalFilename($this->utils->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
+            $media->setOriginalFilename($this->hgabkaUtils->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
             $name = $media->getName();
 
             if (empty($name)) {
