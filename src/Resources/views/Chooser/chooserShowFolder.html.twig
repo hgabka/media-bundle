@@ -46,6 +46,12 @@
     </nav>
 {% endblock %}
 
+{% block admin_breadcrumb %}
+    {% include '@HgabkaMedia/Chooser/breadcrumbs.html.twig' %}
+{% endblock %}
+
+
+
 {% set urlParams = {'type': type} %}
 {% if cKEditorFuncNum %}
     {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
