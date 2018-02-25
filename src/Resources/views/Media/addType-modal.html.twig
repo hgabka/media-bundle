@@ -8,13 +8,13 @@
                     <button class="close" data-dismiss="modal">
                         <i class="fa fa-times"></i>
                     </button>
-                    {% set title = 'media.' ~ type ~ '.modal.title' %}
+                    {% set title = 'hg_media.' ~ type ~ '.modal.title' %}
                     <h3>
                         {{ title | trans }}
                     </h3>
                 </div>
 
-                {% form_theme form '@HgabkaAdmin/Form/fields.html.twig' %}
+                {% form_theme form '@HgabkaMedia/Form/fields.html.twig' %}
                 {{ form_start(form, {'method': 'POST', 'action': path('HgabkaMediaBundle_media_modal_create', urlParams|merge({'type': type}))}) }}
                     <!-- Body -->
                     <div class="modal-body">

@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Controller;
 
 use AppBundle\Form\ProfileType;
+use Hgabka\MediaBundle\Traits\MediaControllerTrait;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
@@ -19,6 +20,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MediaAdminController extends CRUDController
 {
+    use MediaControllerTrait;
+
     public function listAction()
     {
         $request = $this->getRequest();
@@ -91,7 +94,7 @@ class MediaAdminController extends CRUDController
             'type' => null,
             'pagerfanta' => $this->getPager($request, $folder),
             'orderByFields' => ['name', 'contentType', 'updatedAt', 'filesize'],
-            'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
+            'base_template' => $this->getBaseTemplate(),
             'orderBy' => $orderBy,
             'orderDirection' => $orderDirection,
         ];
@@ -109,63 +112,4 @@ class MediaAdminController extends CRUDController
         return $form;
     }
 
-    private function getPager(Request $request, $folder)
-    {
-        $queryBuilder = $this
-            ->getDoctrine()
-            ->getRepository(Media::class)
-            ->createQueryBuilder('b')
-            ->leftJoin('b.translations','bt', 'WITH', 'bt.locale = :locale')
-            ->andWhere('b.folder = :folder')
-            ->setParameter('folder', $folder->getId())
-            ->setParameter('locale', $this->get(HgabkaUtils::class)->getCurrentLocale())
-            ->andWhere('b.deleted = 0')
-        ;
-        $orderBy = $request->query->get('orderBy', 'updatedAt');
-        $orderDirection = $request->query->get('orderDirection','DESC');
-        if ($orderBy === 'name') {
-            $orderBy = 'bt.name';
-        } else {
-            $orderBy = 'b.'.$orderBy;
-        }
-        $queryBuilder->orderBy($orderBy, $orderDirection);
-        $type = $request->query->get('type');
-        if ($type) {
-            switch ($type) {
-                case 'file':
-                    $queryBuilder->andWhere('b.location = :location')
-                                 ->setParameter('location', 'local');
-
-                    break;
-                case 'image':
-                    $queryBuilder->andWhere('b.contentType LIKE :ctype')
-                                 ->setParameter('ctype', '%image%');
-
-                    break;
-                case RemoteAudioHandler::TYPE:
-                    $queryBuilder->andWhere('b.contentType = :ctype')
-                                 ->setParameter('ctype', RemoteAudioHandler::CONTENT_TYPE);
-
-                    break;
-                case RemoteSlideHandler::TYPE:
-                    $queryBuilder->andWhere('b.contentType = :ctype')
-                                 ->setParameter('ctype', RemoteSlideHandler::CONTENT_TYPE);
-
-                    break;
-                case RemoteVideoHandler::TYPE:
-                    $queryBuilder->andWhere('b.contentType = :ctype')
-                                 ->setParameter('ctype', RemoteVideoHandler::CONTENT_TYPE);
-
-                    break;
-            }
-        }
-        $adapter = new DoctrineORMAdapter($queryBuilder->getQuery());
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setNormalizeOutOfRangePages(true);
-        $pagerfanta->setMaxPerPage(250);
-        $pagerfanta->setCurrentPage($request->query->get('page', 1));
-
-
-        return $pagerfanta;
-    }
 }

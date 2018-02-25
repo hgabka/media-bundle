@@ -12,14 +12,14 @@ use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Hgabka\MediaBundle\Controller\BaseMediaController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ChooserController.
  */
-class ChooserController extends Controller
+class ChooserController extends BaseMediaController
 {
     /**
      * @Route("/chooser", name="HgabkaMediaBundle_chooser")
@@ -43,7 +43,7 @@ class ChooserController extends Controller
         $folderId = false;
 
         if (!empty($folderName)) {
-            $folder = $em->getRepository('HgabkaMediaBundle:Folder')->findOneByInternalName($folderName);
+            $folder = $em->getRepository(Folder::class)->findOneByInternalName($folderName);
             if ($folder) {
                 $folderId = $folder->getId();
             }
@@ -114,8 +114,11 @@ class ChooserController extends Controller
         // @var MediaManager $mediaHandler
         $mediaHandler = $this->get('hgabka_media.media_manager');
 
+        $em = $this->getDoctrine();
+        $repo = $em->getRepository(Folder::class);
+
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = empty($folderId) ? $repo->getFirstTopFolder() : $repo->getFolder($folderId);
 
         /** @var AbstractMediaHandler $handler */
         $handler = null;
@@ -146,6 +149,8 @@ class ChooserController extends Controller
             }
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
+        $orderBy = $request->query->get('orderBy', 'updatedAt');
+        $orderDirection = $request->query->get('orderDirection','DESC');
 
         $viewVariabels = [
             'cKEditorFuncNum' => $cKEditorFuncNum,
@@ -156,7 +161,11 @@ class ChooserController extends Controller
             'handler' => $handler,
             'type' => $type,
             'folder' => $folder,
-   //         'adminlist' => $adminList,
+            'pagerfanta' => $this->getPager($request, $folder),
+            'orderByFields' => ['name', 'contentType', 'updatedAt', 'filesize'],
+            'base_template' => $this->getBaseTemplate(),
+            'orderBy' => $orderBy,
+            'orderDirection' => $orderDirection,
             'subform' => $subForm->createView(),
         ];
 
@@ -182,6 +191,7 @@ class ChooserController extends Controller
     {
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();
+        $media->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
         $helper = $handler->getFormHelper($media);
 
         return $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions())->createView();

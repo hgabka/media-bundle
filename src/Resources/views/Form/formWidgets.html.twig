@@ -20,7 +20,7 @@
             <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn js-icon-chooser__choose" data-toggle="modal" data-target="#{{ id }}_iconChooserModal"
                     data-link="{{ path('KunstmaanMediaBundle_icon_font_chooser', {'loader': loader, 'loader_data': loader_data }) }}">
                 <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
-                {{ 'media.widget.choose' | trans }}
+                {{ 'hg_media.widget.choose' | trans }}
             </button>
         </div>
 
@@ -35,7 +35,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                         <h3 class="modal-title">
-                            {{ 'media.widget.icon_chooser' | trans }}
+                            {{ 'hg_media.widget.icon_chooser' | trans }}
                         </h3>
                     </div>
 
@@ -71,7 +71,7 @@
                         {% endif %}
                         {% if imageurl %}
                             <a style="text-decoration:none;outline: 0;none" target="_blank" href="{{ asset(media.url) }}">
-                                <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" id="{{ id }}__preview__img"
+                                <img src="{{ imageurl }}" srcset="" alt="{{ media.name }}" id="{{ id }}__preview__img"
                                      class="thumbnail-img media-chooser__preview__img">
                             </a>
                             <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
@@ -100,7 +100,7 @@
             <!-- Select Button -->
             <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn" data-toggle="modal" data-target="#{{ id }}-mediaChooserModal" data-link="{{ path(chooser, {'type': mediatype, 'foldername': foldername, 'folderid': folderid}) }}">
                 <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
-                {{ 'media.widget.choose' | trans }}
+                {{ 'hg_media.widget.choose' | trans }}
             </button>
         </div>
 
@@ -116,7 +116,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                         <h3 class="modal-title">
-                            {{ 'media.widget.media_chooser' | trans }}
+                            {{ 'hg_media.widget.media_chooser' | trans }}
                         </h3>
                     </div>
 

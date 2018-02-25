@@ -127,3 +127,6 @@ services:
     Hgabka\MediaBundle\DataFixtures\ORM\FolderFixtures:
         tags:
             - { name: doctrine.fixture.orm }
+
+    Hgabka\MediaBundle\Helper\FolderManager: '@hgabka_media.folder_manager'
+    Hgabka\MediaBundle\Helper\MediaManager: '@hgabka_media.media_manager'
