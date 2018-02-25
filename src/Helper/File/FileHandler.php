@@ -8,7 +8,6 @@ use Hgabka\MediaBundle\Form\File\FileType;
 use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
-use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;

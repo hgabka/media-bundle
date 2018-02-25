@@ -7,10 +7,9 @@ use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 
 abstract class AbstractMediaHandler
 {
-    private $priority;
-
     /** @var HgabkaUtils $utils */
     protected $hgabkaUtils;
+    private $priority;
 
     /**
      * @param int $priority

@@ -4,10 +4,9 @@ namespace Hgabka\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Hgabka\UtilsBundle\Traits\TimestampableEntity;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
-use Hgabka\UtilsBundle\Traits\TimestampableEntity;
 use Prezent\Doctrine\Translatable\TranslatableInterface;
 
 /**
@@ -30,7 +29,6 @@ class Media implements TranslatableInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
 
     /**
      * @var string
@@ -147,7 +145,6 @@ class Media implements TranslatableInterface
 
         return $this;
     }
-
 
     /**
      * @return string
@@ -413,7 +410,8 @@ class Media implements TranslatableInterface
     }
 
     /**
-     * @param string $copyright
+     * @param string     $copyright
+     * @param null|mixed $locale
      *
      * @return Media
      */
@@ -425,6 +423,8 @@ class Media implements TranslatableInterface
     }
 
     /**
+     * @param null|mixed $locale
+     *
      * @return string
      */
     public function getCopyright($locale = null)

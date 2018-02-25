@@ -11,8 +11,6 @@ use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Hgabka\MediaBundle\Controller\BaseMediaController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -129,9 +127,9 @@ class ChooserController extends BaseMediaController
         // @var MediaManager $mediaManager
         $mediaManager = $this->get('hgabka_media.media_manager');
 
- /*       $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList = $this->get('hgabka_adminlist.factory')->createList($adminListConfigurator);
-        $adminList->bindRequest($request);*/
+        /*       $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
+               $adminList = $this->get('hgabka_adminlist.factory')->createList($adminListConfigurator);
+               $adminList->bindRequest($request);*/
 
         $sub = new Folder();
         $sub->setParent($folder);
@@ -150,7 +148,7 @@ class ChooserController extends BaseMediaController
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
         $orderBy = $request->query->get('orderBy', 'updatedAt');
-        $orderDirection = $request->query->get('orderDirection','DESC');
+        $orderDirection = $request->query->get('orderDirection', 'DESC');
 
         $viewVariabels = [
             'cKEditorFuncNum' => $cKEditorFuncNum,

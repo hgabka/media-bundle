@@ -2,15 +2,15 @@
 
 namespace Hgabka\MediaBundle\Traits;
 
-use Symfony\Component\HttpFoundation\Request;
 use Hgabka\MediaBundle\Entity\Folder;
-use Hgabka\UtilsBundle\Helper\HgabkaUtils;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
+use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
 use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
-use Hgabka\MediaBundle\Entity\Media;
+use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
+use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\Request;
 
 trait MediaControllerTrait
 {
@@ -20,15 +20,15 @@ trait MediaControllerTrait
             ->getDoctrine()
             ->getRepository(Media::class)
             ->createQueryBuilder('b')
-            ->leftJoin('b.translations','bt', 'WITH', 'bt.locale = :locale')
+            ->leftJoin('b.translations', 'bt', 'WITH', 'bt.locale = :locale')
             ->andWhere('b.folder = :folder')
             ->setParameter('folder', $folder->getId())
             ->setParameter('locale', $this->get(HgabkaUtils::class)->getCurrentLocale())
             ->andWhere('b.deleted = 0')
         ;
         $orderBy = $request->query->get('orderBy', 'updatedAt');
-        $orderDirection = $request->query->get('orderDirection','DESC');
-        if ($orderBy === 'name') {
+        $orderDirection = $request->query->get('orderDirection', 'DESC');
+        if ('name' === $orderBy) {
             $orderBy = 'bt.name';
         } else {
             $orderBy = 'b.'.$orderBy;
@@ -70,7 +70,6 @@ trait MediaControllerTrait
         $pagerfanta->setMaxPerPage(250);
         $pagerfanta->setCurrentPage($request->query->get('page', 1));
 
-
         return $pagerfanta;
     }
 
@@ -78,5 +77,4 @@ trait MediaControllerTrait
     {
         return $this->getParameter('sonata.admin.configuration.templates')['layout'];
     }
-
 }

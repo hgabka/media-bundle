@@ -5,11 +5,9 @@ namespace Hgabka\MediaBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Tree\Node as GedmoNode;
-use Symfony\Component\Validator\Constraints as Assert;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
-use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
+use Hgabka\UtilsBundle\Traits\TranslatableTrait;
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\TranslatableInterface;
 
 /**
@@ -33,11 +31,6 @@ class Folder implements TranslatableInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @Prezent\Translations(targetEntity="Hgabka\MediaBundle\Entity\FolderTranslation")
-     */
-    private $translations;
 
     /**
      * @var Folder
@@ -109,6 +102,11 @@ class Folder implements TranslatableInterface
     protected $deleted;
 
     /**
+     * @Prezent\Translations(targetEntity="Hgabka\MediaBundle\Entity\FolderTranslation")
+     */
+    private $translations;
+
+    /**
      * constructor.
      */
     public function __construct()
@@ -129,6 +127,7 @@ class Folder implements TranslatableInterface
 
     /**
      * @param mixed $id
+     *
      * @return Folder
      */
     public function setId($id)
@@ -190,7 +189,7 @@ class Folder implements TranslatableInterface
      *
      * @return Folder
      */
-    public function setParent(Folder $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
 
@@ -204,7 +203,7 @@ class Folder implements TranslatableInterface
      *
      * @return Folder
      */
-    public function addChild(Folder $child)
+    public function addChild(self $child)
     {
         $this->children[] = $child;
         $child->setParent($this);

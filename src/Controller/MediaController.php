@@ -127,7 +127,7 @@ class MediaController extends Controller
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
-        return $this->render('@HgabkaMedia/Media/bulkUpload.html.twig',[
+        return $this->render('@HgabkaMedia/Media/bulkUpload.html.twig', [
             'folder' => $folder,
             'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
             'foldermanager' => $this->get('hgabka_media.folder_manager'),

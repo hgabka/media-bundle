@@ -2,6 +2,7 @@
 
 namespace Hgabka\MediaBundle\Form\File;
 
+use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Repository\FolderRepository;
 use Hgabka\MediaBundle\Validator\Constraints\HasGuessableExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,7 +16,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Hgabka\MediaBundle\Entity\Folder;
 
 /**
  * FileType.

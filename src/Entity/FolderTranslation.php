@@ -35,6 +35,7 @@ class FolderTranslation implements TranslationInterface
 
     /**
      * @param mixed $name
+     *
      * @return MediaTranslation
      */
     public function setName($name)

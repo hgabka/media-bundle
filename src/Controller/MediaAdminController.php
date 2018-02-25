@@ -2,20 +2,13 @@
 
 namespace Hgabka\MediaBundle\Controller;
 
-use AppBundle\Form\ProfileType;
-use Hgabka\MediaBundle\Traits\MediaControllerTrait;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
-use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use Hgabka\MediaBundle\Traits\MediaControllerTrait;
+use Pagerfanta\Pagerfanta;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
-use Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
-use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
-use Symfony\Component\HttpFoundation\Request;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MediaAdminController extends CRUDController
@@ -82,7 +75,7 @@ class MediaAdminController extends CRUDController
             }
         }
         $orderBy = $request->query->get('orderBy', 'updatedAt');
-        $orderDirection = $request->query->get('orderDirection','DESC');
+        $orderDirection = $request->query->get('orderDirection', 'DESC');
 
         $params = [
             'foldermanager' => $this->get('hgabka_media.folder_manager'),
@@ -111,5 +104,4 @@ class MediaAdminController extends CRUDController
 
         return $form;
     }
-
 }

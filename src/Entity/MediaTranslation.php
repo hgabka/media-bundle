@@ -47,6 +47,7 @@ class MediaTranslation implements TranslationInterface
 
     /**
      * @param mixed $name
+     *
      * @return MediaTranslation
      */
     public function setName($name)
@@ -66,6 +67,7 @@ class MediaTranslation implements TranslationInterface
 
     /**
      * @param mixed $description
+     *
      * @return MediaTranslation
      */
     public function setDescription($description)
@@ -85,6 +87,7 @@ class MediaTranslation implements TranslationInterface
 
     /**
      * @param string $copyright
+     *
      * @return MediaTranslation
      */
     public function setCopyright($copyright)
