@@ -43,7 +43,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
             return;
         }
 
-        if ($value->getError() != UPLOAD_ERR_OK) {
+        if (UPLOAD_ERR_OK !== $value->getError()) {
             $this->context
                 ->getValidator()
                 ->inContext($this->context)

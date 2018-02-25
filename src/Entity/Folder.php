@@ -421,4 +421,11 @@ class Folder implements TranslatableInterface
     {
         return $this->translate($locale)->getName();
     }
+
+    public function setName($name, $locale = null)
+    {
+        $this->translate($locale)->setName($name);
+
+        return $this;
+    }
 }

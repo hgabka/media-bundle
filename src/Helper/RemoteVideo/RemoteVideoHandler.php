@@ -246,9 +246,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
 
                     break;
             }
+            if ($result instanceof Media) {
+                $result->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
+            }
         }
-
-        $result->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
 
         return $result;
     }

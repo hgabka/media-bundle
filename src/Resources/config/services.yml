@@ -4,6 +4,7 @@ parameters:
     hgabka_media.menu.adaptor.class: 'Hgabka\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     hgabka_media.listener.doctrine.class: 'Hgabka\MediaBundle\EventListener\DoctrineMediaListener'
     hgabka_media.form.type.media.class: 'Hgabka\MediaBundle\Form\Type\MediaType'
+    hgabka_media.form.type.media_simple.class: 'Hgabka\MediaBundle\Form\Type\MediaSimpleType'
     hgabka_media.form.type.folder.class: 'Hgabka\MediaBundle\Form\FolderType'
     hgabka_media.form.type.iconfont.class: 'Hgabka\MediaBundle\Form\Type\IconFontType'
     hgabka_media.icon_font_manager.class: 'Hgabka\MediaBundle\Helper\IconFont\IconFontManager'
@@ -35,6 +36,15 @@ services:
         arguments:
             - '@hgabka_media.media_manager'
             - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type}
+
+    form.type.media_simple:
+        class: '%hgabka_media.form.type.media_simple.class%'
+        arguments:
+            - '@hgabka_media.media_manager'
+            - '@doctrine.orm.entity_manager'
+            - '@hgabka_utils.hgabka_utils'
         tags:
             - { name: form.type}
 
