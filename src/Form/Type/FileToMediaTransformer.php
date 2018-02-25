@@ -85,9 +85,13 @@ class FileToMediaTransformer implements DataTransformerInterface
                 $entity = $this->mediaManager->createNew($value['file']);
                 $entity->setFolder($this->folder);
                 $this->currentValueContainer->setCurrentValue($entity);
+
+                return $entity;
             }
+
+            return $this->currentValueContainer->getCurrentValue();
         }
 
-        return $this->currentValueContainer->getCurrentValue();
+        return empty($value['id']) ? null : $this->currentValueContainer->getCurrentValue();
     }
 }

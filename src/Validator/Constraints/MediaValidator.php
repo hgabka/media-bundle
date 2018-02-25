@@ -42,6 +42,18 @@ class MediaValidator extends ConstraintValidator
             }
         }
 
+        if ($constraint->maxSize) {
+            if ($value->getFileSizeBytes() > $constraint->maxSize) {
+                $this->context->buildViolation($constraint->maxSizeErrorMessage)
+                              ->setParameter('{{ size }}', $value->getFileSize())
+                              ->setParameter('{{ maxSize }}', $this->getFileSizeText($constraint->maxSize))
+                              ->setCode(Media::INVALID_MIME_TYPE_ERROR)
+                              ->addViolation();
+
+                return;
+            }
+        }
+
         if (!preg_match('^image\/*^', $mimeType) || 'image/svg+xml' === $mimeType) {
             return;
         }
@@ -49,11 +61,38 @@ class MediaValidator extends ConstraintValidator
         $this->validateDimensions($value, $constraint);
     }
 
+    /**
+     * @param mixed $size
+     *
+     * @return string
+     */
+    public function getFileSizeText($size)
+    {
+        if ($size < 1024) {
+            return $size.' B';
+        }
+        $help = $size / 1024;
+        if ($help < 1024) {
+            return round($help, 1).' KB';
+        }
+
+        return round(($help / 1024), 1).' MB';
+    }
+
     private function validateMimeType(MediaObject $value, $allowedMimeTypes)
     {
         $mimeType = strtolower($value->getContentType());
 
         foreach ($allowedMimeTypes as $type) {
+            if ('image' === $type) {
+                return in_array($mimeType, [
+                    'image/gif',
+                    'image/png',
+                    'image/jpeg',
+                    'image/bmp',
+                    'image/webp',
+                ], true);
+            }
             $type = strtolower($type);
             if ($type === $mimeType) {
                 return true;

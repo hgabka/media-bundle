@@ -24,11 +24,12 @@ class Media extends Constraint
     public $maxWidth;
     public $binaryFormat;
     public $mimeTypes = [];
+    public $maxSize;
 
-    public $notFoundMessage = 'The file could not be found.';
-    public $notReadableMessage = 'The file is not readable.';
-    public $mimeTypesMessage = 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.';
-    public $disallowEmptyMessage = 'An empty file is not allowed.';
+    public $notFoundMessage = 'hg_media.errors.not_found';
+    public $notReadableMessage = 'hg_media.errors.not_readable';
+    public $mimeTypesMessage = 'hg_media.errors.mime_type';
+    public $disallowEmptyMessage = 'hg_media.errors.empty';
     public $maxWidthMessage = 'The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.';
     public $minWidthMessage = 'The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.';
     public $maxHeightMessage = 'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.';
@@ -39,6 +40,7 @@ class Media extends Constraint
     public $uploadCantWriteErrorMessage = 'Cannot write temporary file to disk.';
     public $uploadExtensionErrorMessage = 'A PHP extension caused the upload to fail.';
     public $uploadErrorMessage = 'The file could not be uploaded.';
+    public $maxSizeErrorMessage = 'hg_media.errors.too_big';
 
     protected static $errorNames = [
         self::NOT_FOUND_ERROR => 'NOT_FOUND_ERROR',

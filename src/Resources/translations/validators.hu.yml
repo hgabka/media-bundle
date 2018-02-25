@@ -1,0 +1,7 @@
+hg_media:
+    errors:
+        not_found: The file could not be found.
+        not_readable: The file is not readable.
+        mime_type: 'A fájl típusa ({{ type }}) nem megengedett. Csak az alábbi típusok tölthetők fel: {{ types }}.'
+        empty: Üres fájl nem tölthető fel.
+        too_big: 'A fájl mérete ({{ size }}) túl nagy. Maximum {{ maxSize }} méretű fájl tölthető fel.'
