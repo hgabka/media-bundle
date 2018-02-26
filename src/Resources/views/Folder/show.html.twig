@@ -6,6 +6,10 @@
     </h1>
 {% endblock %}
 
+{% block title %}
+    {{ 'hg_media.admin.label'|trans }} - {{ folder.name }}
+{% endblock %}
+
 {% block admin_content %}
 
     <!-- Sub-actions -->

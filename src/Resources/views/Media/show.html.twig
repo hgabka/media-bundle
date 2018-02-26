@@ -3,8 +3,9 @@
 
 {% block content_title %}{{ media.name }}{% endblock %}
 
-
-
+{% block title %}
+    {{ 'hg_media.admin.label'|trans }} - {{ media.name }}
+{% endblock %}
 
 {% block header %}
     <h1 class="app__content__header__title">
