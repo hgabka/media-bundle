@@ -1,3 +1,5 @@
+{% set extraparams = app.request.query.all|merge({ 'folderId' : folder.id, 'orderBy': orderBy, 'orderDirection': orderDirection}) %}
+{% include '@HgabkaMedia/AdminList/filters.html.twig' %}
 {% if pagerfanta.haveToPaginate() %}
     {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
         'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,
@@ -26,7 +28,7 @@
                     {% endif %}
                 {% endif %}
                 <th class="js-sortable-link table--sortable__th {{ extraHeaderClass }}"
-                    data-order-url="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({ 'folderId': folder.id, 'orderBy': field, "orderDirection": orderDirection })) }}">
+                    data-order-url="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge(extraparams|merge({ 'folderId': folder.id, 'orderBy': field, "orderDirection": orderDirection }))) }}">
                     {{ columnkey | trans }}
                 </th>
             {% endfor %}

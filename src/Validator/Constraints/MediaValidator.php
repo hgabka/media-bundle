@@ -73,7 +73,7 @@ class MediaValidator extends ConstraintValidator
         }
         $help = $size / 1024;
         if ($help < 1024) {
-            return round($help, 1).' KB';
+            return round($help, 1).' kB';
         }
 
         return round(($help / 1024), 1).' MB';

@@ -7,13 +7,18 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
 use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
 use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
+use Hgabka\UtilsBundle\AdminList\FilterType\FilterTypeInterface;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use Hgabka\UtilsBundle\AdminList\FilterBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 
 trait MediaControllerTrait
 {
+    /** @var FilterBuilder */
+    protected $filterBuilder;
+
     protected function getPager(Request $request, Folder $folder)
     {
         $queryBuilder = $this
@@ -64,6 +69,16 @@ trait MediaControllerTrait
                     break;
             }
         }
+        // Apply filters
+        $filters = $this->getFilterBuilder()->getCurrentFilters();
+        // @var Filter $filter
+        foreach ($filters as $filter) {
+            // @var AbstractORMFilterType $type
+            $type = $filter->getType();
+            $type->setQueryBuilder($queryBuilder);
+            $filter->apply();
+        }
+
         $adapter = new DoctrineORMAdapter($queryBuilder->getQuery());
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setNormalizeOutOfRangePages(true);
@@ -76,5 +91,38 @@ trait MediaControllerTrait
     protected function getBaseTemplate()
     {
         return $this->getParameter('sonata.admin.configuration.templates')['layout'];
+    }
+
+
+    /**
+     * @param string              $columnName The column name
+     * @param FilterTypeInterface $type       The filter type
+     * @param string              $filterName The name of the filter
+     * @param array               $options    Options
+     *
+     * @return AbstractAdminListConfigurator
+     */
+    public function addFilter(
+        $columnName,
+        FilterTypeInterface $type = null,
+        $filterName = null,
+        array $options = []
+    ) {
+        $this->getFilterBuilder()->add($columnName, $type, $filterName, $options);
+
+        return $this;
+    }
+
+
+    /**
+     * @return FilterBuilder
+     */
+    public function getFilterBuilder()
+    {
+        if (null === $this->filterBuilder) {
+            $this->filterBuilder = new FilterBuilder();
+        }
+
+        return $this->filterBuilder;
     }
 }
