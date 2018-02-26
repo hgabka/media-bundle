@@ -6,12 +6,11 @@ use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Traits\MediaControllerTrait;
-use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
+use Hgabka\UtilsBundle\AdminList\FilterType\ORM;
 use Pagerfanta\Pagerfanta;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Hgabka\UtilsBundle\AdminList\FilterType\ORM;
 
 class MediaAdminController extends CRUDController
 {

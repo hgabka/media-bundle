@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                         </div>
-                        {% if pagerfanta.nbResults > 0 %}
+                        {% if pagerfanta.count > 0 %}
                             {% if pagerfanta.haveToPaginate() %}
                                 {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
                                     'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,

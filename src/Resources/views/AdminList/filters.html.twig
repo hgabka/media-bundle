@@ -3,7 +3,7 @@
         <!-- Toggle Item -->
         <div id="app__filter" class="toggle-item{% if filter.currentfilters|length >0 %} toggle-item--active{% endif %}">
             <div class="toggle-item__content app__filter__content">
-                <form class="form form-inline" action="{{ path('admin_hgabka_media_media_list', extraparams) }}">
+                <form class="form form-inline" action="{{ path(app.request.attributes.get('_route'), extraparams|merge({folderId: folder.id})) }}">
 
                     <fieldset id="filter-holder" class="form__fieldset--padded-full">
                         <!-- Start Filter -->
@@ -78,7 +78,7 @@
                         {% endif %}
                     {% endfor %}
 
-
+                    <input type="hidden" name="folderId" value="{{ folder.id }}">
 
                     <!-- Form Actions -->
                     <div class="form-actions form-actions--padded">
