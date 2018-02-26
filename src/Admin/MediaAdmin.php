@@ -21,4 +21,26 @@ class MediaAdmin extends AbstractAdmin
     {
         return [];
     }
+
+
+    /**
+     * Get the list of actions that can be accessed directly from the dashboard.
+     *
+     * @return array
+     */
+    public function getDashboardActions()
+    {
+        $actions = [];
+
+        if ($this->hasAccess('list')) {
+            $actions['list'] = [
+                'label' => 'hg_media.admin.list',
+                'translation_domain' => 'messages',
+                'url' => $this->generateUrl('list'),
+                'icon' => 'list',
+            ];
+        }
+
+        return $actions;
+    }
 }

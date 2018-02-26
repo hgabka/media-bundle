@@ -138,5 +138,11 @@ services:
         tags:
             - { name: doctrine.fixture.orm }
 
+    Hgabka\MediaBundle\Admin\Menu\AdminMenuListener:
+        autowire: true
+        arguments: ['@hg_media.admin.media', '@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }
+
     Hgabka\MediaBundle\Helper\FolderManager: '@hgabka_media.folder_manager'
     Hgabka\MediaBundle\Helper\MediaManager: '@hgabka_media.media_manager'

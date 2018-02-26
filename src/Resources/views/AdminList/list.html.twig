@@ -2,8 +2,7 @@
     {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
         'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,
         'next_message' : 'hg_media.pagerfanta.next_message' | trans
-    })
-    }}
+    }) }}
 {% endif %}
 
 <div class="table-responsive">
@@ -17,7 +16,7 @@
                 {% set columnkey = 'hg_media.field.'~field %}
                 {% set orderDirection = "DESC" %}
                 {% set extraHeaderClass = "" %}
-                {% if ( columnName == orderBy )%}
+                {% if ( columnName == orderBy ) %}
 
                     {% if orderDirection == "DESC" %}
                         {% set orderDirection = "ASC" %}
@@ -26,7 +25,8 @@
                         {% set extraHeaderClass = "table--sortable__th--up" %}
                     {% endif %}
                 {% endif %}
-                <th class="js-sortable-link table--sortable__th {{extraHeaderClass}}" data-order-url="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({ 'folderId': folder.id, 'orderBy': field, "orderDirection": orderDirection }))}}">
+                <th class="js-sortable-link table--sortable__th {{ extraHeaderClass }}"
+                    data-order-url="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({ 'folderId': folder.id, 'orderBy': field, "orderDirection": orderDirection })) }}">
                     {{ columnkey | trans }}
                 </th>
             {% endfor %}
@@ -55,8 +55,8 @@
                 <!-- Actions -->
                 <td class="table__actions">
                     {% if modal is defined and modal %}
-                    {% set mediaHandler = mediamanager.getHandler(item) %}
-                    {% set imageurl =  mediaHandler.getImageUrl(item, app.request.basePath) %}
+                        {% set mediaHandler = mediamanager.getHandler(item) %}
+                        {% set imageurl =  mediaHandler.getImageUrl(item, app.request.basePath) %}
                         {% if imageurl is not empty and item.location == 'local' %}
                             {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in item.contentType %}
                                 {% set imageurlretina = imageurl %}
@@ -66,17 +66,22 @@
                             {% endif %}
                         {% endif %}
 
-                    {% set cke = (app.request and app.request.get('CKEditorFuncNum')) %}
-                    <a data-thumb-path="{{ imageurl }}" data-path="{{ item.url }}" data-title="{{ item.name }}" data-id="{{ item.id }}" href="javascript:void(0)" class="js-url-chooser-media-select" data-cke="{% if cke %}true{% else %}false{% endif %}">
-                        Kiválaszt
-                    </a>
+                        {% set cke = (app.request and app.request.get('CKEditorFuncNum')) %}
+                        <a data-thumb-path="{{ imageurl }}" data-path="{{ item.url }}" data-title="{{ item.name }}" data-id="{{ item.id }}" href="javascript:void(0)" class="js-url-chooser-media-select"
+                           data-cke="{% if cke %}true{% else %}false{% endif %}">
+                            {{ 'hg_media.label.select' | trans }}
+                        </a>
                     {% else %}
-                    <a href="{{ path('HgabkaMediaBundle_media_show', { mediaId: item.id}) }}" class="link--text table__actions__item" title="{{ 'kuma_admin_list.list.edit' | trans }}">
-                        <i class="fa fa-pencil-square-o"></i>
-                    </a>
-                    <a href="{{ path('HgabkaMediaBundle_media_delete', { mediaId: item.id}) }}" class="link--text link--danger table__actions__item" title="{{ 'kuma_admin_list.list.delete' | trans }}">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
+                        {% if admin.hasAccess('edit') %}
+                            <a href="{{ path('HgabkaMediaBundle_media_show', { mediaId: item.id}) }}" class="link--text table__actions__item" title="{{ 'kuma_admin_list.list.edit' | trans }}">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                        {% endif %}
+                        {% if admin.hasAccess('delete') %}
+                            <a href="{{ path('HgabkaMediaBundle_media_delete', { mediaId: item.id}) }}" class="link--text link--danger table__actions__item" title="{{ 'kuma_admin_list.list.delete' | trans }}">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>
@@ -97,6 +102,5 @@
     {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
         'prev_message' : 'kuma_admin_list.pagerfanta.prev_message' | trans,
         'next_message' : 'kuma_admin_list.pagerfanta.next_message' | trans
-    })
-    }}
+    }) }}
 {% endif %}

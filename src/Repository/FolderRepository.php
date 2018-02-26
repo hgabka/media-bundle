@@ -333,7 +333,9 @@ class FolderRepository extends NestedTreeRepository
         foreach ($folder->getChildren() as $child) {
             $this->deleteMedia($child);
             $this->deleteChildren($child);
-            $child->setDeleted(true);
+            if (!$child->isInternal()) {
+                $child->setDeleted(true);
+            }
             $em->persist($child);
         }
     }

@@ -28,6 +28,8 @@ class ChooserController extends BaseMediaController
      */
     public function chooserIndexAction(Request $request)
     {
+        $this->getAdmin()->checkAccess('list');
+
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $folderId = false;
@@ -76,6 +78,7 @@ class ChooserController extends BaseMediaController
             'type' => $type,
             'CKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser' => $linkChooser,
+            'admin' => $this->getAdmin(),
         ];
 
         return $this->redirect($this->generateUrl('HgabkaMediaBundle_chooser_show_folder', $params));
@@ -91,6 +94,7 @@ class ChooserController extends BaseMediaController
      */
     public function chooserShowFolderAction(Request $request, $folderId)
     {
+        $this->getAdmin()->checkAccess('list');
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
 
@@ -165,6 +169,7 @@ class ChooserController extends BaseMediaController
             'orderBy' => $orderBy,
             'orderDirection' => $orderDirection,
             'subform' => $subForm->createView(),
+            'admin' => $this->getAdmin(),
         ];
 
         // generate all forms

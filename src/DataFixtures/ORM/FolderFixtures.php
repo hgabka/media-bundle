@@ -24,6 +24,8 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $gal->setRel('media');
         $gal->translate('en')->setName('Media');
         $gal->translate('hu')->setName('Média');
+        $gal->setInternal(true);
+        $gal->setInternalName('mediaroot');
         $manager->persist($gal);
         $manager->flush();
         $this->addReference('media-folder', $gal);
@@ -33,6 +35,8 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal->setRel('image');
         $subgal->translate('en')->setName('Images');
         $subgal->translate('hu')->setName('Képek');
+        $subgal->setInternal(true);
+        $subgal->setInternalName('imageroot');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('images-folder', $subgal);
@@ -42,6 +46,8 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal->setRel('files');
         $subgal->translate('en')->setName('Files');
         $subgal->translate('hu')->setName('Fájlok');
+        $subgal->setInternal(true);
+        $subgal->setInternalName('fileroot');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('files-folder', $subgal);
@@ -51,6 +57,8 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal->setRel('slideshow');
         $subgal->translate('en')->setName('Slides');
         $subgal->translate('hu')->setName('Bemutatók');
+        $subgal->setInternal(true);
+        $subgal->setInternalName('slideroot');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('slides-folder', $subgal);
@@ -60,6 +68,8 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal->setRel('video');
         $subgal->translate('en')->setName('Videos');
         $subgal->translate('hu')->setName('Videók');
+        $subgal->setInternal(true);
+        $subgal->setInternalName('videoroot');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('videos-folder', $subgal);

@@ -22,82 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * FolderController.
  */
-class FolderController extends Controller
+class FolderController extends BaseMediaController
 {
-    /**
-     * @param Request $request
-     * @param int     $folderId The folder id
-     *
-     * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_show")
-     * @Template()
-     *
-     * @return array
-     */
-    public function showAction(Request $request, $folderId)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $session = $request->getSession();
-
-        // Check when user switches between thumb -and list view
-        $viewMode = $request->query->get('viewMode');
-        if ($viewMode && 'list-view' === $viewMode) {
-            $session->set('media-list-view', true);
-        } elseif ($viewMode && 'thumb-view' === $viewMode) {
-            $session->remove('media-list-view');
-        }
-
-        // @var MediaManager $mediaManager
-        $mediaManager = $this->get('hgabka_media.media_manager');
-
-        // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
-
-        $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList = $this->get('hgabka_adminlist.factory')->createList($adminListConfigurator);
-        $adminList->bindRequest($request);
-
-        $sub = new Folder();
-        $sub->setParent($folder);
-        $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
-
-        $emptyForm = $this->createEmptyForm();
-
-        $editForm = $this->createForm(FolderType::class, $folder, ['folder' => $folder]);
-
-        if ($request->isMethod('POST')) {
-            $editForm->handleRequest($request);
-            if ($editForm->isValid()) {
-                $em->getRepository('HgabkaMediaBundle:Folder')->save($folder);
-
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.show.success.text', [
-                        '%folder%' => $folder->getName(),
-                    ])
-                );
-
-                return new RedirectResponse(
-                    $this->generateUrl(
-                        'HgabkaMediaBundle_folder_show',
-                        ['folderId' => $folderId]
-                    )
-                );
-            }
-        }
-
-        return [
-            'foldermanager' => $this->get('hgabka_media.folder_manager'),
-            'mediamanager' => $this->get('hgabka_media.media_manager'),
-            'subform' => $subForm->createView(),
-            'emptyform' => $emptyForm->createView(),
-            'editform' => $editForm->createView(),
-            'folder' => $folder,
-            'adminlist' => $adminList,
-            'type' => null,
-        ];
-    }
-
     /**
      * @param int $folderId
      *
@@ -107,11 +33,13 @@ class FolderController extends Controller
      */
     public function deleteAction($folderId)
     {
+        $this->getAdmin()->checkAccess('delete');
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         $folderName = $folder->getName();
         $parentFolder = $folder->getParent();
 
@@ -122,6 +50,14 @@ class FolderController extends Controller
                     '%folder%' => $folderName,
                 ])
             );
+        } elseif ($folder->isInternal()) {
+            $this->addFlash(
+                'sonata_flash_error',
+                $this->get('translator')->trans('hg_media.folder.delete.failure.text', [
+                    '%folder%' => $folderName,
+                ])
+            );
+            $folderId = $parentFolder->getId();
         } else {
             $em->getRepository('HgabkaMediaBundle:Folder')->delete($folder);
             $this->addFlash(
@@ -163,6 +99,8 @@ class FolderController extends Controller
      */
     public function subCreateAction(Request $request, $folderId)
     {
+        $this->getAdmin()->checkAccess('create');
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -211,6 +149,7 @@ class FolderController extends Controller
                 'galleries' => $galleries,
                 'folder' => $folder,
                 'parent' => $parent,
+                'admin' => $this->getAdmin(),
             ]
         );
     }
@@ -227,11 +166,14 @@ class FolderController extends Controller
      */
     public function emptyAction(Request $request, $folderId)
     {
+        $this->getAdmin()->checkAccess('delete');
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+
 
         $form = $this->createEmptyForm();
 
@@ -241,7 +183,7 @@ class FolderController extends Controller
                 $data = $form->getData();
                 $alsoDeleteFolders = $data['checked'];
 
-                $em->getRepository('HgabkaMediaBundle:Folder')->emptyFolder($folder, $alsoDeleteFolders);
+                $em->getRepository(Folder::class)->emptyFolder($folder, $alsoDeleteFolders);
 
                 $this->addFlash(
                     'sonata_flash_success',
@@ -284,6 +226,7 @@ class FolderController extends Controller
      */
     public function reorderAction(Request $request)
     {
+        $this->getAdmin()->checkAccess('edit');
         $folders = [];
         $nodeIds = $request->get('nodes');
 

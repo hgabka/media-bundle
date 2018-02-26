@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * MediaController.
  */
-class MediaController extends Controller
+class MediaController extends BaseMediaController
 {
     /**
      * @param Request $request
@@ -32,10 +32,12 @@ class MediaController extends Controller
      */
     public function showAction(Request $request, $mediaId)
     {
+        $this->getAdmin()->checkAccess('edit');
+
         $em = $this->getDoctrine()->getManager();
 
         // @var Media $media
-        $media = $em->getRepository('HgabkaMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository(Media::class)->getMedia($mediaId);
         $folder = $media->getFolder();
 
         // @var MediaManager $mediaManager
@@ -69,6 +71,7 @@ class MediaController extends Controller
                 'media' => $media,
                 'helper' => $helper,
                 'folder' => $folder,
+                'admin' => $this->getAdmin(),
                 'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
             ]
         );
@@ -84,6 +87,8 @@ class MediaController extends Controller
      */
     public function deleteAction(Request $request, $mediaId)
     {
+        $this->getAdmin()->checkAccess('delete');
+
         $em = $this->getDoctrine()->getManager();
 
         // @var Media $media
@@ -122,6 +127,8 @@ class MediaController extends Controller
      */
     public function bulkUploadAction($folderId)
     {
+        $this->getAdmin()->checkAccess('create');
+
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
@@ -131,6 +138,7 @@ class MediaController extends Controller
             'folder' => $folder,
             'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
             'foldermanager' => $this->get('hgabka_media.folder_manager'),
+            'admin' => $this->getAdmin(),
         ]);
     }
 
@@ -143,6 +151,8 @@ class MediaController extends Controller
      */
     public function bulkUploadSubmitAction($folderId)
     {
+        $this->getAdmin()->checkAccess('create');
+
         // Make sure file is not cached (as it happens for example on iOS devices)
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
@@ -283,10 +293,12 @@ class MediaController extends Controller
      */
     public function dropAction(Request $request, $folderId)
     {
+        $this->getAdmin()->checkAccess('create');
+
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         $drop = null;
 
@@ -325,6 +337,8 @@ class MediaController extends Controller
      */
     public function createAction(Request $request, $folderId, $type)
     {
+        $this->getAdmin()->checkAccess('create');
+
         $params = $this->createAndRedirect($request, $folderId, $type, 'admin_hgabka_media_media_list');
         if ($params instanceof Response) {
             return $params;
@@ -332,6 +346,7 @@ class MediaController extends Controller
 
         $params['base_template'] = $this->getParameter('sonata.admin.configuration.templates')['layout'];
         $params['foldermanager'] = $this->get('hgabka_media.folder_manager');
+        $params['admin'] = $this->getAdmin();
 
         return $this->render('@HgabkaMedia/Media/create.html.twig', $params);
     }
@@ -349,6 +364,8 @@ class MediaController extends Controller
      */
     public function createModalAction(Request $request, $folderId, $type)
     {
+        $this->getAdmin()->checkAccess('create');
+
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
         $linkChooser = $request->get('linkChooser');
 
@@ -474,6 +491,7 @@ class MediaController extends Controller
             'type' => $type,
             'form' => $form->createView(),
             'folder' => $folder,
+            'admin' => $this->getAdmin(),
         ];
     }
 }

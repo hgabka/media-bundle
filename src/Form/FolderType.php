@@ -11,6 +11,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FolderType extends AbstractType
@@ -88,7 +90,18 @@ class FolderType extends AbstractType
                     'label' => 'hg_media.folder.addsub.form.internal_name',
                     'required' => false,
                 ]
-            );
+            )->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $folder = $event->getData();
+                $form = $event->getForm();
+                if ($folder->isInternal()) {
+                    $form
+                        ->remove('rel')
+                        ->remove('parent')
+                        ->remove('internalName')
+                    ;
+                }
+            })
+        ;
     }
 
     /**

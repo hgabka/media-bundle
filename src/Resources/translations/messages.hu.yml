@@ -13,8 +13,11 @@ hg_media:
         delete: Törlés
     label:
         search: Keresés
+        click_to_select: Kattintson a kiválasztáshoz
+        select: Kiválaszt
     admin:
-        label: Média
+        label: Médiatár
+        list: Adminisztráció
     aviary:
         title: Aviary
         nothing: Nincs megjeleníthető elem

@@ -23,9 +23,11 @@
         <div class="btn-group" role="group">
             {% block extraactions %}{% endblock %}
             {% block actions %}
+                {% if admin.hasAccess('delete') %}
                 <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
                     {{ 'hg_media.form.delete'|trans }}
                 </button>
+                {% endif %}
             {% endblock %}
         </div>
     </div>
@@ -45,16 +47,20 @@
 
     <!-- Main Tabs -->
     <ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
+        {% if admin.hasAccess('list') %}
         <li class="active">
             <a href="#imagegallery" data-toggle="tab">
                 {{ 'hg_media.media.contenttab.title'|trans|capitalize }}
             </a>
         </li>
+        {% endif %}
+        {% if admin.hasAccess('edit') %}
         <li>
             <a href="#properties" data-toggle="tab">
                 {{ 'hg_media.media.propertiestab.title' | trans }}
             </a>
         </li>
+        {% endif %}
         <li class="tab__more dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 {{ 'hg_media.form.button.dropdown.more' | trans }} <span class="caret"></span>
@@ -64,6 +70,7 @@
     </ul>
 
     <div class="tab-content">
+        {% if admin.hasAccess('list') %}
 
         <!-- TAB - Imagegallery -->
         <div class="tab-pane active" id="imagegallery">
@@ -90,7 +97,8 @@
             </div>
         </div>
 
-
+        {% endif %}
+        {% if admin.hasAccess('edit') %}
         <!-- TAB - Properties -->
         <div class="tab-pane" id="properties">
 
@@ -113,6 +121,7 @@
                 </fieldset>
             {{ form_end(editform) }}
         </div>
+        {% endif %}
     </div>
 
 

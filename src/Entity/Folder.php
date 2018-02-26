@@ -102,6 +102,13 @@ class Folder implements TranslatableInterface
     protected $deleted;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $internal = false;
+
+    /**
      * @Prezent\Translations(targetEntity="Hgabka\MediaBundle\Entity\FolderTranslation")
      */
     private $translations;
@@ -425,6 +432,25 @@ class Folder implements TranslatableInterface
     public function setName($name, $locale = null)
     {
         $this->translate($locale)->setName($name);
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInternal(): bool
+    {
+        return $this->internal;
+    }
+
+    /**
+     * @param bool $internal
+     * @return Folder
+     */
+    public function setInternal($internal)
+    {
+        $this->internal = $internal;
 
         return $this;
     }
