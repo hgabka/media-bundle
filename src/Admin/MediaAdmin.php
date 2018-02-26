@@ -22,7 +22,6 @@ class MediaAdmin extends AbstractAdmin
         return [];
     }
 
-
     /**
      * Get the list of actions that can be accessed directly from the dashboard.
      *

@@ -446,6 +446,7 @@ class Folder implements TranslatableInterface
 
     /**
      * @param bool $internal
+     *
      * @return Folder
      */
     public function setInternal($internal)

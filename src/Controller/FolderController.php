@@ -3,16 +3,12 @@
 namespace Hgabka\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Hgabka\AdminBundle\FlashMessages\FlashTypes;
-use Hgabka\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
-use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -173,7 +169,6 @@ class FolderController extends BaseMediaController
 
         // @var Folder $folder
         $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
-
 
         $form = $this->createEmptyForm();
 

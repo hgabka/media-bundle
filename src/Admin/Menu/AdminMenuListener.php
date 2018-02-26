@@ -2,38 +2,36 @@
 
 namespace Hgabka\MediaBundle\Admin\Menu;
 
-use AppBundle\Helper\IwsHelper;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Helper\FolderManager;
 use Sonata\AdminBundle\Event\ConfigureMenuEvent;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class AdminMenuListener
 {
+    const ICONS = [
+        'default' => 'fa fa-file-o',
+        'offline' => 'fa fa-chain-broken',
+        'folder' => 'fa fa-folder-o',
+        'image' => 'fa fa-picture-o',
+        'files' => 'fa fa-files-o',
+        'slideshow' => 'fa fa-desktop',
+        'video' => 'fa fa-film',
+        'media' => 'fa fa-folder-o',
+    ];
     /** @var MediaAdmin */
     protected $mediaAdmin;
 
     /** @var ManagerRegistry */
     protected $doctrine;
 
-    const ICONS = [
-        'default' => 'fa fa-file-o',
-        'offline' =>  'fa fa-chain-broken',
-        'folder' => 'fa fa-folder-o',
-        'image' =>  'fa fa-picture-o',
-        'files' =>  'fa fa-files-o',
-        'slideshow' => 'fa fa-desktop',
-        'video' => 'fa fa-film',
-        'media' => 'fa fa-folder-o',
-    ];
-
     /**
      * AdminMenuListener constructor.
-     * @param MediaAdmin $mediaAdmin
+     *
+     * @param MediaAdmin      $mediaAdmin
      * @param ManagerRegistry $doctrine
-     * @param FolderManager $folderManager
+     * @param FolderManager   $folderManager
      */
     public function __construct(MediaAdmin $mediaAdmin, ManagerRegistry $doctrine)
     {
@@ -58,7 +56,7 @@ class AdminMenuListener
                 $group->addChild($folder->getName(), [
                     'route' => 'admin_hgabka_media_media_list',
                     'routeParameters' => ['folderId' => $folder->getId()],
-                    'label' => $folder->getName()
+                    'label' => $folder->getName(),
                 ])->setExtra('icon', '<i class="'.$iconClass.'"></i>')
                 ;
             }

@@ -12,6 +12,8 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 class FileToMediaTransformer implements DataTransformerInterface
 {
+    /** @var null|string */
+    protected $mediaName;
     /**
      * @var ObjectManager
      */
@@ -31,13 +33,15 @@ class FileToMediaTransformer implements DataTransformerInterface
     /**
      * @param ObjectManager         $objectManager         The object manager
      * @param CurrentValueContainer $currentValueContainer The current value container
+     * @param null|mixed            $mediaName
      */
-    public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null)
+    public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null)
     {
         $this->objectManager = $objectManager;
         $this->folder = $folder;
         $this->currentValueContainer = $currentValueContainer;
         $this->mediaManager = $manager;
+        $this->mediaName = $mediaName;
     }
 
     /**
@@ -83,6 +87,9 @@ class FileToMediaTransformer implements DataTransformerInterface
         if (!empty($value) && !empty($value['file'])) {
             if ($value['file']->isValid()) {
                 $entity = $this->mediaManager->createNew($value['file']);
+                if (!empty($this->mediaName)) {
+                    $entity->setName($this->mediaName);
+                }
                 $entity->setFolder($this->folder);
                 $this->currentValueContainer->setCurrentValue($entity);
 

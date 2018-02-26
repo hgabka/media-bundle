@@ -91,7 +91,7 @@ class MediaSimpleType extends AbstractType
         $builder->add('file', FileType::class);
 
         $builder->addViewTransformer(
-            new FileToMediaTransformer($this->objectManager, $options['current_value_container'], $this->mediaManager, $folder),
+            new FileToMediaTransformer($this->objectManager, $options['current_value_container'], $this->mediaManager, $folder, $options['medianame']),
             true
         );
 
@@ -121,6 +121,7 @@ class MediaSimpleType extends AbstractType
                 'compound' => true,
                 'current_value_container' => new CurrentValueContainer(),
                 'foldername' => null,
+                'medianame' => null,
                 'folderid' => null,
                 'folder' => null,
                 'parentfolder' => null,
