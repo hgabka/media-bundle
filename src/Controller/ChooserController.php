@@ -154,6 +154,9 @@ class ChooserController extends BaseMediaController
         $orderBy = $request->query->get('orderBy', 'updatedAt');
         $orderDirection = $request->query->get('orderDirection', 'DESC');
 
+        $this->buildFilters();
+        $this->getFilterBuilder()->bindRequest($request);
+
         $viewVariabels = [
             'cKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser' => $linkChooser,
@@ -170,6 +173,7 @@ class ChooserController extends BaseMediaController
             'orderDirection' => $orderDirection,
             'subform' => $subForm->createView(),
             'admin' => $this->getAdmin(),
+            'filter' => $this->getFilterBuilder(),
         ];
 
         // generate all forms

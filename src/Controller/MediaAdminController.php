@@ -6,7 +6,6 @@ use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Traits\MediaControllerTrait;
-use Hgabka\UtilsBundle\AdminList\FilterType\ORM;
 use Pagerfanta\Pagerfanta;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -78,11 +77,7 @@ class MediaAdminController extends CRUDController
         $orderBy = $request->query->get('orderBy', 'updatedAt');
         $orderDirection = $request->query->get('orderDirection', 'DESC');
 
-        $this->addFilter('name', new ORM\StringFilterType('bt.name'), 'hg_media.adminlist.configurator.filter.name');
-        $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'hg_media.adminlist.configurator.filter.type');
-        $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'hg_media.adminlist.configurator.filter.updated_at');
-        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'hg_media.adminlist.configurator.filter.filesize');
-
+        $this->buildFilters();
         $this->getFilterBuilder()->bindRequest($request);
 
         $params = [

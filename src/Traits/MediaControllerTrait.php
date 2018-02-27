@@ -9,6 +9,7 @@ use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
 use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Hgabka\UtilsBundle\AdminList\FilterBuilder;
 use Hgabka\UtilsBundle\AdminList\FilterType\FilterTypeInterface;
+use Hgabka\UtilsBundle\AdminList\FilterType\ORM;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -122,5 +123,13 @@ trait MediaControllerTrait
     protected function getBaseTemplate()
     {
         return $this->getParameter('sonata.admin.configuration.templates')['layout'];
+    }
+
+    protected function buildFilters()
+    {
+        $this->addFilter('name', new ORM\StringFilterType('bt.name'), 'hg_media.adminlist.configurator.filter.name');
+        $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'hg_media.adminlist.configurator.filter.type');
+        $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'hg_media.adminlist.configurator.filter.updated_at');
+        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'hg_media.adminlist.configurator.filter.filesize');
     }
 }
