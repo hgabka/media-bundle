@@ -129,7 +129,7 @@ trait MediaControllerTrait
     {
         $this->addFilter('name', new ORM\StringFilterType('bt.name'), 'hg_media.adminlist.configurator.filter.name');
         $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'hg_media.adminlist.configurator.filter.type');
-        $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'hg_media.adminlist.configurator.filter.updated_at');
+        $this->addFilter('updatedAt', new ORM\DateFilterType('updatedAt'), 'hg_media.adminlist.configurator.filter.updated_at');
         $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'hg_media.adminlist.configurator.filter.filesize');
     }
 }
