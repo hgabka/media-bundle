@@ -20,6 +20,7 @@ services:
         arguments: ['@hgabka_utils.hgabka_utils']
         calls:
             - [ setDefaultHandler, [ '@hgabka_media.media_handlers.file' ] ]
+        public: true
 
     hgabka_media.listener.doctrine:
         class: '%hgabka_media.listener.doctrine.class%'
@@ -38,6 +39,7 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type}
+        public: true
 
     form.type.media_simple:
         class: '%hgabka_media.form.type.media_simple.class%'
@@ -47,6 +49,7 @@ services:
             - '@hgabka_utils.hgabka_utils'
         tags:
             - { name: form.type}
+        public: true
 
     form.type.folder:
         class: '%hgabka_media.form.type.folder.class%'
@@ -54,6 +57,7 @@ services:
             - '@hgabka_utils.hgabka_utils'
         tags:
             - { name: form.type}
+        public: true
 
     form.type.iconfont:
         class: '%hgabka_media.form.type.iconfont.class%'
@@ -90,6 +94,7 @@ services:
     hgabka_media.folder_manager:
         class: '%hgabka_media.folder_manager.class%'
         arguments: ['@hgabka_media.repository.folder']
+        public: true
 
     hgabka_media.mimetype_guesser.factory:
         class: '%hgabka_media.mimetype_guesser.factory.class%'
