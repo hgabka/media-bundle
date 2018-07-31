@@ -175,4 +175,32 @@ class MediaManager
 
         return $result;
     }
+
+
+    /**
+     * @param Media $media
+     *
+     * @return bool|string
+     */
+    public function getMediaContent(Media $media)
+    {
+        /** @var SplFileInfo $file */
+        $file = $this->getHandler($media)->getOriginalFile($media);
+
+        return $file ? $file->getContent() : null;
+    }
+
+
+    /**
+     * @param Media $media
+     *
+     * @return bool|string
+     */
+    public function getMediaSize(Media $media)
+    {
+        /** @var SplFileInfo $file */
+        $file = $this->getHandler($media)->getOriginalFile($media);
+
+        return $file ? $file->getSize() : 0;
+    }
 }
