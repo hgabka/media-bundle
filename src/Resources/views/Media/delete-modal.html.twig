@@ -14,16 +14,16 @@
 
             <!-- Body -->
             <div class="modal-body">
-                {{ 'media.media.deletesure' | trans }}
+                {{ 'hg_media.media.deletesure' | trans }}
             </div>
 
             <!-- Footer -->
             <div class="modal-footer">
                 <a href="{{ path('HgabkaMediaBundle_media_delete', { 'mediaId': media.id }) }}" class="btn btn-danger btn--raise-on-hover">
-                    {{ 'form.delete' | trans }}
+                    {{ 'hg_media.form.delete' | trans }}
                 </a>
                 <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                    {{ 'form.cancel' | trans }}
+                    {{ 'hg_media.form.cancel' | trans }}
                 </button>
             </div>
         </div>
