@@ -45,20 +45,22 @@ class AdminMenuListener
             $menu = $event->getMenu();
             $group = $menu->getChild('hg_media.group');
 
-            foreach ($group->getChildren() as $key => $child) {
-                $group->removeChild($key);
-            }
+            if ($group) {
+                foreach ($group->getChildren() as $key => $child) {
+                    $group->removeChild($key);
+                }
 
-            $repo = $this->doctrine->getRepository(Folder::class);
-            $root = $repo->getFirstTopFolder();
-            foreach ($root->getChildren() as $folder) {
-                $iconClass = static::ICONS[$folder->getRel()] ?? static::ICONS['default'];
-                $group->addChild($folder->getName(), [
-                    'route' => 'admin_hgabka_media_media_list',
-                    'routeParameters' => ['folderId' => $folder->getId()],
-                    'label' => $folder->getName(),
-                ])->setExtra('icon', '<i class="'.$iconClass.'"></i>')
-                ;
+                $repo = $this->doctrine->getRepository(Folder::class);
+                $root = $repo->getFirstTopFolder();
+                foreach ($root->getChildren() as $folder) {
+                    $iconClass = static::ICONS[$folder->getRel()] ?? static::ICONS['default'];
+                    $group->addChild($folder->getName(), [
+                        'route' => 'admin_hgabka_media_media_list',
+                        'routeParameters' => ['folderId' => $folder->getId()],
+                        'label' => $folder->getName(),
+                    ])->setExtra('icon', '<i class="' . $iconClass . '"></i>')
+                    ;
+                }
             }
         }
     }
