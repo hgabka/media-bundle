@@ -23,12 +23,12 @@
 
                     <!-- Footer -->
                     <div class="modal-footer">
-                        {% set save = 'media.' ~ type ~ '.modal.save' %}
+                        {% set save = 'hg_media.' ~ type ~ '.modal.save' %}
                         <button type="submit" class="js-add-app-loading--forms btn btn-primary btn--raise-on-hover">
                             {{ save | trans }}
                         </button>
                         <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                            {{ 'form.cancel' | trans }}
+                            {{ 'hg_media.form.cancel' | trans }}
                         </button>
                     </div>
                 {{ form_end(form) }}
