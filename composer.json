@@ -18,6 +18,7 @@
         "hgabka/utils-bundle": "^1.0",
         "white-october/pagerfanta-bundle": "~1.0",
         "liip/imagine-bundle": "^1.9",
+        "knplabs/gaufrette": "^0.6",
         "symfony/symfony": "~3.2"
     },
     "require-dev": {
