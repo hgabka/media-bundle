@@ -70,10 +70,10 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('kuma:media:rename-soft-deleted')
+            ->setName('hgabka:media:rename-soft-deleted')
             ->setDescription('Rename physical files for soft-deleted media.')
             ->setHelp(
-                'The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
+                'The <info>hgabka:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
             )
             ->addOption(
                 'original',
