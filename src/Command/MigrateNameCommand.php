@@ -49,10 +49,10 @@ class MigrateNameCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('kuma:media:migrate-name')
+            ->setName('hgabka:media:migrate-name')
             ->setDescription('Migrate media name to new column.')
             ->setHelp(
-                'The <info>kuma:media:migrate-name</info> command can be used to migrate the media name to the newly added column.'
+                'The <info>hgabka:media:migrate-name</info> command can be used to migrate the media name to the newly added column.'
             );
     }
 }
