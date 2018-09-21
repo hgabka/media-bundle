@@ -15,10 +15,10 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('kuma:media:clean-deleted-media')
+            ->setName('hgabka:media:clean-deleted-media')
             ->setDescription('Throw away all files from the file system that have been deleted in the database')
             ->setHelp(
-                'The <info>kuma:media:clean-deleted-media</info> command can be used to clean up your file system after having deleted Media items using the backend.'
+                'The <info>hgabka:media:clean-deleted-media</info> command can be used to clean up your file system after having deleted Media items using the backend.'
             )
             ->addOption(
                 'force',
