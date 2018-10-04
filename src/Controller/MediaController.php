@@ -99,7 +99,7 @@ class MediaController extends BaseMediaController
 
         $this->addFlash(
             'sonata_flash_success',
-            $this->get('translator')->trans('kuma_admin.media.flash.deleted_success.%medianame%', [
+            $this->get('translator')->trans('hg_media.flash.deleted_success.%medianame%', [
                 '%medianame%' => $medianame,
             ])
         );
