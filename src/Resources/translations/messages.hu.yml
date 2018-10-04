@@ -3,6 +3,9 @@ hg_media:
     flash:
         created: Az elem sikeresen feltöltve.
         not_created: A fájlt nem sikerült feltölteni.
+        'deleted_success.%medianame%': A '%medianame%' sikeresen törölve!
+        drop_success: A fájlfeltöltés sikeresen befejezve.
+        drop_unrecognized: Nem sikerült értelmezni a fájlhúzás műveletet.
     field:
         name: Név
         updatedAt: Utolsó frissítés
