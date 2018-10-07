@@ -1,5 +1,26 @@
 # Media
-media:
+hg_media:
+    flash:
+        created: Item created successfully.
+        not_created: Item upload failed.
+        'deleted_success.%medianame%': The '%medianame%' has been uploaded successfully!
+        drop_success: Upload done.
+        drop_unrecognized: Unable to identify file upload.
+    field:
+        name: Név
+        updatedAt: Utolsó frissítés
+        contentType: Típus
+        filesize: Méret
+    helper:
+        edit: Kattintson a szerkesztéshez
+        delete: Törlés
+    label:
+        search: Keresés
+        click_to_select: Kattintson a kiválasztáshoz
+        select: Kiválaszt
+    admin:
+        label: Médiatár
+        list: Adminisztráció
     aviary:
         title: Aviary
         nothing: Nothing to see here.
