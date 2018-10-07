@@ -1,0 +1,5 @@
+hg_media:
+    group:  Media
+    admin:
+        model_name: Media
+        label: Media
