@@ -7,20 +7,20 @@ hg_media:
         drop_success: Upload done.
         drop_unrecognized: Unable to identify file upload.
     field:
-        name: Név
-        updatedAt: Utolsó frissítés
-        contentType: Típus
-        filesize: Méret
+        name: Name
+        updatedAt: Updated
+        contentType: Type
+        filesize: Size
     helper:
-        edit: Kattintson a szerkesztéshez
-        delete: Törlés
+        edit: Click to edit
+        delete: Delete
     label:
-        search: Keresés
-        click_to_select: Kattintson a kiválasztáshoz
-        select: Kiválaszt
+        search: Search
+        click_to_select: Click to select
+        select: Select
     admin:
-        label: Médiatár
-        list: Adminisztráció
+        label: Media
+        list: Administration
     aviary:
         title: Aviary
         nothing: Nothing to see here.
