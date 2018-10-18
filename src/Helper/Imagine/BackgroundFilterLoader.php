@@ -25,7 +25,7 @@ class BackgroundFilterLoader extends \Liip\ImagineBundle\Imagine\Filter\Loader\B
         $size = $image->getSize();
 
         if (isset($options['size'])) {
-            list($width, $height) = $options['size'];
+            [$width, $height] = $options['size'];
 
             $size = new Box($width, $height);
             $topLeft = new Point(($width - $image->getSize()->getWidth()) / 2, ($height - $image->getSize()->getHeight()) / 2);

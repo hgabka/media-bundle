@@ -165,7 +165,7 @@ class MediaController extends BaseMediaController
         } else {
             $tempDir = sys_get_temp_dir();
         }
-        $targetDir = rtrim($tempDir, '/').DIRECTORY_SEPARATOR.'plupload';
+        $targetDir = rtrim($tempDir, '/').\DIRECTORY_SEPARATOR.'plupload';
         $cleanupTargetDir = true; // Remove old files
         $maxFileAge = 5 * 60 * 60; // Temp file age in seconds
 
@@ -177,12 +177,12 @@ class MediaController extends BaseMediaController
         // Get a file name
         if (array_key_exists('name', $_REQUEST)) {
             $fileName = $_REQUEST['name'];
-        } elseif (0 !== count($_FILES)) {
+        } elseif (0 !== \count($_FILES)) {
             $fileName = $_FILES['file']['name'];
         } else {
             $fileName = uniqid('file_', false);
         }
-        $filePath = $targetDir.DIRECTORY_SEPARATOR.$fileName;
+        $filePath = $targetDir.\DIRECTORY_SEPARATOR.$fileName;
 
         $chunk = 0;
         $chunks = 0;
@@ -201,7 +201,7 @@ class MediaController extends BaseMediaController
             }
 
             while (false !== ($file = readdir($dir))) {
-                $tmpFilePath = $targetDir.DIRECTORY_SEPARATOR.$file;
+                $tmpFilePath = $targetDir.\DIRECTORY_SEPARATOR.$file;
 
                 // If temp file is current file proceed to the next
                 if ($tmpFilePath === "{$filePath}.part") {
@@ -224,7 +224,7 @@ class MediaController extends BaseMediaController
             return $this->returnJsonError('102', 'Failed to open output stream.');
         }
 
-        if (0 !== count($_FILES)) {
+        if (0 !== \count($_FILES)) {
             if ($_FILES['file']['error'] || !is_uploaded_file($_FILES['file']['tmp_name'])) {
                 return $this->returnJsonError('103', 'Failed to move uploaded file.');
             }
@@ -301,7 +301,7 @@ class MediaController extends BaseMediaController
 
         $drop = null;
 
-        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] === 0) {
+        if (array_key_exists('files', $_FILES) && 0 === $_FILES['files']['error']) {
             $drop = $request->files->get('files');
         } elseif ($request->files->get('file')) {
             $drop = $request->files->get('file');

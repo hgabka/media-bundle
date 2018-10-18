@@ -286,7 +286,7 @@ class Folder implements TranslatableInterface
         }
 
         return $this->children->filter(
-            function (Folder $entry) {
+            function (self $entry) {
                 if ($entry->isDeleted()) {
                     return false;
                 }

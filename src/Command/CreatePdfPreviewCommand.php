@@ -14,7 +14,7 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         $output->writeln('Creating PDF preview images...');
 
         $pdfTransformer = $this->getContainer()->get('hgabka_media.pdf_transformer');
-        $webPath = realpath($this->getContainer()->get('kernel')->getRootDir().'/../web').DIRECTORY_SEPARATOR;
+        $webPath = realpath($this->getContainer()->get('kernel')->getRootDir().'/../web').\DIRECTORY_SEPARATOR;
 
         /**
          * @var EntityManager

@@ -18,7 +18,7 @@
                                    <button type="submit" class="btn btn-primary btn--raise-on-hover">
                                        {{ 'hg_media.file.add' | trans }}
                                    </button>
-                                   <a class="btn btn-default btn--raise-on-hover" href="{{ path('HgabkaMediaBundle_folder_show', { 'folderId' : folder.id } ) }}">
+                                   <a class="btn btn-default btn--raise-on-hover" href="{{ path('admin_hgabka_media_media_list', { 'folderId' : folder.id } ) }}">
                                        {{ 'hg_media.form.cancel' | trans }}
                                    </a>
                                {% endblock %}
@@ -30,7 +30,7 @@
        {% endblock %}
 
 
-{% block media_content %}
+{% block admin_content %}
     {{ form_start(form, {'method': 'POST', 'action': path('HgabkaMediaBundle_media_create', { 'folderId' : folder.id, 'type': type }), 'attr': {'novalidate': 'novalidate'}}) }}
         <!-- Scroll-actions -->
         <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">

@@ -3,10 +3,8 @@
 namespace Hgabka\MediaBundle\Controller;
 
 use Hgabka\MediaBundle\Entity\Folder;
-use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Traits\MediaControllerTrait;
-use Pagerfanta\Pagerfanta;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
