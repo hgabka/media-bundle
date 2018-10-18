@@ -27,7 +27,7 @@ class PdfHandler extends FileHandler
     {
         parent::setMediaPath($kernelRootDir);
 
-        $this->setWebPath(realpath(str_replace('/', DIRECTORY_SEPARATOR, $kernelRootDir.'/../web/')).DIRECTORY_SEPARATOR);
+        $this->setWebPath(realpath(str_replace('/', \DIRECTORY_SEPARATOR, $kernelRootDir.'/../web/')).\DIRECTORY_SEPARATOR);
     }
 
     /**

@@ -176,7 +176,6 @@ class MediaManager
         return $result;
     }
 
-
     /**
      * @param Media $media
      *
@@ -189,7 +188,6 @@ class MediaManager
 
         return $file ? $file->getContent() : null;
     }
-
 
     /**
      * @param Media $media

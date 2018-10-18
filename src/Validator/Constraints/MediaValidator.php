@@ -85,7 +85,7 @@ class MediaValidator extends ConstraintValidator
 
         foreach ($allowedMimeTypes as $type) {
             if ('image' === $type) {
-                return in_array($mimeType, [
+                return \in_array($mimeType, [
                     'image/gif',
                     'image/png',
                     'image/jpeg',

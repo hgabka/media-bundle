@@ -59,7 +59,7 @@ class FileToMediaTransformer implements DataTransformerInterface
                 'id' => '',
             ];
         }
-        if (!is_object($entity)) {
+        if (!\is_object($entity)) {
             throw new UnexpectedTypeException($entity, 'object');
         }
         if ($entity instanceof Collection) {

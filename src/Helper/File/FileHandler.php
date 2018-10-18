@@ -207,7 +207,7 @@ class FileHandler extends AbstractMediaHandler
             $allMyKeys = $adapter->keys();
             $everythingfromdir = preg_grep('/'.$folderPath, $allMyKeys);
 
-            if (1 === count($everythingfromdir)) {
+            if (1 === \count($everythingfromdir)) {
                 $adapter->delete($folderPath);
             }
         }

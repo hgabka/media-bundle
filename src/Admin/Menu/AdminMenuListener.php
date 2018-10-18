@@ -58,7 +58,7 @@ class AdminMenuListener
                         'route' => 'admin_hgabka_media_media_list',
                         'routeParameters' => ['folderId' => $folder->getId()],
                         'label' => $folder->getName(),
-                    ])->setExtra('icon', '<i class="' . $iconClass . '"></i>')
+                    ])->setExtra('icon', '<i class="'.$iconClass.'"></i>')
                     ;
                 }
             }

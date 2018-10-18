@@ -61,7 +61,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
 
                 if (null !== $currentFolder) {
                     $parentIds = $this->repo->getParentIds($currentFolder);
-                    if (in_array($rootFolder->getId(), $parentIds, true)) {
+                    if (\in_array($rootFolder->getId(), $parentIds, true)) {
                         $menuItem->setActive(true);
                     }
                 }

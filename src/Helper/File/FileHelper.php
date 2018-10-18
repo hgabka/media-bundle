@@ -137,7 +137,7 @@ class FileHelper
     public function setFile(File $file)
     {
         $this->file = $file;
-        if (strlen($file->getPathname()) > 0) {
+        if (\strlen($file->getPathname()) > 0) {
             $this->media->setContent($file);
             $this->media->setContentType($file->getMimeType());
             $this->media->setUrl(
@@ -154,7 +154,7 @@ class FileHelper
     public function getMediaFromUrl($mediaUrl)
     {
         $path = tempnam(sys_get_temp_dir(), 'kuma_');
-        $saveFile = fopen($path, 'w');
+        $saveFile = fopen($path, 'wb');
         $this->path = $path;
 
         $ch = curl_init($mediaUrl);

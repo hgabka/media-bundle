@@ -78,7 +78,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function canHandle($object)
     {
         if (
-            (is_string($object)) ||
+            (\is_string($object)) ||
             ($object instanceof Media && self::CONTENT_TYPE === $object->getContentType())
         ) {
             return true;
@@ -114,7 +114,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         switch ($video->getType()) {
             case 'youtube':
                 try {
-                    if (false === @fopen('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'r')) {
+                    if (false === @fopen('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'rb')) {
                         $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/0.jpg');
                     } else {
                         $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg');
@@ -195,7 +195,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function createNew($data)
     {
         $result = null;
-        if (is_string($data)) {
+        if (\is_string($data)) {
             if (0 !== strpos($data, 'http')) {
                 $data = 'http://'.$data;
             }
@@ -298,6 +298,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     private function endsWith($str, $sub)
     {
-        return substr($str, strlen($str) - strlen($sub)) === $sub;
+        return substr($str, \strlen($str) - \strlen($sub)) === $sub;
     }
 }
