@@ -1,8 +1,8 @@
 # Media
 hg_media:
     flash:
-        created: Item created successfully.
-        not_created: Item upload failed.
+        created: Media %medianame% has been created!
+        not_created: Media not created! %mediaerrors%
         'deleted_success.%medianame%': The '%medianame%' has been uploaded successfully!
         drop_success: Upload done.
         drop_unrecognized: Unable to identify file upload.
@@ -187,6 +187,4 @@ hg_media:
             type:
                 label: Type
 
-    flash:
-        created: Media %medianame% has been created!
-        not_created: Media not created! %mediaerrors%
+
