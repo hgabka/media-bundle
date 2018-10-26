@@ -73,50 +73,6 @@
     {% include '@HgabkaMedia/Chooser/breadcrumbs.html.twig' %}
 {% endblock %}
 
-{% block appHeader %}
-    <header role="banner">
-
-        <!-- App Header -->
-        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-
-                <!-- Header -->
-                <div class="navbar-header">
-
-                    <!--Header - Toggle -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
-                        <span class="sr-only">Toggle</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-
-                <!-- Navigation -->
-                <div class="collapse navbar-collapse" id="main-nav-bar">
-
-                    <!-- Navigation - Left -->
-                    <ul class="nav navbar-nav">
-                        {% if linkChooserLink is defined and linkChooserLink %}
-                            <li>
-                                <a href="{{ linkChooserLink }}">
-                                    Pages
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="javascript:void(0)">
-                                    Media
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-
-                    <!-- Navigation - Right -->
-                </div>
-            </div>
-        </nav>
-    </header>
-{% endblock %}
 
 
 {% block header %}
@@ -127,7 +83,56 @@
 {% endblock %}
 
 
+
 {% block admin_content %}
+    {% block appHeader %}
+        <header role="banner">
+
+            <!-- App Header -->
+            <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+
+                    <!-- Header -->
+                    <div class="navbar-header">
+
+                        <!--Header - Toggle -->
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                            <span class="sr-only">Toggle</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="collapse navbar-collapse" id="main-nav-bar">
+
+                        <!-- Navigation - Left -->
+                        <ul class="nav navbar-nav">
+                            {% if linkChooserLink is defined and linkChooserLink %}
+                                <li>
+                                    <a href="{{ linkChooserLink }}">
+                                        {{ 'kuma_admin.pages.title' | trans }}
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="javascript:void(0)">
+                                        {{ 'kuma_admin.media.title' | trans }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+
+                        <!-- Navigation - Right -->
+                        <ul class="nav navbar-nav navbar-right">
+                            {% set route = app.request.attributes.get('_route') %}
+                            {{ localeswitcher_widget(get_backend_locales(), route) }}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    {% endblock %}
 
     <!-- Sub-actions -->
     <div class="page-sub-actions page-sub-actions--has-buttons">
