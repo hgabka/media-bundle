@@ -95,7 +95,7 @@ class FolderType extends AbstractType
                     'internalName',
                     TextType::class,
                     [
-                        'label'    => 'hg_media.folder.addsub.form.internal_name',
+                        'label' => 'hg_media.folder.addsub.form.internal_name',
                         'required' => false,
                     ]
                 )->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
