@@ -55,6 +55,7 @@ services:
         class: '%hgabka_media.form.type.folder.class%'
         arguments:
             - '@hgabka_utils.hgabka_utils'
+            - '@security.authorization_checker'
         tags:
             - { name: form.type}
         public: true
