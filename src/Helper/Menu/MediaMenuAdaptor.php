@@ -2,12 +2,12 @@
 
 namespace Hgabka\MediaBundle\Helper\Menu;
 
-use Hgabka\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-use Hgabka\AdminBundle\Helper\Menu\MenuBuilder;
-use Hgabka\AdminBundle\Helper\Menu\MenuItem;
-use Hgabka\AdminBundle\Helper\Menu\TopMenuItem;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Repository\FolderRepository;
+use Hgabka\UtilsBundle\Helper\Menu\MenuAdaptorInterface;
+use Hgabka\UtilsBundle\Helper\Menu\MenuBuilder;
+use Hgabka\UtilsBundle\Helper\Menu\MenuItem;
+use Hgabka\UtilsBundle\Helper\Menu\TopMenuItem;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
