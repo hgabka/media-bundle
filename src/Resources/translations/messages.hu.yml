@@ -18,6 +18,7 @@ hg_media:
         search: Keresés
         click_to_select: Kattintson a kiválasztáshoz
         select: Kiválaszt
+        no_translation: hiányzó név
     admin:
         label: Médiatár
         list: Adminisztráció
@@ -206,3 +207,4 @@ hg_media:
     pagerfanta:
         prev_message: '&larr; Előző'
         next_message: 'Következő &rarr;'
+

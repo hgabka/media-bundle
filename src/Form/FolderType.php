@@ -14,20 +14,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class FolderType extends AbstractType
 {
     /** @var HgabkaUtils $utils */
     protected $utils;
 
+    /** @var AuthorizationCheckerInterface */
+    protected $authChecker;
+
     /**
      * FolderType constructor.
      *
      * @param HgabkaUtils $utils
      */
-    public function __construct(HgabkaUtils $utils)
+    public function __construct(HgabkaUtils $utils, AuthorizationCheckerInterface $authChecker)
     {
         $this->utils = $utils;
+        $this->authChecker = $authChecker;
     }
 
     /**
@@ -47,7 +52,7 @@ class FolderType extends AbstractType
         $builder
             ->add('translations', TranslationsType::class, [
                 'label' => false,
-                'locales' => [$this->utils->getCurrentLocale()],
+                'locales' => $this->utils->getAvailableLocales(),
                 'required' => false,
                 'fields' => [
                     'name' => [
@@ -83,25 +88,29 @@ class FolderType extends AbstractType
                     },
                 ]
             )
-            ->add(
-                'internalName',
-                TextType::class,
-                [
-                    'label' => 'hg_media.folder.addsub.form.internal_name',
-                    'required' => false,
-                ]
-            )->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $folder = $event->getData();
-                $form = $event->getForm();
-                if ($folder->isInternal()) {
-                    $form
-                        ->remove('rel')
-                        ->remove('parent')
-                        ->remove('internalName')
-                    ;
-                }
-            })
         ;
+        if ($this->authChecker->isGranted('ROLE_TEST')) {
+            $builder
+                ->add(
+                    'internalName',
+                    TextType::class,
+                    [
+                        'label'    => 'hg_media.folder.addsub.form.internal_name',
+                        'required' => false,
+                    ]
+                )->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                    $folder = $event->getData();
+                    $form = $event->getForm();
+                    if ($folder->isInternal()) {
+                        $form
+                            ->remove('rel')
+                            ->remove('parent')
+                            ->remove('internalName')
+                        ;
+                    }
+                })
+            ;
+        }
     }
 
     /**

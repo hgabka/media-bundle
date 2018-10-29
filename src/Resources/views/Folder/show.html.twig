@@ -2,12 +2,12 @@
 
 {% block header %}
     <h1 class="app__content__header__title">
-        {{ folder.name }}
+        {{ folder.name|default('hg_media.label.no_translation'|trans) }}
     </h1>
 {% endblock %}
 
 {% block title %}
-    {{ 'hg_media.admin.label'|trans }} - {{ folder.name }}
+    {{ 'hg_media.admin.label'|trans }} - {{ folder.name|default('hg_media.label.no_translation'|trans) }}
 {% endblock %}
 
 {% block admin_content %}
@@ -53,7 +53,7 @@
                         <span class="small-screen">{{ 'hg_media.folder.addsub.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                     </button>
                 {% endif %}
-                {% if not folder.internal and admin.hasAccess('delete') %}
+                {% if not folder.internal and (folder.internalName is empty or is_granted('ROLE_SUPER_ADMIN')) and admin.hasAccess('delete') %}
                     <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
                         <span class="large-screen">{{ 'hg_media.folder.delete.action' |trans }}</span>
                         <span class="small-screen">{{ 'hg_media.folder.delete.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>

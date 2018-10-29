@@ -18,6 +18,7 @@ hg_media:
         search: Search
         click_to_select: Click to select
         select: Select
+        no_translation: missing name
     admin:
         label: Media
         list: Administration
@@ -152,6 +153,13 @@ hg_media:
                 filesize:   Filesize (in bytes)
 
     form:
+        actions: Actions
+        delete: Delete
+        cancel: Cancel
+        save: Save
+        button:
+            dropdown:
+                more: More actions
         remote:
             name:
                 label: Name
