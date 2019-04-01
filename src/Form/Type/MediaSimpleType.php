@@ -125,6 +125,7 @@ class MediaSimpleType extends AbstractType
                 'folderid' => null,
                 'folder' => null,
                 'parentfolder' => null,
+                'error_bubbling' => false,
             ]
         );
     }
