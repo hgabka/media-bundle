@@ -3,9 +3,9 @@
 namespace Hgabka\MediaBundle\Controller;
 
 use Hgabka\MediaBundle\Traits\MediaControllerTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class BaseMediaController extends Controller
+class BaseMediaController extends AbstractController
 {
     use MediaControllerTrait;
 
