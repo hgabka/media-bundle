@@ -152,3 +152,29 @@ services:
 
     Hgabka\MediaBundle\Helper\FolderManager: '@hgabka_media.folder_manager'
     Hgabka\MediaBundle\Helper\MediaManager: '@hgabka_media.media_manager'
+    Hgabka\MediaBundle\Admin\MediaAdmin: '@hg_media.admin.media'
+
+    Hgabka\MediaBundle\Controller\ChooserController:
+        autoconfigure: true
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    Hgabka\MediaBundle\Controller\FolderController:
+        autoconfigure: true
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    Hgabka\MediaBundle\Controller\MediaController:
+        autoconfigure: true
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    Hgabka\MediaBundle\Controller\MediaAdminController:
+        autoconfigure: true
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    Hgabka\MediaBundle\Controller\AviaryController:
+        autoconfigure: true
+        autowire: true
+        tags: ['controller.service_arguments']

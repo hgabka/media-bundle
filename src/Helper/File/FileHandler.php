@@ -170,7 +170,7 @@ class FileHandler extends AbstractMediaHandler
         if ($content instanceof UploadedFile) {
             $pathInfo = pathinfo($content->getClientOriginalName());
 
-            if (!array_key_exists('extension', $pathInfo)) {
+            if (!\array_key_exists('extension', $pathInfo)) {
                 $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
             }
 
@@ -311,7 +311,7 @@ class FileHandler extends AbstractMediaHandler
 
         $parts = pathinfo($filename);
         $filename = $this->hgabkaUtils->slugify($parts['filename']);
-        if (array_key_exists('extension', $parts)) {
+        if (\array_key_exists('extension', $parts)) {
             $filename .= '.'.strtolower($parts['extension']);
         }
 

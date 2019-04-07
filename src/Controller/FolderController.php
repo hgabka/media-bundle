@@ -5,7 +5,6 @@ namespace Hgabka\MediaBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
-use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -42,14 +41,14 @@ class FolderController extends BaseMediaController
         if (null === $parentFolder) {
             $this->addFlash(
                 'sonata_flash_error',
-                $this->get('translator')->trans('hg_media.folder.delete.failure.text', [
+                $this->getTranslator()->trans('hg_media.folder.delete.failure.text', [
                     '%folder%' => $folderName,
                 ])
             );
         } elseif ($folder->isInternal()) {
             $this->addFlash(
                 'sonata_flash_error',
-                $this->get('translator')->trans('hg_media.folder.delete.failure.text', [
+                $this->getTranslator()->trans('hg_media.folder.delete.failure.text', [
                     '%folder%' => $folderName,
                 ])
             );
@@ -58,7 +57,7 @@ class FolderController extends BaseMediaController
             $em->getRepository('HgabkaMediaBundle:Folder')->delete($folder);
             $this->addFlash(
                 'sonata_flash_success',
-                $this->get('translator')->trans('hg_media.folder.delete.success.text', [
+                $this->getTranslator()->trans('hg_media.folder.delete.success.text', [
                     '%folder%' => $folderName,
                 ])
             );
@@ -70,7 +69,7 @@ class FolderController extends BaseMediaController
             $redirect = 'admin_hgabka_media_media_list';
         }
 
-        $type = $this->get('request_stack')->getCurrentRequest()->get('type');
+        $type = $this->getRequestStack()->getCurrentRequest()->get('type');
 
         return new RedirectResponse(
             $this->generateUrl(
@@ -104,7 +103,7 @@ class FolderController extends BaseMediaController
         $parent = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
-        $folder->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
+        $folder->setCurrentLocale($this->getUtils()->getCurrentLocale());
         $form = $this->createForm(FolderType::class, $folder);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -112,7 +111,7 @@ class FolderController extends BaseMediaController
                 $em->getRepository('HgabkaMediaBundle:Folder')->save($folder);
                 $this->addFlash(
                     'sonata_flash_success',
-                    $this->get('translator')->trans('hg_media.folder.addsub.success.text', [
+                    $this->getTranslator()->trans('hg_media.folder.addsub.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );
@@ -182,7 +181,7 @@ class FolderController extends BaseMediaController
 
                 $this->addFlash(
                     'sonata_flash_success',
-                    $this->get('translator')->trans('hg_media.folder.empty.success.text', [
+                    $this->getTranslator()->trans('hg_media.folder.empty.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );

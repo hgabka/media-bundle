@@ -9,7 +9,6 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
-use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -114,7 +113,7 @@ class ChooserController extends BaseMediaController
         }
 
         // @var MediaManager $mediaHandler
-        $mediaHandler = $this->get('hgabka_media.media_manager');
+        $mediaHandler = $this->getManager();
 
         $em = $this->getDoctrine();
         $repo = $em->getRepository(Folder::class);
@@ -129,7 +128,7 @@ class ChooserController extends BaseMediaController
         }
 
         // @var MediaManager $mediaManager
-        $mediaManager = $this->get('hgabka_media.media_manager');
+        $mediaManager = $this->getManager();
 
         /*       $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
                $adminList = $this->get('hgabka_adminlist.factory')->createList($adminListConfigurator);
@@ -137,7 +136,7 @@ class ChooserController extends BaseMediaController
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $sub->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
+        $sub->setCurrentLocale($this->getUtils()->getCurrentLocale());
         $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
 
         $linkChooserLink = null;
@@ -162,7 +161,7 @@ class ChooserController extends BaseMediaController
             'linkChooser' => $linkChooser,
             'linkChooserLink' => $linkChooserLink,
             'mediamanager' => $mediaManager,
-            'foldermanager' => $this->get('hgabka_media.folder_manager'),
+            'foldermanager' => $this->getFolderManager(),
             'handler' => $handler,
             'type' => $type,
             'folder' => $folder,
@@ -198,7 +197,7 @@ class ChooserController extends BaseMediaController
     {
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();
-        $media->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
+        $media->setCurrentLocale($this->getUtils()->getCurrentLocale());
         $helper = $handler->getFormHelper($media);
 
         return $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions())->createView();

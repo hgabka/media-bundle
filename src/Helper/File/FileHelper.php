@@ -154,7 +154,7 @@ class FileHelper
     public function getMediaFromUrl($mediaUrl)
     {
         $path = tempnam(sys_get_temp_dir(), 'kuma_');
-        $saveFile = fopen($path, 'wb');
+        $saveFile = fopen($path, 'w');
         $this->path = $path;
 
         $ch = curl_init($mediaUrl);

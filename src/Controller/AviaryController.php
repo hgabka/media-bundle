@@ -6,14 +6,13 @@ use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Controller class which Aviary can use to upload the edited image and add it to the database.
  */
-class AviaryController extends AbstractController
+class AviaryController extends BaseMediaController
 {
     /**
      * @param Request $request
@@ -29,11 +28,11 @@ class AviaryController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         // @var Media $media
-        $media = $em->getRepository('HgabkaMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository(Media::class)->getMedia($mediaId);
         // @var MediaManager $mediaManager
-        $mediaManager = $this->get('hgabka_media_media.media_manager');
+        $mediaManager = $this->getManager();
 
         $media = clone $media;
         $handler = $mediaManager->getHandler($media);

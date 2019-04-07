@@ -406,8 +406,8 @@ class Folder implements TranslatableInterface
     public function getOptionLabel()
     {
         return str_repeat(
-                '-',
-                $this->getLevel()
+            '-',
+            $this->getLevel()
             ).' '.$this->getName();
     }
 

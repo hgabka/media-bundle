@@ -54,7 +54,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
         }
         $contentType = $this->mimeTypeGuesser->guess($value->getPathname());
         $pathInfo = pathinfo($value->getClientOriginalName());
-        if (!array_key_exists('extension', $pathInfo)) {
+        if (!\array_key_exists('extension', $pathInfo)) {
             $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
         }
 

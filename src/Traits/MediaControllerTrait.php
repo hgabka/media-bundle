@@ -2,8 +2,11 @@
 
 namespace Hgabka\MediaBundle\Traits;
 
+use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
+use Hgabka\MediaBundle\Helper\FolderManager;
+use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
 use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
 use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
@@ -14,11 +17,46 @@ use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait MediaControllerTrait
 {
     /** @var FilterBuilder */
     protected $filterBuilder;
+
+    /** @var MediaAdmin */
+    protected $admin;
+
+    /** @var MediaManager */
+    protected $manager;
+
+    /** @var HgabkaUtils */
+    protected $utils;
+
+    /** @var FolderManager */
+    protected $folderManager;
+
+    /** @var TranslatorInterface */
+    protected $translator;
+
+    /** @var RequestStack */
+    protected $requestStack;
+
+    /**
+     * MediaControllerTrait constructor.
+     *
+     * @param MediaAdmin $admin
+     */
+    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack)
+    {
+        $this->admin = $admin;
+        $this->manager = $manager;
+        $this->utils = $utils;
+        $this->folderManager = $folderManager;
+        $this->translator = $translator;
+        $this->requestStack = $requestStack;
+    }
 
     /**
      * @param string              $columnName The column name
@@ -51,6 +89,51 @@ trait MediaControllerTrait
         return $this->filterBuilder;
     }
 
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @return MediaManager
+     */
+    public function getManager(): MediaManager
+    {
+        return $this->manager;
+    }
+
+    /**
+     * @return HgabkaUtils
+     */
+    public function getUtils(): HgabkaUtils
+    {
+        return $this->utils;
+    }
+
+    /**
+     * @return FolderManager
+     */
+    public function getFolderManager(): FolderManager
+    {
+        return $this->folderManager;
+    }
+
+    /**
+     * @return TranslatorInterface
+     */
+    public function getTranslator(): TranslatorInterface
+    {
+        return $this->translator;
+    }
+
+    /**
+     * @return RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->requestStack;
+    }
+
     protected function getPager(Request $request, Folder $folder)
     {
         $queryBuilder = $this
@@ -60,7 +143,7 @@ trait MediaControllerTrait
             ->leftJoin('b.translations', 'bt', 'WITH', 'bt.locale = :locale')
             ->andWhere('b.folder = :folder')
             ->setParameter('folder', $folder->getId())
-            ->setParameter('locale', $this->get(HgabkaUtils::class)->getCurrentLocale())
+            ->setParameter('locale', $this->getUtils()->getCurrentLocale())
             ->andWhere('b.deleted = 0')
         ;
         $orderBy = $request->query->get('orderBy', 'updatedAt');

@@ -6,7 +6,6 @@ use Hgabka\AdminBundle\FlashMessages\FlashTypes;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
-use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -40,7 +39,7 @@ class MediaController extends BaseMediaController
         $folder = $media->getFolder();
 
         // @var MediaManager $mediaManager
-        $mediaManager = $this->get('hgabka_media.media_manager');
+        $mediaManager = $this->getManager();
         $handler = $mediaManager->getHandler($media);
         $helper = $handler->getFormHelper($media);
 
@@ -64,8 +63,8 @@ class MediaController extends BaseMediaController
             $showTemplate,
             [
                 'handler' => $handler,
-                'foldermanager' => $this->get('hgabka_media.folder_manager'),
-                'mediamanager' => $this->get('hgabka_media.media_manager'),
+                'foldermanager' => $this->getFolderManager(),
+                'mediamanager' => $this->getManager(),
                 'editform' => $form->createView(),
                 'media' => $media,
                 'helper' => $helper,
@@ -99,7 +98,7 @@ class MediaController extends BaseMediaController
 
         $this->addFlash(
             'sonata_flash_success',
-            $this->get('translator')->trans('hg_media.flash.deleted_success.%medianame%', [
+            $this->getTranslator()->trans('hg_media.flash.deleted_success.%medianame%', [
                 '%medianame%' => $medianame,
             ])
         );
@@ -136,7 +135,7 @@ class MediaController extends BaseMediaController
         return $this->render('@HgabkaMedia/Media/bulkUpload.html.twig', [
             'folder' => $folder,
             'base_template' => $this->getParameter('sonata.admin.configuration.templates')['layout'],
-            'foldermanager' => $this->get('hgabka_media.folder_manager'),
+            'foldermanager' => $this->getFolderManager(),
             'admin' => $this->getAdmin(),
         ]);
     }
@@ -175,7 +174,7 @@ class MediaController extends BaseMediaController
         }
 
         // Get a file name
-        if (array_key_exists('name', $_REQUEST)) {
+        if (\array_key_exists('name', $_REQUEST)) {
             $fileName = $_REQUEST['name'];
         } elseif (0 !== \count($_FILES)) {
             $fileName = $_FILES['file']['name'];
@@ -187,10 +186,10 @@ class MediaController extends BaseMediaController
         $chunk = 0;
         $chunks = 0;
         // Chunking might be enabled
-        if (array_key_exists('chunk', $_REQUEST)) {
+        if (\array_key_exists('chunk', $_REQUEST)) {
             $chunk = (int) $_REQUEST['chunk'];
         }
-        if (array_key_exists('chunks', $_REQUEST)) {
+        if (\array_key_exists('chunks', $_REQUEST)) {
             $chunks = (int) $_REQUEST['chunks'];
         }
 
@@ -230,11 +229,11 @@ class MediaController extends BaseMediaController
             }
 
             // Read binary input stream and append it to temp file
-            if (!$input = @fopen($_FILES['file']['tmp_name'], 'rb')) {
+            if (!$input = @fopen($_FILES['file']['tmp_name'], 'r')) {
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         } else {
-            if (!$input = @fopen('php://input', 'rb')) {
+            if (!$input = @fopen('php://input', 'r')) {
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         }
@@ -258,10 +257,10 @@ class MediaController extends BaseMediaController
         $file = new File($filePath);
 
         try {
-            $handler = $this->get('hgabka_media.media_manager')->getHandler($file);
-            $handler->setHgabkaUtils($this->get(HgabkaUtils::class));
+            $handler = $this->getManager()->getHandler($file);
+            $handler->setHgabkaUtils($this->getUtils());
             // @var Media $media
-            $media = $this->get('hgabka_media.media_manager')->getHandler($file)->createNew($file);
+            $media = $this->getManager()->getHandler($file)->createNew($file);
             $media->setFolder($folder);
             $em->getRepository(Media::class)->save($media);
         } catch (\Exception $e) {
@@ -301,27 +300,27 @@ class MediaController extends BaseMediaController
 
         $drop = null;
 
-        if (array_key_exists('files', $_FILES) && 0 === $_FILES['files']['error']) {
+        if (\array_key_exists('files', $_FILES) && 0 === $_FILES['files']['error']) {
             $drop = $request->files->get('files');
         } elseif ($request->files->get('file')) {
             $drop = $request->files->get('file');
         } else {
             $drop = $request->get('text');
         }
-        $media = $this->get('hgabka_media.media_manager')->createNew($drop);
+        $media = $this->getManager()->createNew($drop);
         if ($media) {
             $media->setFolder($folder);
             $em->getRepository('HgabkaMediaBundle:Media')->save($media);
 
-            return new Response(json_encode(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_success')]));
+            return new Response(json_encode(['status' => $this->getTranslator()->trans('kuma_admin.media.flash.drop_success')]));
         }
 
         $request->getSession()->getFlashBag()->add(
             FlashTypes::DANGER,
-            $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')
+            $this->getTranslator()->trans('kuma_admin.media.flash.drop_unrecognized')
         );
 
-        return new Response(json_encode(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')]));
+        return new Response(json_encode(['status' => $this->getTranslator()->trans('kuma_admin.media.flash.drop_unrecognized')]));
     }
 
     /**
@@ -344,7 +343,7 @@ class MediaController extends BaseMediaController
         }
 
         $params['base_template'] = $this->getParameter('sonata.admin.configuration.templates')['layout'];
-        $params['foldermanager'] = $this->get('hgabka_media.folder_manager');
+        $params['foldermanager'] = $this->getFolderManager();
         $params['admin'] = $this->getAdmin();
 
         return $this->render('@HgabkaMedia/Media/create.html.twig', $params);
@@ -445,10 +444,10 @@ class MediaController extends BaseMediaController
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         // @var MediaManager $mediaManager
-        $mediaManager = $this->get('hgabka_media.media_manager');
+        $mediaManager = $this->getManager();
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();
-        $media->setCurrentLocale($this->get(HgabkaUtils::class)->getCurrentLocale());
+        $media->setCurrentLocale($this->getUtils()->getCurrentLocale());
         $helper = $handler->getFormHelper($media);
 
         $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
@@ -466,7 +465,7 @@ class MediaController extends BaseMediaController
 
                 $this->addFlash(
                     'sonata_flash_success',
-                    $this->get('translator')->trans('hg_media.flash.created', [
+                    $this->getTranslator()->trans('hg_media.flash.created', [
                         '%medianame%' => $media->getName(),
                     ])
                 );
@@ -477,7 +476,7 @@ class MediaController extends BaseMediaController
             if ($isInModal) {
                 $this->addFlash(
                     'sonata_flash_error',
-                    $this->get('translator')->trans('hg_media.flash.not_created', [
+                    $this->getTranslator()->trans('hg_media.flash.not_created', [
                         '%mediaerrors%' => $form->getErrors(true, true),
                     ])
                 );
