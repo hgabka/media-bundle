@@ -17,7 +17,7 @@
         "php" : "~7.2",
         "hgabka/utils-bundle": "^4.0",
         "white-october/pagerfanta-bundle": "~1.0",
-        "liip/imagine-bundle": "dev-master@dev",
+        "liip/imagine-bundle": "^2.1",
         "knplabs/gaufrette": "^0.6",
         "symfony/framework-bundle": "^4.1"
     },
