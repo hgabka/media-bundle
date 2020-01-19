@@ -2,6 +2,7 @@
 
 namespace Hgabka\MediaBundle\Traits;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
@@ -43,12 +44,15 @@ trait MediaControllerTrait
     /** @var RequestStack */
     protected $requestStack;
 
+    /** @var ManagerRegistry */
+    protected $doctrine;
+    
     /**
      * MediaControllerTrait constructor.
      *
      * @param MediaAdmin $admin
      */
-    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack)
+    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack, ManagerRegistry $doctrine)
     {
         $this->admin = $admin;
         $this->manager = $manager;
@@ -56,6 +60,12 @@ trait MediaControllerTrait
         $this->folderManager = $folderManager;
         $this->translator = $translator;
         $this->requestStack = $requestStack;
+        $this->doctrine = $doctrine;
+    }
+
+    protected function getDoctrine()
+    {
+        return $this->doctrine;
     }
 
     /**
