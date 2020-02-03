@@ -19,8 +19,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('hgabka_media');
+        $treeBuilder = new TreeBuilder('hgabka_media');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
