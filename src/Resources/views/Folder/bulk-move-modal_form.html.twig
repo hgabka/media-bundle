@@ -1,0 +1,20 @@
+{% form_theme form '@HgabkaUtils/Form/fields.html.twig' %}
+
+{{ form_start(form, {'method': 'POST', 'action': path('HgabkaMediaBundle_media_bulk_move'), 'attr': {'id': 'bulk-move-modal-form'}}) }}
+
+<!-- Body -->
+<div class="modal-body">
+    {{ 'hg_media.folder.bulk_move.modal.text' | trans }}
+    {{ form_widget(form) }}
+</div>
+
+<!-- Footer -->
+<div class="modal-footer">
+    <button type="submit" class="js-add-app-loading--forms btn btn-danger btn--raise-on-hover">
+        {{ 'hg_media.folder.bulk_move.modal.save' | trans }}
+    </button>
+    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+        {{ 'hg_media.form.cancel' | trans }}
+    </button>
+</div>
+{{ form_end(form) }}

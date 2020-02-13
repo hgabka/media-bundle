@@ -5,6 +5,7 @@ namespace Hgabka\MediaBundle\Controller;
 use Hgabka\AdminBundle\FlashMessages\FlashTypes;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
+use Hgabka\MediaBundle\Form\BulkMoveMediaType;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * MediaController.
@@ -491,5 +493,53 @@ class MediaController extends BaseMediaController
             'folder' => $folder,
             'admin' => $this->getAdmin(),
         ];
+    }
+
+
+    /**
+     * @Route("/bulk-move", name="HgabkaMediaBundle_media_bulk_move")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse|Response
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function bulkMoveAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mediaRepo = $em->getRepository(Media::class);
+        $form = $this->createForm(BulkMoveMediaType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Folder $folder */
+            $folder = $form->getData()['folder'];
+            $mediaIds = explode(',', $form->getData()['media']);
+
+            $mediaRepo->createQueryBuilder('m')
+                      ->update()
+                      ->set('m.folder', $folder->getId())
+                      ->where('m.id in (:mediaIds)')
+                      ->setParameter('mediaIds', $mediaIds)
+                      ->getQuery()
+                      ->execute();
+
+            $this->addFlash('sonata_flash_success', $this->getTranslator()->trans('hg_media.folder.bulk_move.success.text'));
+
+            return new JsonResponse(
+                [
+                    'Success' => 'The media is moved',
+                ]
+            );
+        }
+
+        return $this->render(
+            '@HgabkaMedia/Folder/bulk-move-modal_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 }

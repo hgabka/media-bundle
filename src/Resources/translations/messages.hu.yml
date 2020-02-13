@@ -58,6 +58,14 @@ hg_media:
         new: Új hozzáadása
 
     folder:
+        bulk_move:
+            action: Tömeges média áthelyezés
+            action_short: Tömeges áthelyezés
+            modal:
+                title: Tömeges média áthelyezés
+                text: 'Válassza ki a mappát, ahová át szeretné helyezni a kijelölt fájlokat:'
+                save: Mozgatás
+
         addsub:
             action: Almappa létrehozása
             action_short: Almappa hozzáadása

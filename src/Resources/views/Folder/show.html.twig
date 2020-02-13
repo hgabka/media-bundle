@@ -65,6 +65,10 @@
                         <span class="small-screen">{{ 'hg_media.folder.empty.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                     </button>
                 {% endif %}
+                <button class="btn btn-default btn--raise-on-hover" data-target="#bulk-move-modal" data-toggle="modal" type="button">
+                    <span class="large-screen">{{ 'hg_media.folder.bulk_move.action' |trans }}</span>
+                    <span class="small-screen">{{ 'hg_media.folder.bulk_move.action_short' |trans }} <i class="fa fa-folder btn__icon-folder"></i></span>
+                </button>
             {% endblock %}
         </div>
     </div>
@@ -212,13 +216,24 @@
                                             {{ 'hg_media.helper.edit'|trans }}
                                         </span>
                                         </a>
+                                        <div class="media-thumbnail-action media-thumbnail-action__move">
+                                            <input data-sonata-icheck="false" type="checkbox" data-media-id="{{ media.id }}" id="bulk-move-{{ media.id }}" name="bulk-move-{{ media.id }}" class="media-thumbnail-bulk-move-btn js-bulk-move-media">
+                                            <label class="btn" for="bulk-move-{{ media.id }}"></label>
+                                        </div>
+                                        <span class="media-thumbnail-bulk-move-helper">
+                                            Bulk move
+                                        </span>
+
                                         {% if admin.hasAccess('delete') %}
+                                        <div class="media-thumbnail-action media-thumbnail-action__delete">
                                             <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn media-thumbnail-del-btn">
                                                 <i class="fa fa-trash-o"></i>
                                             </button>
+
+                                        </div>
                                             <span class="media-thumbnail-del-helper">
-                                        {{ 'hg_media.helper.delete'|trans }}
-                                    </span>
+                                                {{ 'hg_media.helper.delete'|trans }}
+                                            </span>
                                             <!-- Modals -->
                                             {% include 'HgabkaMediaBundle:Media:delete-modal.html.twig' %}
                                         {% endif %}
@@ -286,5 +301,6 @@
     {% include '@HgabkaMedia/Folder/addsub-modal.html.twig' %}
     {% include '@HgabkaMedia/Folder/delete-modal.html.twig' %}
     {% include '@HgabkaMedia/Folder/empty-modal.html.twig' %}
+    {% include '@HgabkaMedia/Folder/bulk-move-modal.html.twig' %}
 
 {% endblock %}
