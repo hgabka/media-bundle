@@ -59,6 +59,7 @@ hg_media:
 
     folder:
         bulk_move:
+            helper: Kijelölés
             action: Tömeges média áthelyezés
             action_short: Tömeges áthelyezés
             modal:

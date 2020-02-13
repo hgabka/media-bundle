@@ -58,6 +58,15 @@ hg_media:
         new: Add media to "%folder%"
 
     folder:
+        bulk_move:
+            helper: Select media
+            action: Bulk move media
+            action_short: Bulk move media
+            modal:
+                title: Bulk move media
+                text: 'Choose the folder you want to move the selected media to:'
+                save: Move
+
         addsub:
             action: Add subfolder
             action_short: Add
