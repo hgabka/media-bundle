@@ -1,7 +1,9 @@
 require('../css/media-chooser.css');
+require('../css/media.css');
 
 import bulkUpload from './bulkupload.js';
 var dndUpload = require('./dndupload.js').dndUpload;
+var bulkmove = require('./bulkmove.js').bulkmove;
 var hgabkamedia = {};
 
 hgabkamedia.app = (function($, window, undefined) {
@@ -11,6 +13,7 @@ hgabkamedia.app = (function($, window, undefined) {
     init = function () {
         bulkUpload.bulkUpload.init();
         dndUpload.dndUpload.init();
+        bulkmove.bulkMove.init();
     }
     return {
         init: init

@@ -113,11 +113,11 @@
     color: white;
 }
 
-.media-thumbnail-del-btn, .media-thumbnail-del-btn:hover {
+.btn.media-thumbnail-del-btn, .btn.media-thumbnail-del-btn:hover {
     background: #d9534f;
     color: white;
 }
-.media-thumbnail:hover + .media-thumbnail-del-btn {
+.media-thumbnail:hover + .btn.media-thumbnail-del-btn {
     opacity: 1;
 }
 .media-thumbnail-del-btn:hover {
@@ -195,11 +195,11 @@ input[type="checkbox"].media-thumbnail-bulk-move-btn + label::after {
 .media-thumbnail-action:hover {
     opacity: 1;
 }
-.media-thumbnail:hover .media-thumbnail__helper, .media-thumbnail:hover ~ .media-thumbnail-action, .media-thumbnail:hover ~ .media-thumbnail-del-btn {
+.media-thumbnail:hover .media-thumbnail__helper, .media-thumbnail:hover ~ .media-thumbnail-action, .media-thumbnail:hover ~ .btn.media-thumbnail-del-btn {
     opacity: 1;
 }
 
-.media-thumbnail-del-btn {
+.btn.media-thumbnail-del-btn {
     padding: .2em .5em;
     border-radius: 0 3px 0 3px;
 }
@@ -208,7 +208,7 @@ input[type="checkbox"].media-thumbnail-bulk-move-btn + label::after {
     color: #2997ce;
 }
 
-.media-thumbnail-move-btn {
+.btn.media-thumbnail-move-btn {
     opacity: 0;
     transition: opacity .3s ease;
 }
