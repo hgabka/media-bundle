@@ -153,6 +153,7 @@ services:
     Hgabka\MediaBundle\Helper\FolderManager: '@hgabka_media.folder_manager'
     Hgabka\MediaBundle\Helper\MediaManager: '@hgabka_media.media_manager'
     Hgabka\MediaBundle\Admin\MediaAdmin: '@hg_media.admin.media'
+    Hgabka\MediaBundle\Helper\Services\MediaCreatorService: '@hgabka_media.media_creator_service'
 
     Hgabka\MediaBundle\Controller\ChooserController:
         autoconfigure: true
