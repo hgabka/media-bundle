@@ -107,11 +107,15 @@ services:
         class: Hgabka\MediaBundle\Command\RebuildFolderTreeCommand
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
 
     hgabka_media.command.cleandeletedmedia:
         class: Hgabka\MediaBundle\Command\CleanDeletedMediaCommand
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
 
     hgabka_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
