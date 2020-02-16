@@ -9,6 +9,7 @@ parameters:
 
 services:
     hgabka_media.media_handlers.remote_slide:
+        public: true
         class: '%hgabka_media.media_handler.remote_slide.class%'
         arguments: [1]
         calls:
@@ -17,6 +18,7 @@ services:
             -  { name: 'hgabka_media.media_handler' }
 
     hgabka_media.media_handlers.remote_video:
+        public: true
         class: '%hgabka_media.media_handler.remote_video.class%'
         arguments: [1, '%hgabka_media.remote_video%']
         calls:
@@ -25,6 +27,7 @@ services:
             -  { name: 'hgabka_media.media_handler' }
 
     hgabka_media.media_handlers.remote_audio:
+        public: true
         class: '%hgabka_media.media_handler.remote_audio.class%'
         arguments: [1, '%hgabka_media.soundcloud_api_key%']
         calls:
@@ -33,6 +36,7 @@ services:
             -  { name: 'hgabka_media.media_handler' }
 
     hgabka_media.media_handlers.image:
+        public: true
         class: '%hgabka_media.media_handler.image.class%'
         arguments: [1, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory', '%aviary_api_key%']
         calls:
@@ -44,6 +48,7 @@ services:
             -  { name: 'hgabka_media.media_handler' }
 
     hgabka_media.media_handlers.file:
+        public: true
         class: '%hgabka_media.media_handler.file.class%'
         arguments: [0, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory']
         calls:
