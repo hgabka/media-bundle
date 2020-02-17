@@ -66,6 +66,8 @@ hg_media:
                 title: Tömeges média áthelyezés
                 text: 'Válassza ki a mappát, ahová át szeretné helyezni a kijelölt fájlokat:'
                 save: Mozgatás
+            success:
+                text: Az áthelyezés sikeresen megtörtént
 
         addsub:
             action: Almappa létrehozása
