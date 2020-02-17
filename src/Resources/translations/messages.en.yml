@@ -66,6 +66,8 @@ hg_media:
                 title: Bulk move media
                 text: 'Choose the folder you want to move the selected media to:'
                 save: Move
+            success:
+                text: Moved successfully
 
         addsub:
             action: Add subfolder
