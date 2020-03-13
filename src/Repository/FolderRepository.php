@@ -257,7 +257,17 @@ class FolderRepository extends NestedTreeRepository
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
 
-        $folders = $this->findBy([], ['parent' => 'ASC', 'name' => 'asc']);
+        $folders =
+            $this
+                ->createQueryBuilder('f')
+                ->leftJoin('f.translations', 'ft')
+                ->orderBy('f.parent', 'ASC')
+                ->addOrderBy('ft.name', 'ASC')
+                ->where('f.deleted = false')
+                ->getQuery()
+                ->getResult()
+        ;
+
 
         $rootFolder = $folders[0];
         $first = true;
