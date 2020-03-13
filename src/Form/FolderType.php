@@ -89,7 +89,7 @@ class FolderType extends AbstractType
                 ]
             )
         ;
-        if ($this->authChecker->isGranted('ROLE_ADMIN')) {
+                if ($this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $builder
                 ->add(
                     'internalName',
@@ -98,7 +98,11 @@ class FolderType extends AbstractType
                         'label' => 'hg_media.folder.addsub.form.internal_name',
                         'required' => false,
                     ]
-                )->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                )
+            ;
+        } else {
+            $builder
+                ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                     $folder = $event->getData();
                     $form = $event->getForm();
                     if ($folder->isInternal()) {
