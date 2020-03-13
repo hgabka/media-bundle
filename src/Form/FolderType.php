@@ -89,7 +89,8 @@ class FolderType extends AbstractType
                 ]
             )
         ;
-                if ($this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
+        
+        if ($this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $builder
                 ->add(
                     'internalName',
