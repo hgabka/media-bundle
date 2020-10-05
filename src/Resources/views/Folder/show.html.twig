@@ -206,7 +206,7 @@
                                         <a class="thumbnail media-thumbnail" href="{{ path('HgabkaMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                             <figure>
                                                 {% if imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
-                                                    <video width="200" height="140" preload="metadata">
+                                                    <video controls width="200" height="140" preload="metadata">
                                                         <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
                                                     </video>
                                                 {% elseif imageurl %}
