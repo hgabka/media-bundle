@@ -245,7 +245,7 @@
                                 <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ path }}" data-title="{{ media.name }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
                                     <figure>
                                         {% if imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
-                                             <video width="200" height="140" preload="metadata">
+                                             <video controls width="200" height="140" preload="metadata">
                                                  <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
                                              </video>
                                         {% elseif imageurl %}
