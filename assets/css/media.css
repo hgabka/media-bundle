@@ -79,6 +79,11 @@
     min-height: 20rem;
 }
 
+.media-thumbnail video {
+    display: block;
+    margin: 0 auto;
+}
+
 .media-thumbnail__icon {
     display: block;
     margin: 2rem 0;
