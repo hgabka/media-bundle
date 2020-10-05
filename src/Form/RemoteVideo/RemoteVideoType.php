@@ -30,7 +30,7 @@ class RemoteVideoType extends AbstractRemoteType
                 'type',
                 ChoiceType::class,
                 [
-                    'label' => 'media.form.remote_video.type.label',
+                    'label' => 'hg_media.form.remote_video.type.label',
                     'choices' => $this->getRemoteVideoChoices($options['configuration']),
                     'constraints' => [new NotBlank()],
                     'required' => true,
