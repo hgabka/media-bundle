@@ -194,6 +194,8 @@
                                     {% if imageurl is not empty and media.location == 'local' %}
                                         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
                                             {% set imageurlretina = imageurl %}
+                                        {% elseif imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
+                                            {% set imageurlretina = imageurl %}
                                         {% else %}
                                             {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
                                             {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
@@ -203,7 +205,11 @@
                                     <div class="js-can-have-dnd col-sm-6 col-md-4 col-lg-3">
                                         <a class="thumbnail media-thumbnail" href="{{ path('HgabkaMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                             <figure>
-                                                {% if imageurl %}
+                                                {% if imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
+                                                    <video width="145" height="102" preload="metadata">
+                                                        <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
+                                                    </video>
+                                                {% elseif imageurl %}
                                                     <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">
                                                 {% else %}
                                                     <i class="fa fa-file-o media-thumbnail__icon"></i>
