@@ -200,8 +200,8 @@ input[type="checkbox"].media-thumbnail-bulk-move-btn + label::after {
 }
 
 .btn.media-thumbnail-del-btn {
-    padding: .2em .5em;
-    border-radius: 0 3px 0 3px;
+    padding: .2em .5em !important;
+    border-radius: 0 3px 0 3px !important;
 }
 
 .media-thumbnail-bulk-move-helper {
