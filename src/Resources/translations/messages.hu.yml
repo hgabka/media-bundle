@@ -52,7 +52,7 @@ hg_media:
             contenttype: Információ
             createdat: Létrehozva
             updatedat: Frissítve
-            downloadlink: "Letölthető innen:"
+            downloadlink: 'Letölthető innen'
         addto: Feltöltés
         deletesure: Biztos, hogy törölni szeretné?
         new: Új hozzáadása
