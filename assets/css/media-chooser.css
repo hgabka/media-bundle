@@ -89,6 +89,12 @@ h3.modal-title {
 .media-chooser__preview {
     position: relative;
 }
+.media-chooser__preview video {
+    display: block;
+    margin: 0 auto;
+    outline: 0 none;
+    border: none;
+}
 .media-chooser__preview__del-btn {
     z-index: 2;
     position: absolute;
