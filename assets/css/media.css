@@ -82,6 +82,8 @@
 .media-thumbnail video {
     display: block;
     margin: 0 auto;
+    border: none;
+    outline: 0 none;
 }
 
 .media-thumbnail__icon {
