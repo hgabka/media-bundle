@@ -354,7 +354,7 @@ class FolderRepository extends NestedTreeRepository
         $qb
             ->orderBy('f.lft')
             ->setParameter('left', $parentFolder->getLeft())
-            ->setParameter('right', $ignoreSubtree->getRight())
+            ->setParameter('right', $parentFolder->getRight())
         ;
 
         return $qb;
