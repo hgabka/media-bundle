@@ -318,6 +318,49 @@ class FolderRepository extends NestedTreeRepository
         return $qb;
     }
 
+
+    /**
+     * Used as querybuilder for Folder entity selectors under $parent.
+     *
+     * @param Folder $parent Folder used as root
+     *
+     * @return QueryBuilder
+     */
+    public function selectParentFolderQueryBuilder($parent = null, $includeParent = true)
+    {
+        if (is_string($parent)) {
+            $parentFolder = $this->findOneByInternalName($parent);
+        } else {
+            $parentFolder = $parent;
+        }
+
+        if (null === $parentFolder || !$parentFolder instanceof Folder) {
+            return $this->selectFolderQueryBuilder();
+        }
+
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('f');
+        $qb->where('f.deleted != true');
+        if ($includeParent) {
+            $qb
+                ->andWhere('f.lft >= :left')
+                ->andWhere('f.rgt <= :right')
+            ;
+        } else {
+            $qb
+                ->andWhere('f.lft > :left')
+                ->andWhere('f.rgt < :right')
+            ;
+        }
+        $qb
+            ->orderBy('f.lft')
+            ->setParameter('left', $parentFolder->getLeft())
+            ->setParameter('right', $ignoreSubtree->getRight())
+        ;
+
+        return $qb;
+    }
+    
     /**
      * @param Folder $folder
      */
