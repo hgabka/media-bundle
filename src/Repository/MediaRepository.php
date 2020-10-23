@@ -80,7 +80,7 @@ class MediaRepository extends EntityRepository
         return $this->findBy(['deleted' => true, 'removedFromFileSystem' => false]);
     }
 
-    public function getMediaForFolder(Folder $folder, $orderByField = null, $orderDirection = 'ASC', $includeDeleted = false)
+    public function getMediaForFolder($orderByField = null, $orderDirection = 'ASC', $includeDeleted = false)
     {
         $qb =
             $this
