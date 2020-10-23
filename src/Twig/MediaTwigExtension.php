@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Twig\Extension\AbstractExtension;
