@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
-use Prezent\Doctrine\Translatable\TranslatableInterface;
+use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
+use Hgabka\Doctrine\Translatable\TranslatableInterface;
 
 /**
  * Class that defines a folder from the MediaBundle in the database.
@@ -109,7 +109,7 @@ class Folder implements TranslatableInterface
     protected $internal = false;
 
     /**
-     * @Prezent\Translations(targetEntity="Hgabka\MediaBundle\Entity\FolderTranslation")
+     * @Hgabka\Translations(targetEntity="Hgabka\MediaBundle\Entity\FolderTranslation")
      */
     private $translations;
 

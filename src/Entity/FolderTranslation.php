@@ -3,9 +3,9 @@
 namespace Hgabka\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
-use Prezent\Doctrine\Translatable\Entity\TranslationTrait;
-use Prezent\Doctrine\Translatable\TranslationInterface;
+use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
+use Hgabka\Doctrine\Translatable\Entity\TranslationTrait;
+use Hgabka\Doctrine\Translatable\TranslationInterface;
 
 /**
  * @ORM\Table(name="hg_media_folder_translation")
@@ -21,7 +21,7 @@ class FolderTranslation implements TranslationInterface
     protected $name;
 
     /**
-     * @Prezent\Translatable(targetEntity="Hgabka\MediaBundle\Entity\Folder")
+     * @Hgabka\Translatable(targetEntity="Hgabka\MediaBundle\Entity\Folder")
      */
     private $translatable;
 

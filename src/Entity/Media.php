@@ -6,8 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
-use Prezent\Doctrine\Translatable\TranslatableInterface;
+use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
+use Hgabka\Doctrine\Translatable\TranslatableInterface;
 
 /**
  * Media.
@@ -108,7 +108,7 @@ class Media implements TranslatableInterface
     protected $removedFromFileSystem;
 
     /**
-     * @Prezent\Translations(targetEntity="Hgabka\MediaBundle\Entity\MediaTranslation")
+     * @Hgabka\Translations(targetEntity="Hgabka\MediaBundle\Entity\MediaTranslation")
      */
     private $translations;
 
