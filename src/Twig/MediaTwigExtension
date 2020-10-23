@@ -16,6 +16,7 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
 
     /** @var EntityManagerInterface */
     protected $doctrine;
+    
     /**
      * MediaTwigExtension constructor.
      *
