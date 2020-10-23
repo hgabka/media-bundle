@@ -136,6 +136,12 @@ services:
             - [setMimeTypeGuesser, ['@hgabka_media.mimetype_guesser.factory']]
             - [setExtensionGuesser, ['@hgabka_media.extension_guesser.factory']]
 
+    hgabka_media.media.twig.extension:
+        class: Hgabka\MediaBundle\Twig\MediaTwigExtension
+        arguments: ['@hgabka_media.media_manager', '@doctrine.orm.entity_manager']
+        tags:
+            - { name: twig.extension }
+
     hg_media.admin.media:
         class: Hgabka\MediaBundle\Admin\MediaAdmin
         tags:
