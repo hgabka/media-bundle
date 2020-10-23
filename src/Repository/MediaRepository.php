@@ -4,6 +4,7 @@ namespace Hgabka\MediaBundle\Repository;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\EntityRepository;
+use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 
 /**
@@ -77,5 +78,24 @@ class MediaRepository extends EntityRepository
     public function findAllDeleted()
     {
         return $this->findBy(['deleted' => true, 'removedFromFileSystem' => false]);
+    }
+
+    public function getMediaForFolder(Folder $folder, $orderByField = null, $orderDirection = 'ASC', $includeDeleted = false)
+    {
+        $qb =
+            $this
+                ->createQueryBuilder('m')
+                ->where('m.folder = :folder')
+                ->setParameter('folder', $folder)
+        ;
+        if (null !== $orderByField) {
+            $qb->orderBy('m.'.$orderByField, $orderDirection);
+        }
+        
+        if (!$includeDeleted) {
+            $qb->andWhere('m.deleted = 0');
+        }
+        
+        return $qb->getQuery()->getResult();
     }
 }
