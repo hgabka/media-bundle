@@ -370,7 +370,7 @@ class MediaController extends BaseMediaController
         $linkChooser = $request->get('linkChooser');
 
         $extraParams = [];
-        if (!empty($cKEditorFuncNum)) {
+        if (null !==$cKEditorFuncNum) {
             $extraParams['CKEditorFuncNum'] = $cKEditorFuncNum;
         }
         if (!empty($linkChooser)) {

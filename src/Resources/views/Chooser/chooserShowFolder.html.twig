@@ -12,11 +12,12 @@
 
                 <!-- Navigation -->
                 <div class="collapse navbar-collapse" id="main-nav-bar">
-                     <!-- Navigation - Right -->
+                    <!-- Navigation - Right -->
                     <ul class="nav navbar-nav navbar-right">
                         {% set route = app.request.attributes.get('_route') %}
                         {{ localeswitcher_widget(get_backend_locales(), route) }}
                     </ul>
+
                 </div>
             </div>
         </nav>
@@ -58,7 +59,7 @@
 
 
 {% set urlParams = {'type': type} %}
-{% if cKEditorFuncNum %}
+{% if cKEditorFuncNum is not null %}
     {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
 {% endif %}
 {% if linkChooser %}
@@ -244,10 +245,10 @@
                                 {% endif %}
                             {% endif %}
 
-                            {% set path = cKEditorFuncNum ? media.url : ("[%s]" | format("M" ~ media.id)) %}
+                            {% set path = cKEditorFuncNum is not null ? media.url : ("[%s]" | format("M" ~ media.id)) %}
 
                             <div class="col-sm-6 col-md-4 col-lg-3">
-                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ path }}" data-title="{{ media.name }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
+                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ path }}" data-title="{{ media.name }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum is not null %}true{% else %}false{% endif %}">
                                     <figure>
                                         {% if imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
                                              <video controls width="200" height="140" preload="metadata">

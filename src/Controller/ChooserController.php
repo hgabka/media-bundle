@@ -142,7 +142,7 @@ class ChooserController extends BaseMediaController
         $linkChooserLink = null;
         if (!empty($linkChooser)) {
             $params = [];
-            if (!empty($cKEditorFuncNum)) {
+            if (null !== $cKEditorFuncNum) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
                 $routeName = 'HgabkaNodeBundle_ckselecturl';
             } else {
