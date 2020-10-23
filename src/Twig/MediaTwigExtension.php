@@ -40,6 +40,7 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
         return [
             new TwigFunction('get_media_for_folder', [$this, 'getMediaForFolder']),
             new TwigFunction('get_last_media_for_folder', [$this, 'getLastMediaForFolder']),
+            new TwigFunction('get_folder_by_internal_name', [$this, 'getFolderByInternalName']),
         ];
     }
 
@@ -53,5 +54,10 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
         $media = $this->doctrine->getRepository(Media::class)->getMediaForFolder($folder, 'createdAt', 'DESC');
 
         return empty($media) ? null : current($media);
+    }
+    
+    public function getFolderByInternalName($internalName)
+    {
+        return $this->doctrine->getRepository(Folder::class)->findOneByInternalName($internalName);
     }
 }
