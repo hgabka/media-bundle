@@ -15,7 +15,7 @@ use Hgabka\UtilsBundle\AdminList\FilterBuilder;
 use Hgabka\UtilsBundle\AdminList\FilterType\FilterTypeInterface;
 use Hgabka\UtilsBundle\AdminList\FilterType\ORM;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -204,7 +204,7 @@ trait MediaControllerTrait
             $filter->apply();
         }
 
-        $adapter = new DoctrineORMAdapter($queryBuilder->getQuery());
+        $adapter = new QueryAdapter($queryBuilder->getQuery());
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setNormalizeOutOfRangePages(true);
         $pagerfanta->setMaxPerPage(250);
