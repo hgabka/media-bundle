@@ -119,7 +119,7 @@
 
                     {% for child in folder.children %}
                         <a href="{{ path('admin_hgabka_media_media_list', { 'folderId' :child.id }) }}" class="list-group-item" data-folder-id="{{ child.id }}">
-                            {{ child.name }}
+                            {{ child.name|default('hg_media.label.no_translation'|trans) }}
                         </a>
                     {% else %}
                         <p class="list-group-item text--muted">
