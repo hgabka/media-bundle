@@ -83,7 +83,7 @@
 
 {% block header %}
     <h1 class="app__content__header__title">
-        {{ folder.name | trans }}
+        {{ folder.name|default('hg_media.label.no_translation'|trans) }}
     </h1>
     {% block extra_actions_header %}{% endblock %}
 {% endblock %}
@@ -205,7 +205,7 @@
     <nav class="list-group" role="navigation">
         {% for child in folder.children %}
             <a href="{{ path('HgabkaMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}" class="list-group-item">
-                {{ child.name | trans }}
+                {{ child.name|default('hg_media.label.no_translation'|trans) }}
             </a>
         {% else %}
             <p class="list-group-item text--muted">
