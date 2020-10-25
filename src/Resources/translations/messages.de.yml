@@ -65,12 +65,16 @@ hg_media:
             action_short: Löschen
             modal:
                 title: Verzeichnis Löschen
-                text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden?
+                text: 'Soll das Verzeichnis "%folder%" wirklich gelöscht werden?'
         save: Speichern
         contenttab:
             title: Inhalt
         propertiestab:
             title: Eigenschaften
+        sortby: Sortieren
+        show:
+            success:
+                text: 'Ordner "%folder%" geändert!'
 
     bulkupload:
         upload: Upload

@@ -12,9 +12,9 @@
                 {% endif %}
                 <li>
                     {% if loop.last %}
-                        <span>{{ parent.name }}</span>
+                        <span>{{ parent.name|default('hg_media.label.no_translation'|trans) }}</span>
                     {% else %}
-                        <a href="{{ path('admin_hgabka_media_media_list', { folderId: parent.id }) }}">{{ parent.name }}</a>
+                        <a href="{{ path('admin_hgabka_media_media_list', { folderId: parent.id }) }}">{{ parent.name|default('hg_media.label.no_translation'|trans) }}</a>
                     {% endif %}
                 </li>
             {% endfor %}
