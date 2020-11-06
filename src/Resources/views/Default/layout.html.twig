@@ -1,21 +1,21 @@
 {% extends '@HgabkaUtils/Default/layout.html.twig' %}
 
 {% block breadcrumb %}
-            <li>
-                <a href="{{ path('sonata_admin_dashboard') }}">{{ 'link_breadcrumb_dashboard' | trans({}, 'SonataAdminBundle') | raw }}</a>
-            </li>
-            {% for parent in foldermanager.parents(folder) %}
-                {% if block('breadcrumb_between') is defined %}
-                    {{ block('breadcrumb_between') }}
-                {% endif %}
-                <li>
-                    {% if loop.last %}
-                        <span>{{ parent.name|default('hg_media.label.no_translation'|trans) }}</span>
-                    {% else %}
-                        <a href="{{ path('admin_hgabka_media_media_list', { folderId: parent.id }) }}">{{ parent.name|default('hg_media.label.no_translation'|trans) }}</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
+    <li>
+        <a href="{{ path('sonata_admin_dashboard') }}">{{ 'link_breadcrumb_dashboard' | trans({}, 'SonataAdminBundle') | raw }}</a>
+    </li>
+    {% for parent in foldermanager.parents(folder) %}
+        {% if block('breadcrumb_between') is defined %}
+            {{ block('breadcrumb_between') }}
+        {% endif %}
+        <li>
+            {% if loop.last %}
+                <span>{{ parent.name|default('hg_media.label.no_translation'|trans) }}</span>
+            {% else %}
+                <a href="{{ path('admin_hgabka_media_media_list', { folderId: parent.id }) }}">{{ parent.name|default('hg_media.label.no_translation'|trans) }}</a>
+            {% endif %}
+        </li>
+    {% endfor %}
 {% endblock %}
 
 {% block admin_sidebar %}
@@ -45,6 +45,3 @@
         </ul>
     </nav>
 {% endblock %}
-
-
-
