@@ -1,8 +1,6 @@
 {% extends '@HgabkaUtils/Default/layout.html.twig' %}
 
 {% block breadcrumb %}
-    <div class="hidden-xs">
-        <ol class="nav navbar-top-links breadcrumb">
             <li>
                 <a href="{{ path('sonata_admin_dashboard') }}">{{ 'link_breadcrumb_dashboard' | trans({}, 'SonataAdminBundle') | raw }}</a>
             </li>
@@ -18,8 +16,6 @@
                     {% endif %}
                 </li>
             {% endfor %}
-        </ol>
-    </div>
 {% endblock %}
 
 {% block admin_sidebar %}
