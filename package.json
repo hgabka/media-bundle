@@ -1,7 +1,7 @@
 {
   "name": "hgabka-media",
-  "version": "1.0.0",
-  "description": "utils assets for hgabka-media bundle",
+  "version": "1.0.1",
+  "description": "media assets for hgabka-media bundle",
   "author": "Gabe",
   "license": "ISC",
   "dependencies": {
@@ -9,5 +9,11 @@
     "moment": "^2.24.0",
     "moment-with-locales-es6": "^1.0.1"
   },
-  "main": "assets/js/app"
+  "main": "assets/js/app",
+  "scripts": {
+    "postinstall": "rm -rf src"
+  },
+  "files": [
+    "/assets/*"
+  ]
 }
