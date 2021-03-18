@@ -4,7 +4,6 @@ namespace Hgabka\MediaBundle\Repository;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\EntityRepository;
-use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 
 /**
@@ -12,9 +11,6 @@ use Hgabka\MediaBundle\Entity\Media;
  */
 class MediaRepository extends EntityRepository
 {
-    /**
-     * @param Media $media
-     */
     public function save(Media $media)
     {
         $em = $this->getEntityManager();
@@ -22,9 +18,6 @@ class MediaRepository extends EntityRepository
         $em->flush();
     }
 
-    /**
-     * @param Media $media
-     */
     public function delete(Media $media)
     {
         $em = $this->getEntityManager();
@@ -91,11 +84,11 @@ class MediaRepository extends EntityRepository
         if (null !== $orderByField) {
             $qb->orderBy('m.'.$orderByField, $orderDirection);
         }
-        
+
         if (!$includeDeleted) {
             $qb->andWhere('m.deleted = 0');
         }
-        
+
         return $qb->getQuery()->getResult();
     }
 }

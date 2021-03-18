@@ -88,8 +88,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return RemoteVideoHelper
      */
     public function getFormHelper(Media $media)
@@ -98,8 +96,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @throws \RuntimeException when the file does not exist
      */
     public function prepareMedia(Media $media)
@@ -149,16 +145,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
         }
     }
 
-    /**
-     * @param Media $media
-     */
     public function saveMedia(Media $media)
     {
     }
 
-    /**
-     * @param Media $media
-     */
     public function removeMedia(Media $media)
     {
     }
@@ -171,8 +161,6 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param array $params
-     *
      * @return array
      */
     public function getAddUrlFor(array $params = [])

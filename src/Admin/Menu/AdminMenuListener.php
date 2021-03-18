@@ -29,9 +29,7 @@ class AdminMenuListener
     /**
      * AdminMenuListener constructor.
      *
-     * @param MediaAdmin      $mediaAdmin
-     * @param ManagerRegistry $doctrine
-     * @param FolderManager   $folderManager
+     * @param FolderManager $folderManager
      */
     public function __construct(MediaAdmin $mediaAdmin, ManagerRegistry $doctrine)
     {

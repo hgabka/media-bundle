@@ -21,8 +21,6 @@ class ChooserController extends BaseMediaController
     /**
      * @Route("/chooser", name="HgabkaMediaBundle_chooser")
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     public function chooserIndexAction(Request $request)
@@ -84,8 +82,7 @@ class ChooserController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId The folder id
+     * @param int $folderId The folder id
      *
      * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_chooser_show_folder")
      *
@@ -188,8 +185,7 @@ class ChooserController extends BaseMediaController
     }
 
     /**
-     * @param MediaManager $mediaManager
-     * @param string       $type
+     * @param string $type
      *
      * @return \Symfony\Component\Form\FormView
      */

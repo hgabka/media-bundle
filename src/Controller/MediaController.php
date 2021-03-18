@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * MediaController.
@@ -23,8 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class MediaController extends BaseMediaController
 {
     /**
-     * @param Request $request
-     * @param int     $mediaId
+     * @param int $mediaId
      *
      * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="HgabkaMediaBundle_media_show")
      *
@@ -78,8 +76,7 @@ class MediaController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $mediaId
+     * @param int $mediaId
      *
      * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="HgabkaMediaBundle_media_delete")
      *
@@ -283,8 +280,7 @@ class MediaController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId
+     * @param int $folderId
      *
      * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_media_drop_upload")
      * @Method({"GET", "POST"})
@@ -326,9 +322,8 @@ class MediaController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId The folder id
-     * @param string  $type     The type
+     * @param int    $folderId The folder id
+     * @param string $type     The type
      *
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_create")
      * @Method({"GET", "POST"})
@@ -352,9 +347,8 @@ class MediaController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId The folder id
-     * @param string  $type     The type
+     * @param int    $folderId The folder id
+     * @param string $type     The type
      *
      * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_modal_create")
      * @Method({"GET", "POST"})
@@ -370,7 +364,7 @@ class MediaController extends BaseMediaController
         $linkChooser = $request->get('linkChooser');
 
         $extraParams = [];
-        if (null !==$cKEditorFuncNum) {
+        if (null !== $cKEditorFuncNum) {
             $extraParams['CKEditorFuncNum'] = $cKEditorFuncNum;
         }
         if (!empty($linkChooser)) {
@@ -388,8 +382,6 @@ class MediaController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     *
      * @Route("move/", name="HgabkaMediaBundle_media_move")
      * @Method({"POST"})
      *
@@ -416,6 +408,51 @@ class MediaController extends BaseMediaController
         return new JsonResponse();
     }
 
+    /**
+     * @Route("/bulk-move", name="HgabkaMediaBundle_media_bulk_move")
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     *
+     * @return JsonResponse|Response
+     */
+    public function bulkMoveAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mediaRepo = $em->getRepository(Media::class);
+        $form = $this->createForm(BulkMoveMediaType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Folder $folder */
+            $folder = $form->getData()['folder'];
+            $mediaIds = explode(',', $form->getData()['media']);
+
+            $mediaRepo->createQueryBuilder('m')
+                      ->update()
+                      ->set('m.folder', $folder->getId())
+                      ->where('m.id in (:mediaIds)')
+                      ->setParameter('mediaIds', $mediaIds)
+                      ->getQuery()
+                      ->execute();
+
+            $this->addFlash('sonata_flash_success', $this->getTranslator()->trans('hg_media.folder.bulk_move.success.text'));
+
+            return new JsonResponse(
+                [
+                    'Success' => 'The media is moved',
+                ]
+            );
+        }
+
+        return $this->render(
+            '@HgabkaMedia/Folder/bulk-move-modal_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
     private function returnJsonError($code, $message)
     {
         return new JsonResponse([
@@ -429,12 +466,11 @@ class MediaController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId    The folder Id
-     * @param string  $type        The type
-     * @param string  $redirectUrl The url where we want to redirect to on success
-     * @param array   $extraParams The extra parameters that will be passed wen redirecting
-     * @param mixed   $isInModal
+     * @param int    $folderId    The folder Id
+     * @param string $type        The type
+     * @param string $redirectUrl The url where we want to redirect to on success
+     * @param array  $extraParams The extra parameters that will be passed wen redirecting
+     * @param mixed  $isInModal
      *
      * @return array
      */
@@ -493,53 +529,5 @@ class MediaController extends BaseMediaController
             'folder' => $folder,
             'admin' => $this->getAdmin(),
         ];
-    }
-
-
-    /**
-     * @Route("/bulk-move", name="HgabkaMediaBundle_media_bulk_move")
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse|Response
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function bulkMoveAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository(Media::class);
-        $form = $this->createForm(BulkMoveMediaType::class);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Folder $folder */
-            $folder = $form->getData()['folder'];
-            $mediaIds = explode(',', $form->getData()['media']);
-
-            $mediaRepo->createQueryBuilder('m')
-                      ->update()
-                      ->set('m.folder', $folder->getId())
-                      ->where('m.id in (:mediaIds)')
-                      ->setParameter('mediaIds', $mediaIds)
-                      ->getQuery()
-                      ->execute();
-
-            $this->addFlash('sonata_flash_success', $this->getTranslator()->trans('hg_media.folder.bulk_move.success.text'));
-
-            return new JsonResponse(
-                [
-                    'Success' => 'The media is moved',
-                ]
-            );
-        }
-
-        return $this->render(
-            '@HgabkaMedia/Folder/bulk-move-modal_form.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
     }
 }

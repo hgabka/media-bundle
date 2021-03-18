@@ -36,7 +36,7 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
         }
 
         $dom = new \DOMDocument();
-        $xml = $dom->load($path, LIBXML_NOERROR + LIBXML_ERR_FATAL + LIBXML_ERR_NONE);
+        $xml = $dom->load($path, \LIBXML_NOERROR + \LIBXML_ERR_FATAL + \LIBXML_ERR_NONE);
         if (false === $xml) {
             return;
         }

@@ -4,10 +4,10 @@ namespace Hgabka\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Hgabka\UtilsBundle\Traits\TimestampableEntity;
-use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\TranslatableInterface;
+use Hgabka\UtilsBundle\Traits\TimestampableEntity;
+use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 
 /**
  * Media.
@@ -20,8 +20,8 @@ use Hgabka\Doctrine\Translatable\TranslatableInterface;
  */
 class Media implements TranslatableInterface
 {
-    use TranslatableTrait;
     use TimestampableEntity;
+    use TranslatableTrait;
 
     /**
      * @ORM\Id
@@ -347,8 +347,6 @@ class Media implements TranslatableInterface
 
     /**
      * Set folder.
-     *
-     * @param Folder $folder
      *
      * @return Media
      */

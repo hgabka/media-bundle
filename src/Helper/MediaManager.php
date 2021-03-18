@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class MediaManager
 {
-    /** @var HgabkaUtils $utils */
+    /** @var HgabkaUtils */
     protected $utils;
 
     /**
@@ -27,8 +27,6 @@ class MediaManager
 
     /**
      * MediaManager constructor.
-     *
-     * @param HgabkaUtils $utils
      */
     public function __construct(HgabkaUtils $utils)
     {
@@ -107,8 +105,6 @@ class MediaManager
     }
 
     /**
-     * @param \Hgabka\MediaBundle\Entity\Media $media
-     *
      * @return MediaManager
      */
     public function prepareMedia(Media $media)
@@ -134,9 +130,6 @@ class MediaManager
         }
     }
 
-    /**
-     * @param \Hgabka\MediaBundle\Entity\Media $media
-     */
     public function removeMedia(Media $media)
     {
         $handler = $this->getHandler($media);
@@ -177,8 +170,6 @@ class MediaManager
     }
 
     /**
-     * @param Media $media
-     *
      * @return bool|string
      */
     public function getMediaContent(Media $media)
@@ -190,8 +181,6 @@ class MediaManager
     }
 
     /**
-     * @param Media $media
-     *
      * @return bool|string
      */
     public function getMediaSize(Media $media)

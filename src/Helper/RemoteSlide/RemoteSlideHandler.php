@@ -60,8 +60,6 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return RemoteSlideHelper
      */
     public function getFormHelper(Media $media)
@@ -70,8 +68,6 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @throws \RuntimeException when the file does not exist
      */
     public function prepareMedia(Media $media)
@@ -100,16 +96,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
         }
     }
 
-    /**
-     * @param Media $media
-     */
     public function saveMedia(Media $media)
     {
     }
 
-    /**
-     * @param Media $media
-     */
     public function removeMedia(Media $media)
     {
     }
@@ -122,8 +112,6 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param array $params
-     *
      * @return array
      */
     public function getAddUrlFor(array $params = [])

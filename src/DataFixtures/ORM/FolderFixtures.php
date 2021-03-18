@@ -15,8 +15,6 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
 {
     /**
      * Load data fixtures with the passed EntityManager.
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

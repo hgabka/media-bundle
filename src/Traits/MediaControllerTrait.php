@@ -46,11 +46,9 @@ trait MediaControllerTrait
 
     /** @var ManagerRegistry */
     protected $doctrine;
-    
+
     /**
      * MediaControllerTrait constructor.
-     *
-     * @param MediaAdmin $admin
      */
     public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack, ManagerRegistry $doctrine)
     {
@@ -61,11 +59,6 @@ trait MediaControllerTrait
         $this->translator = $translator;
         $this->requestStack = $requestStack;
         $this->doctrine = $doctrine;
-    }
-
-    protected function getDoctrine()
-    {
-        return $this->doctrine;
     }
 
     /**
@@ -104,44 +97,34 @@ trait MediaControllerTrait
         return $this->admin;
     }
 
-    /**
-     * @return MediaManager
-     */
     public function getManager(): MediaManager
     {
         return $this->manager;
     }
 
-    /**
-     * @return HgabkaUtils
-     */
     public function getUtils(): HgabkaUtils
     {
         return $this->utils;
     }
 
-    /**
-     * @return FolderManager
-     */
     public function getFolderManager(): FolderManager
     {
         return $this->folderManager;
     }
 
-    /**
-     * @return TranslatorInterface
-     */
     public function getTranslator(): TranslatorInterface
     {
         return $this->translator;
     }
 
-    /**
-     * @return RequestStack
-     */
     public function getRequestStack(): RequestStack
     {
         return $this->requestStack;
+    }
+
+    protected function getDoctrine()
+    {
+        return $this->doctrine;
     }
 
     protected function getPager(Request $request, Folder $folder)

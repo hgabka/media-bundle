@@ -24,25 +24,16 @@ class DoctrineMediaListener
      */
     private $fileUrlMap = [];
 
-    /**
-     * @param MediaManager $mediaManager
-     */
     public function __construct(MediaManager $mediaManager)
     {
         $this->mediaManager = $mediaManager;
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
     public function prePersist(LifecycleEventArgs $eventArgs)
     {
         $this->prepareMedia($eventArgs->getEntity());
     }
 
-    /**
-     * @param PreUpdateEventArgs $eventArgs
-     */
     public function preUpdate(PreUpdateEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
@@ -64,7 +55,7 @@ class DoctrineMediaListener
                 if ($deleted || $reverted) {
                     $oldFileUrl = $entity->getUrl();
                     $newFileName = ($reverted ? $entity->getOriginalFilename() : uniqid());
-                    $newFileUrl = \dirname($oldFileUrl).'/'.$newFileName.'.'.pathinfo($oldFileUrl, PATHINFO_EXTENSION);
+                    $newFileUrl = \dirname($oldFileUrl).'/'.$newFileName.'.'.pathinfo($oldFileUrl, \PATHINFO_EXTENSION);
                     $entity->setUrl($newFileUrl);
                     $this->fileUrlMap[$newFileUrl] = $oldFileUrl;
                 }
@@ -72,25 +63,16 @@ class DoctrineMediaListener
         }
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
         $this->saveMedia($eventArgs->getEntity(), true);
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
     public function postUpdate(LifecycleEventArgs $eventArgs)
     {
         $this->saveMedia($eventArgs->getEntity());
     }
 
-    /**
-     * @param LifecycleEventArgs $eventArgs
-     */
     public function preRemove(LifecycleEventArgs $eventArgs)
     {
     }

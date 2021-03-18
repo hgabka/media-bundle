@@ -28,9 +28,6 @@ class FileHelper
      */
     protected $path;
 
-    /**
-     * @param Media $media
-     */
     public function __construct(Media $media)
     {
         $this->media = $media;
@@ -70,9 +67,6 @@ class FileHelper
         return $this->media->getFolder();
     }
 
-    /**
-     * @param Folder $folder
-     */
     public function setFolder(Folder $folder)
     {
         $this->media->setFolder($folder);
@@ -131,9 +125,6 @@ class FileHelper
         return $this->file;
     }
 
-    /**
-     * @param File $file
-     */
     public function setFile(File $file)
     {
         $this->file = $file;
@@ -158,10 +149,10 @@ class FileHelper
         $this->path = $path;
 
         $ch = curl_init($mediaUrl);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_FILE, $saveFile);
+        curl_setopt($ch, \CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, \CURLOPT_FILE, $saveFile);
         curl_exec($ch);
-        $effectiveUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        $effectiveUrl = curl_getinfo($ch, \CURLINFO_EFFECTIVE_URL);
         curl_close($ch);
 
         fclose($saveFile);

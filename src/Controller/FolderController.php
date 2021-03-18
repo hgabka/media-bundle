@@ -83,8 +83,7 @@ class FolderController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId
+     * @param int $folderId
      *
      * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_sub_create")
      * @Method({"GET", "POST"})
@@ -150,8 +149,7 @@ class FolderController extends BaseMediaController
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId
+     * @param int $folderId
      *
      * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_empty")
      * @Method({"GET", "POST"})
@@ -213,8 +211,6 @@ class FolderController extends BaseMediaController
 
     /**
      * @Route("/reorder", name="HgabkaMediaBundle_folder_reorder")
-     *
-     * @param Request $request
      *
      * @return JsonResponse
      */

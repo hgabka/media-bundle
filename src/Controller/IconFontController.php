@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 class IconFontController extends AbstractController
 {
     /**
-     * @param Request $request
-     *
      * @Route("/chooser", name="HgabkaMediaBundle_icon_font_chooser")
      * @Template()
      *

@@ -11,12 +11,9 @@ use Hgabka\MediaBundle\Entity\Media;
  */
 abstract class AbstractRemoteHelper
 {
-    /** @var Media $media */
+    /** @var Media */
     protected $media;
 
-    /**
-     * @param Media $media
-     */
     public function __construct(Media $media)
     {
         $this->media = $media;
@@ -154,9 +151,6 @@ abstract class AbstractRemoteHelper
         return $this->media->getFolder();
     }
 
-    /**
-     * @param Folder $folder
-     */
     public function setFolder(Folder $folder)
     {
         $this->media->setFolder($folder);

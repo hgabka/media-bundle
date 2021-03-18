@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class BulkMoveMediaType
+ * Class BulkMoveMediaType.
  */
 class BulkMoveMediaType extends AbstractType
 {

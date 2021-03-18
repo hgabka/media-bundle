@@ -34,8 +34,6 @@ class MediaCreatorService
 
     /**
      * Constructor.
-     *
-     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -47,6 +45,7 @@ class MediaCreatorService
     /**
      * @param $filePath string  The full filepath of the asset you want to upload. The filetype will be automatically detected.
      * @param $folderId integer For now you still have to manually pass the correct folder ID
+     * @param mixed $andFlush
      *
      * @return Media
      */

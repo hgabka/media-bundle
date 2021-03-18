@@ -5,10 +5,10 @@ namespace Hgabka\MediaBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Hgabka\UtilsBundle\Traits\TimestampableEntity;
-use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\TranslatableInterface;
+use Hgabka\UtilsBundle\Traits\TimestampableEntity;
+use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 
 /**
  * Class that defines a folder from the MediaBundle in the database.
@@ -22,8 +22,8 @@ use Hgabka\Doctrine\Translatable\TranslatableInterface;
  */
 class Folder implements TranslatableInterface
 {
-    use TranslatableTrait;
     use TimestampableEntity;
+    use TranslatableTrait;
 
     /**
      * @ORM\Id
@@ -221,8 +221,6 @@ class Folder implements TranslatableInterface
     /**
      * Add file.
      *
-     * @param Media $media
-     *
      * @return Folder
      */
     public function addMedia(Media $media)
@@ -408,7 +406,7 @@ class Folder implements TranslatableInterface
         return str_repeat(
             '-',
             $this->getLevel()
-            ).' '.$this->getName();
+        ).' '.$this->getName();
     }
 
     /**
@@ -436,9 +434,6 @@ class Folder implements TranslatableInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isInternal(): bool
     {
         return $this->internal;

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 // usleep(5000);
 
 // Settings
-$targetDir = ini_get('upload_tmp_dir').DIRECTORY_SEPARATOR.'plupload';
+$targetDir = ini_get('upload_tmp_dir').\DIRECTORY_SEPARATOR.'plupload';
 //$targetDir = 'uploads';
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
@@ -41,7 +41,7 @@ if (isset($_REQUEST['name'])) {
     $fileName = uniqid('file_');
 }
 
-$filePath = $targetDir.DIRECTORY_SEPARATOR.$fileName;
+$filePath = $targetDir.\DIRECTORY_SEPARATOR.$fileName;
 
 // Chunking might be enabled
 $chunk = isset($_REQUEST['chunk']) ? (int) ($_REQUEST['chunk']) : 0;
@@ -50,11 +50,11 @@ $chunks = isset($_REQUEST['chunks']) ? (int) ($_REQUEST['chunks']) : 0;
 // Remove old temp files
 if ($cleanupTargetDir) {
     if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
-        die('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
+        exit('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
     }
 
     while (false !== ($file = readdir($dir))) {
-        $tmpfilePath = $targetDir.DIRECTORY_SEPARATOR.$file;
+        $tmpfilePath = $targetDir.\DIRECTORY_SEPARATOR.$file;
 
         // If temp file is current file proceed to the next
         if ($tmpfilePath === "{$filePath}.part") {
@@ -71,21 +71,21 @@ if ($cleanupTargetDir) {
 
 // Open temp file
 if (!$out = @fopen("{$filePath}.part", $chunks ? 'ab' : 'wb')) {
-    die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+    exit('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
 }
 
 if (!empty($_FILES)) {
     if ($_FILES['file']['error'] || !is_uploaded_file($_FILES['file']['tmp_name'])) {
-        die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
+        exit('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
     }
 
     // Read binary input stream and append it to temp file
     if (!$in = @fopen($_FILES['file']['tmp_name'], 'r')) {
-        die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
+        exit('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
     }
 } else {
     if (!$in = @fopen('php://input', 'r')) {
-        die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
+        exit('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
     }
 }
 
@@ -103,4 +103,4 @@ if (!$chunks || $chunk === $chunks - 1) {
 }
 
 // Return Success JSON-RPC response
-die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+exit('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');

@@ -17,11 +17,9 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
 
     /** @var EntityManagerInterface */
     protected $doctrine;
-    
+
     /**
      * MediaTwigExtension constructor.
-     *
-     * @param MediaManager $mediaManager
      */
     public function __construct(MediaManager $mediaManager, EntityManagerInterface $doctrine)
     {
@@ -56,7 +54,7 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
 
         return empty($media) ? null : current($media);
     }
-    
+
     public function getFolderByInternalName($internalName)
     {
         return $this->doctrine->getRepository(Folder::class)->findOneByInternalName($internalName);

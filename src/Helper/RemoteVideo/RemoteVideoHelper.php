@@ -12,9 +12,6 @@ use Hgabka\MediaBundle\Helper\Remote\RemoteInterface;
  */
 class RemoteVideoHelper extends AbstractRemoteHelper implements RemoteInterface
 {
-    /**
-     * @param Media $media
-     */
     public function __construct(Media $media)
     {
         parent::__construct($media);

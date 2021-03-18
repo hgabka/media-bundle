@@ -50,9 +50,6 @@ class FolderRepository extends NestedTreeRepository
         }
     }
 
-    /**
-     * @param Folder $folder
-     */
     public function delete(Folder $folder)
     {
         $em = $this->getEntityManager();
@@ -65,8 +62,7 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * @param Folder $folder
-     * @param bool   $alsoDeleteFolders
+     * @param bool $alsoDeleteFolders
      */
     public function emptyFolder(Folder $folder, $alsoDeleteFolders = false)
     {
@@ -268,7 +264,6 @@ class FolderRepository extends NestedTreeRepository
                 ->getResult()
         ;
 
-
         $rootFolder = $folders[0];
         $first = true;
         foreach ($folders as $folder) {
@@ -318,17 +313,17 @@ class FolderRepository extends NestedTreeRepository
         return $qb;
     }
 
-
     /**
      * Used as querybuilder for Folder entity selectors under $parent.
      *
-     * @param Folder $parent Folder used as root
+     * @param Folder $parent        Folder used as root
+     * @param mixed  $includeParent
      *
      * @return QueryBuilder
      */
     public function selectParentFolderQueryBuilder($parent = null, $includeParent = true)
     {
-        if (is_string($parent)) {
+        if (\is_string($parent)) {
             $parentFolder = $this->findOneByInternalName($parent);
         } else {
             $parentFolder = $parent;
@@ -360,10 +355,7 @@ class FolderRepository extends NestedTreeRepository
 
         return $qb;
     }
-    
-    /**
-     * @param Folder $folder
-     */
+
     private function deleteMedia(Folder $folder)
     {
         $em = $this->getEntityManager();
@@ -375,9 +367,6 @@ class FolderRepository extends NestedTreeRepository
         }
     }
 
-    /**
-     * @param Folder $folder
-     */
     private function deleteChildren(Folder $folder)
     {
         $em = $this->getEntityManager();
@@ -394,8 +383,7 @@ class FolderRepository extends NestedTreeRepository
     }
 
     /**
-     * @param Folder $folder
-     * @param        $parent
+     * @param $parent
      */
     private function persistInOrderedTree(Folder $folder, $parent)
     {

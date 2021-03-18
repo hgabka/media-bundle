@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateNameCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager $em */
+    /** @var EntityManager */
     protected $em;
 
     public function execute(InputInterface $input, OutputInterface $output)

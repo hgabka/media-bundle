@@ -15,9 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AviaryController extends BaseMediaController
 {
     /**
-     * @param Request $request
-     * @param int     $folderId The id of the Folder
-     * @param int     $mediaId  The id of the image
+     * @param int $folderId The id of the Folder
+     * @param int $mediaId  The id of the image
      *
      * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="HgabkaMediaBundle_aviary")
      *

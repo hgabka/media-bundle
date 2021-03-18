@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class FolderType extends AbstractType
 {
-    /** @var HgabkaUtils $utils */
+    /** @var HgabkaUtils */
     protected $utils;
 
     /** @var AuthorizationCheckerInterface */
@@ -26,8 +26,6 @@ class FolderType extends AbstractType
 
     /**
      * FolderType constructor.
-     *
-     * @param HgabkaUtils $utils
      */
     public function __construct(HgabkaUtils $utils, AuthorizationCheckerInterface $authChecker)
     {
@@ -89,7 +87,7 @@ class FolderType extends AbstractType
                 ]
             )
         ;
-        
+
         if ($this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $builder
                 ->add(

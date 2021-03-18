@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RenameSoftDeletedCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager $em */
+    /** @var EntityManager */
     protected $em;
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -36,7 +36,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
                 $handler = $manager->getHandler($media);
                 if ($media->isDeleted() && 'local' === $media->getLocation() && $handler instanceof FileHandler) {
                     $oldFileUrl = $media->getUrl();
-                    $newFileName = ($original ? $media->getOriginalFilename() : uniqid().'.'.pathinfo($oldFileUrl, PATHINFO_EXTENSION));
+                    $newFileName = ($original ? $media->getOriginalFilename() : uniqid().'.'.pathinfo($oldFileUrl, \PATHINFO_EXTENSION));
                     $newFileUrl = \dirname($oldFileUrl).'/'.$newFileName;
                     $fileRenameQueue[] = [$oldFileUrl, $newFileUrl, $handler];
                     $media->setUrl($newFileUrl);

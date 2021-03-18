@@ -53,9 +53,7 @@ class FileHandler extends AbstractMediaHandler
     /**
      * Constructor.
      *
-     * @param int                              $priority
-     * @param MimeTypeGuesserFactoryInterface  $mimeTypeGuesserFactory
-     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
+     * @param int $priority
      */
     public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)
     {
@@ -66,8 +64,6 @@ class FileHandler extends AbstractMediaHandler
 
     /**
      * Inject the blacklisted.
-     *
-     * @param array $blacklistedExtensions
      */
     public function setBlacklistedExtensions(array $blacklistedExtensions)
     {
@@ -131,8 +127,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return FileHelper
      */
     public function getFormHelper(Media $media)
@@ -141,8 +135,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @throws \RuntimeException when the file does not exist
      */
     public function prepareMedia(Media $media)
@@ -188,9 +180,6 @@ class FileHandler extends AbstractMediaHandler
         $media->setLocation('local');
     }
 
-    /**
-     * @param Media $media
-     */
     public function removeMedia(Media $media)
     {
         $adapter = $this->fileSystem->getAdapter();
@@ -223,9 +212,6 @@ class FileHandler extends AbstractMediaHandler
         $this->saveMedia($media);
     }
 
-    /**
-     * @param Media $media
-     */
     public function saveMedia(Media $media)
     {
         if (!$media->getContent() instanceof File) {
@@ -237,8 +223,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return \Gaufrette\File
      */
     public function getOriginalFile(Media $media)
@@ -296,8 +280,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return string
      */
     private function getFilePath(Media $media)
@@ -323,8 +305,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
-     *
      * @return string
      */
     private function getFileFolderPath(Media $media)
