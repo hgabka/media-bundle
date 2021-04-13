@@ -84,7 +84,7 @@ class MediaType extends AbstractType
                 'current_value_container' => new CurrentValueContainer(),
                 'foldername' => null,
                 'folderid' => null,
-                 'editor_filter' => 'media_list_thumbnail',
+                'editor_filter' => 'media_list_thumbnail',
                 'editor_filter_retina' => 'media_list_thumbnail_retina',
            ]
         );
