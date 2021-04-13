@@ -57,6 +57,8 @@ class MediaType extends AbstractType
         $builder->setAttribute('mediatype', $options['mediatype']);
         $builder->setAttribute('foldername', $options['foldername']);
         $builder->setAttribute('folderid', $options['folderid']);
+        $builder->setAttribute('editor_filter', $options['editor_filter']);
+        $builder->setAttribute('editor_filter_retina', $options['editor_filter_retina']);
     }
 
     /**
@@ -82,7 +84,9 @@ class MediaType extends AbstractType
                 'current_value_container' => new CurrentValueContainer(),
                 'foldername' => null,
                 'folderid' => null,
-            ]
+                 'editor_filter' => 'media_list_thumbnail',
+                'editor_filter_retina' => 'media_list_thumbnail_retina',
+           ]
         );
     }
 
@@ -106,5 +110,7 @@ class MediaType extends AbstractType
         $view->vars['mediamanager'] = $this->mediaManager;
         $view->vars['foldername'] = $form->getConfig()->getAttribute('foldername');
         $view->vars['folderid'] = $form->getConfig()->getAttribute('folderid');
+        $view->vars['editor_filter'] = $form->getConfig()->getAttribute('editor_filter');
+        $view->vars['editor_filter_retina'] = $form->getConfig()->getAttribute('editor_filter_retina');
     }
 }
