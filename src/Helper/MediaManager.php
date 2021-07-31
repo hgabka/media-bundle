@@ -25,12 +25,16 @@ class MediaManager
      */
     protected $defaultHandler;
 
+    /** @var string */
+    protected $projectDir;
+
     /**
      * MediaManager constructor.
      */
-    public function __construct(HgabkaUtils $utils)
+    public function __construct(HgabkaUtils $utils, string $projectDir)
     {
         $this->utils = $utils;
+        $this->projectDir = $projectDir;
     }
 
     /**
@@ -189,5 +193,55 @@ class MediaManager
         $file = $this->getHandler($media)->getOriginalFile($media);
 
         return $file ? $file->getSize() : 0;
+    }
+
+    /**
+     * @param Media $media
+     * @return string
+     */
+    public function getMediaPath(Media $media): string
+    {
+        return $this->projectDir . '/public' . $media->getUrl();
+    }
+
+    /**
+     * @param Media $media
+     * @return array|null[]
+     */
+    public function getMediaInfo(Media $media): array
+    {
+        $handler = $this->getHandler($media);
+        if (!$handler) {
+            $file = null;
+        } else {
+            $file = $handler->getOriginalFile($media);
+        }
+
+        /** @var \Gaufrette\File $file */
+        if (!$file || !$file->exists()) {
+            return [
+                'imageinfo' => null,
+                'extrainfo' => null,
+                'fileinfo' => null,
+                'width' => null,
+                'height' => null,
+                'type' => null,
+                'attr' => null,
+            ];
+        }
+        $filePath = $this->getMediaPath($media);
+        $fileInfo = new SplFileInfo($filePath);
+
+        $info = getimagesize($filePath, $additionalInfo);
+
+        return [
+            'imageinfo' => $info,
+            'extrainfo' => $additionalInfo,
+            'fileinfo' => $fileInfo,
+            'width' => $info[0],
+            'height' => $info[1],
+            'type' => $info[2],
+            'attr' => $info[3],
+        ];
     }
 }
