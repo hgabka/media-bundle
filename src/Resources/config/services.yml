@@ -17,7 +17,7 @@ parameters:
 services:
     hgabka_media.media_manager:
         class: '%hgabka_media.media_manager.class%'
-        arguments: ['@hgabka_utils.hgabka_utils']
+        arguments: ['@hgabka_utils.hgabka_utils', '%kernel.project_dir%']
         calls:
             - [ setDefaultHandler, [ '@hgabka_media.media_handlers.file' ] ]
         public: true
