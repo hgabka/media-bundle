@@ -5,6 +5,7 @@ namespace Hgabka\MediaBundle\Helper;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use SplFileInfo;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
