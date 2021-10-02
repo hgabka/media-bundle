@@ -299,10 +299,11 @@ class FileHandler extends AbstractMediaHandler
 
         $uuid = $media->getUuid();
         return sprintf(
-            '%s/%s/%s/%s',
+            '%s/%s/%s/%s/%s',
             $uuid[0],
             $uuid[1],
             $uuid[2],
+            $uuid[3],
             $filename
         );
     }
