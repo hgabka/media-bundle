@@ -297,7 +297,7 @@ class FileHandler extends AbstractMediaHandler
             $filename .= '.'.strtolower($parts['extension']);
         }
 
-        $uuid = $media->getUuid();
+        $uuid = md5($media->getUuid());
         return sprintf(
             '%s/%s/%s/%s/%s',
             $uuid[0],
