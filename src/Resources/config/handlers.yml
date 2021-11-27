@@ -44,17 +44,19 @@ services:
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
             - [ setHgabkaUtils, ['@hgabka_utils.hgabka_utils']]
+            - [ setFolderDepth, ['%hgabka_media.folder_depth%']]
         tags:
             -  { name: 'hgabka_media.media_handler' }
 
     hgabka_media.media_handlers.file:
         public: true
         class: '%hgabka_media.media_handler.file.class%'
-        arguments: [0, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory']
+        arguments: [0, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory', '']
         calls:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
             - [ setHgabkaUtils, ['@hgabka_utils.hgabka_utils']]
+            - [ setFolderDepth, ['%hgabka_media.folder_depth%']]
         tags:
             -  { name: 'hgabka_media.media_handler' }

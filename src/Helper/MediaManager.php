@@ -217,7 +217,6 @@ class MediaManager
         } else {
             $file = $handler->getOriginalFile($media);
         }
-
         /** @var \Gaufrette\File $file */
         if (!$file || !$file->exists()) {
             return [

@@ -40,6 +40,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_media.remote_video', $config['remote_video']);
         $container->setParameter('hgabka_media.enable_pdf_preview', $config['enable_pdf_preview']);
         $container->setParameter('hgabka_media.blacklisted_extensions', $config['blacklisted_extensions']);
+        $container->setParameter('hgabka_media.folder_depth', $config['folder_depth']);
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');

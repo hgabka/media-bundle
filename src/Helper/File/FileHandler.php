@@ -50,6 +50,9 @@ class FileHandler extends AbstractMediaHandler
      */
     private $blacklistedExtensions = [];
 
+    /** @var integer */
+    private $folderDepth;
+
     /**
      * Constructor.
      *
@@ -60,6 +63,11 @@ class FileHandler extends AbstractMediaHandler
         parent::__construct($priority);
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
         $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
+    }
+
+    public function setFolderDepth(int $depth)
+    {
+        $this->folderDepth = $depth;
     }
 
     /**
@@ -298,14 +306,22 @@ class FileHandler extends AbstractMediaHandler
         }
 
         $uuid = md5($media->getUuid());
-        return sprintf(
-            '%s/%s/%s/%s/%s',
-            $uuid[0],
-            $uuid[1],
-            $uuid[2],
-            $uuid[3],
-            $filename
-        );
+        $pattern = '';
+        $params = [];
+
+        if ($this->folderDepth <= 0) {
+            $pattern = '%s/%s';
+            $params = [$uuid, $filename];
+        } else {
+            for ($i = 0; $i < min(5, $this->folderDepth); $i++) {
+                $pattern .= '%s/';
+                $params[] = $uuid[$i];
+            }
+            $pattern .= '%s';
+            $params[] = $filename;
+        }
+
+        return sprintf($pattern, ...$params);
     }
 
     /**

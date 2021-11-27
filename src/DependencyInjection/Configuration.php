@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(['php', 'htaccess'])
                     ->prototype('scalar')->end()
                 ->end()
+                ->integerNode('folder_depth')->defaultValue(4)->end()
             ->end();
 
         return $treeBuilder;
