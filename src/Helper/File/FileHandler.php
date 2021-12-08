@@ -9,9 +9,8 @@ use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mime\MimeTypes;
 
 /**
  * FileHandler.
@@ -58,11 +57,10 @@ class FileHandler extends AbstractMediaHandler
      *
      * @param int $priority
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)
+    public function __construct($priority, MimeTypes $mimeTypeGuesser)
     {
         parent::__construct($priority);
-        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
-        $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
+        $this->mimeTypeGuesser = $mimeTypeGuesser;
     }
 
     public function setFolderDepth(int $depth)
@@ -171,7 +169,8 @@ class FileHandler extends AbstractMediaHandler
             $pathInfo = pathinfo($content->getClientOriginalName());
 
             if (!\array_key_exists('extension', $pathInfo)) {
-                $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
+                $extensions = $this->mimeTypeGuesser()->getExtensions($contentType);
+                $pathInfo['extension'] = empty($extensions) ? null : reset($extensions);
             }
 
             $media->setOriginalFilename($this->hgabkaUtils->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
