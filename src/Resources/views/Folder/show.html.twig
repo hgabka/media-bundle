@@ -30,7 +30,7 @@
             {% block actions %}
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-                        {{ 'hg_media.media.add.action'|trans }} <i class="fa fa-caret-down"></i>
+                        {{ 'hg_media.media.add.action'|trans }} <i class="fas fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         {% for addaction in mediamanager.getFolderAddActions() %}
@@ -166,7 +166,7 @@
                             <div class="col-xs-12">
                                 <div class="btn-group pull-right btn-group-md" role="group">
                                     <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-                                        {{ 'hg_media.folder.sortby' | trans }} <i class="fa fa-caret-down"></i>
+                                        {{ 'hg_media.folder.sortby' | trans }} <i class="fas fa-caret-down"></i>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         {% for field in orderByFields %}
