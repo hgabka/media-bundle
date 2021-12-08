@@ -164,7 +164,7 @@ class FileHandler extends AbstractMediaHandler
             $media->setContent($file);
         }
 
-        $contentType = $this->mimeTypeGuesser->guess($content->getPathname());
+        $contentType = $this->mimeTypeGuesser->guessMimeType($content->getPathname());
         if ($content instanceof UploadedFile) {
             $pathInfo = pathinfo($content->getClientOriginalName());
 
