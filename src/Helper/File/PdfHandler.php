@@ -23,11 +23,11 @@ class PdfHandler extends FileHandler
      *
      * @param string $kernelRootDir
      */
-    public function setMediaPath($kernelRootDir)
+    public function setMediaPath($kernelProjectDir)
     {
-        parent::setMediaPath($kernelRootDir);
+        parent::setMediaPath($kernelProjectDir);
 
-        $this->setWebPath(realpath(str_replace('/', \DIRECTORY_SEPARATOR, $kernelRootDir.'/../web/')).\DIRECTORY_SEPARATOR);
+        $this->setWebPath(realpath(str_replace('/', \DIRECTORY_SEPARATOR, $kernelProjectDir.'/public/')).\DIRECTORY_SEPARATOR);
     }
 
     /**
