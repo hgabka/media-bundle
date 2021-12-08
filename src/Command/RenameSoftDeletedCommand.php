@@ -2,7 +2,8 @@
 
 namespace Hgabka\MediaBundle\Command;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -12,8 +13,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RenameSoftDeletedCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager */
-    protected $em;
+    protected static $defaultName = 'hgabka:media:rename-soft-deleted';
+    
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+    
+    /** @var MediaManager */
+    protected $mediaManager;
+
+    public function __construct(EntityManagerInterface $manager, MediaManager $mediaManager)
+    {
+        parent::__construct();
+        
+        $this->entityManager = $entityManager;
+        $this->mediaManager = $mediaManager;
+    }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -21,11 +35,11 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         /**
          * @var EntityManager
          */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $this->entityManager;
 
         $original = $input->getOption('original');
-        $medias = $em->getRepository('HgabkaMediaBundle:Media')->findAll();
-        $manager = $this->getContainer()->get('hgabka_media.media_manager');
+        $medias = $em->getRepository(Media::class)->findAll();
+        $manager = $this->mediaManager;
         $updates = 0;
         $fileRenameQueue = [];
 
@@ -70,7 +84,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('hgabka:media:rename-soft-deleted')
+            ->setName(static::$defaultName)
             ->setDescription('Rename physical files for soft-deleted media.')
             ->setHelp(
                 'The <info>hgabka:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
