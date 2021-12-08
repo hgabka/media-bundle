@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -60,7 +61,7 @@ class CleanDeletedMediaCommand extends Command
         $em = $this->entityManager;
         $mediaManager = $this->mediaManager;
 
-        $medias = $em->getRepository('HgabkaMediaBundle:Media')->findAllDeleted();
+        $medias = $em->getRepository(Media::class)->findAllDeleted();
 
         try {
             $em->beginTransaction();
