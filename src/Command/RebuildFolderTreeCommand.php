@@ -39,5 +39,7 @@ class RebuildFolderTreeCommand extends Command
     {
         $this->manager->getRepository(Folder::class)->rebuildTree();
         $output->writeln('Updated all folders');
+        
+        return Command::SUCCESS;
     }
 }
