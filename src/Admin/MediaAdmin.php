@@ -17,17 +17,18 @@ class MediaAdmin extends AbstractAdmin
         $this->manager = $manager;
     }
 
-    public function getBatchActions()
+    protected function configureBatchActions(array $actions): array
     {
         return [];
     }
+
 
     /**
      * Get the list of actions that can be accessed directly from the dashboard.
      *
      * @return array
      */
-    public function getDashboardActions()
+    protected function configureDashboardActions(array $actions): array
     {
         $actions = [];
 
@@ -36,7 +37,7 @@ class MediaAdmin extends AbstractAdmin
                 'label' => 'hg_media.admin.list',
                 'translation_domain' => 'messages',
                 'url' => $this->generateUrl('list'),
-                'icon' => 'list',
+                'icon' => 'fas fa-list',
             ];
         }
 
