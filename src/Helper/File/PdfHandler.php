@@ -10,7 +10,7 @@ use Hgabka\MediaBundle\Helper\Transformer\PreviewTransformerInterface;
  */
 class PdfHandler extends FileHandler
 {
-    const TYPE = 'pdf';
+    public const TYPE = 'pdf';
 
     /** @var string */
     protected $webPath;
@@ -22,6 +22,7 @@ class PdfHandler extends FileHandler
      * Inject the root dir so we know the full path where we need to store the file.
      *
      * @param string $kernelRootDir
+     * @param mixed  $kernelProjectDir
      */
     public function setMediaPath($kernelProjectDir)
     {

@@ -2,10 +2,9 @@
 
 namespace Hgabka\MediaBundle\Validator\Constraints;
 
-use Symfony\Component\Mime\MimeTypes;
-use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -49,7 +48,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
         $contentType = $this->mimeTypes->guessMimeType($value->getPathname());
         $pathInfo = pathinfo($value->getClientOriginalName());
         if (!\array_key_exists('extension', $pathInfo)) {
-	    $extensions = $this->mimeTypes->getExtensions($contentType);
+            $extensions = $this->mimeTypes->getExtensions($contentType);
             $pathInfo['extension'] = empty($extensions) ? null : reset($extensions);
         }
 
@@ -64,5 +63,4 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     {
         $this->mimeTypes = $mimeTypes;
     }
-
 }

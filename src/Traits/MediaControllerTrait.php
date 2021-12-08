@@ -2,7 +2,6 @@
 
 namespace Hgabka\MediaBundle\Traits;
 
-
 use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
@@ -47,10 +46,9 @@ trait MediaControllerTrait
 
     /** @var ManagerRegistry */
     protected $doctrine;
-        
+
     /** @var TemplateRegistryInterface */
     private $globalTemplateRegistry;
-
 
     /**
      * MediaControllerTrait constructor.
@@ -126,6 +124,11 @@ trait MediaControllerTrait
         return $this->requestStack;
     }
 
+    public function setTemplateRegistry(TemplateRegistryInterface $globalTemplateRegistry)
+    {
+        $this->globalTemplateRegistry = $globalTemplateRegistry;
+    }
+
     protected function getPager(Request $request, Folder $folder)
     {
         $queryBuilder = $this
@@ -198,11 +201,6 @@ trait MediaControllerTrait
     protected function getBaseTemplate(): string
     {
         return $this->globalTemplateRegistry->getTemplate('layout');
-    }
-    
-    public function setTemplateRegistry(TemplateRegistryInterface $globalTemplateRegistry)
-    {
-        $this->globalTemplateRegistry = $globalTemplateRegistry;
     }
 
     protected function buildFilters()

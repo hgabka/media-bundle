@@ -9,14 +9,14 @@ use Symfony\Component\Validator\Constraint;
  */
 class Media extends Constraint
 {
-    const NOT_FOUND_ERROR = 1;
-    const NOT_READABLE_ERROR = 2;
-    const EMPTY_ERROR = 3;
-    const INVALID_MIME_TYPE_ERROR = 5;
-    const TOO_WIDE_ERROR = 11;
-    const TOO_NARROW_ERROR = 12;
-    const TOO_HIGH_ERROR = 13;
-    const TOO_LOW_ERROR = 14;
+    public const NOT_FOUND_ERROR = 1;
+    public const NOT_READABLE_ERROR = 2;
+    public const EMPTY_ERROR = 3;
+    public const INVALID_MIME_TYPE_ERROR = 5;
+    public const TOO_WIDE_ERROR = 11;
+    public const TOO_NARROW_ERROR = 12;
+    public const TOO_HIGH_ERROR = 13;
+    public const TOO_LOW_ERROR = 14;
 
     public $minHeight;
     public $maxHeight;

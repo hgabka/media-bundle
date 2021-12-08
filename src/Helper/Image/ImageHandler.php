@@ -3,9 +3,7 @@
 namespace Hgabka\MediaBundle\Helper\Image;
 
 use Hgabka\MediaBundle\Entity\Media;
-use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
-use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Mime\MimeTypes;
 

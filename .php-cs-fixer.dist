@@ -6,10 +6,11 @@ This file is part of PHP CS Fixer.
 This source file is subject to the MIT license that is bundled
 with this source code in the file LICENSE.
 EOF;
-$config = PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setRiskyAllowed(true)
     ->setRules([
-        '@PHP56Migration' => true,
+        '@PHP73Migration' => true,
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'align_multiline_comment' => true,
@@ -21,10 +22,10 @@ $config = PhpCsFixer\Config::create()
         'header_comment' => ['header' => ''],
         'heredoc_to_nowdoc' => true,
         'list_syntax' => ['syntax' => 'short'],
-        'method_argument_space' => ['ensure_fully_multiline' => true],
-        'no_extra_consecutive_blank_lines' => ['tokens' => ['break', 'continue', 'extra', 'return', 'throw', 'use', 'parenthesis_brace_block', 'square_brace_block', 'curly_brace_block']],
+        'method_argument_space' => ['after_heredoc' => true],
+        'no_extra_blank_lines' => ['tokens' => ['break', 'continue', 'extra', 'return', 'throw', 'use', 'parenthesis_brace_block', 'square_brace_block', 'curly_brace_block']],
         'no_null_property_initialization' => true,
-        'no_short_echo_tag' => true,
+        'echo_tag_syntax' => ['format' => 'long'],
         'no_unreachable_default_argument_value' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
@@ -47,13 +48,4 @@ $config = PhpCsFixer\Config::create()
             ->in(__DIR__ . DIRECTORY_SEPARATOR . 'src')
     )
 ;
-// special handling of fabbot.io service if it's using too old PHP CS Fixer version
-try {
-    PhpCsFixer\FixerFactory::create()
-        ->registerBuiltInFixers()
-        ->registerCustomFixers($config->getCustomFixers())
-        ->useRuleSet(new PhpCsFixer\RuleSet($config->getRules()));
-} catch (PhpCsFixer\ConfigurationException\InvalidConfigurationException $e) {
-    $config->setRules([]);
-}
-return $config;
+

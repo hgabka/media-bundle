@@ -317,7 +317,7 @@ class Media implements TranslatableInterface
      */
     public function getMetadataValue($key)
     {
-        return isset($this->metadata[$key]) ? $this->metadata[$key] : null;
+        return $this->metadata[$key] ?? null;
     }
 
     /**

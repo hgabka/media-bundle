@@ -14,12 +14,12 @@ class RemoteAudioHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const CONTENT_TYPE = 'remote/audio';
+    public const CONTENT_TYPE = 'remote/audio';
 
     /**
      * @var string
      */
-    const TYPE = 'audio';
+    public const TYPE = 'audio';
 
     /**
      * @var string

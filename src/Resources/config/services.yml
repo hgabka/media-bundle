@@ -135,7 +135,7 @@ services:
     hg_media.admin.media:
         class: Hgabka\MediaBundle\Admin\MediaAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: hg_media.group, icon: '<i class="fa fa-image"></i>', label: hg_media.admin.label, label_catalogue: 'HgabkaMediaBundle', label_translator_strategy: 'sonata.admin.label.strategy.underscore' }
+            - { name: sonata.admin, manager_type: orm, group: hg_media.group, icon: '<i class="fas fa-image"></i>', label: hg_media.admin.label, label_catalogue: 'HgabkaMediaBundle', label_translator_strategy: 'sonata.admin.label.strategy.underscore' }
         arguments: [null, Hgabka\MediaBundle\Entity\Media, Hgabka\MediaBundle\Controller\MediaAdminController]
         calls:
           - [setManager, ["@hgabka_media.media_manager"]]

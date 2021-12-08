@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RebuildFolderTreeCommand extends Command
 {
     protected static $defaultName = 'hgabka:media:rebuild-folder-tree';
-    
+
     /** @var EntityManagerInterface */
     private $manager;
 

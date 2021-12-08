@@ -14,21 +14,21 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class CleanDeletedMediaCommand extends Command
 {
     protected static $defaultName = 'hgabka:media:clean-deleted-media';
- 
+
     /** @var EntityManagerInterface */
     private $entityManager;
- 
+
     /** @var MediaManager */
     private $mediaManager;
-    
+
     public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager)
     {
         parent::__construct();
-        
+
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
     }
-   
+
     protected function configure()
     {
         $this

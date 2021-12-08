@@ -196,17 +196,12 @@ class MediaManager
         return $file ? $file->getSize() : 0;
     }
 
-    /**
-     * @param Media $media
-     * @return string
-     */
     public function getMediaPath(Media $media): string
     {
-        return $this->projectDir . '/public' . $media->getUrl();
+        return $this->projectDir.'/public'.$media->getUrl();
     }
 
     /**
-     * @param Media $media
      * @return array|null[]
      */
     public function getMediaInfo(Media $media): array

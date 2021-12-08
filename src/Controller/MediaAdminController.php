@@ -18,7 +18,7 @@ class MediaAdminController extends CRUDController
 
     /** @var FolderManager */
     protected $folderManager;
-    
+
     /**
      * @required
      */
@@ -26,7 +26,7 @@ class MediaAdminController extends CRUDController
     {
         $this->folderManager = $folderManager;
     }
-    
+
     public function listAction(Request $request): Response
     {
         $this->admin->checkAccess('list');

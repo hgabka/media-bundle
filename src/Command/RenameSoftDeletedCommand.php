@@ -3,9 +3,9 @@
 namespace Hgabka\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
+use Hgabka\MediaBundle\Helper\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,17 +14,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RenameSoftDeletedCommand extends ContainerAwareCommand
 {
     protected static $defaultName = 'hgabka:media:rename-soft-deleted';
-    
+
     /** @var EntityManagerInterface */
     protected $entityManager;
-    
+
     /** @var MediaManager */
     protected $mediaManager;
 
     public function __construct(EntityManagerInterface $manager, MediaManager $mediaManager)
     {
         parent::__construct();
-        
+
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
     }

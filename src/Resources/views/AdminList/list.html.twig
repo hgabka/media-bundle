@@ -76,12 +76,12 @@
                     {% else %}
                         {% if admin.hasAccess('edit') %}
                             <a href="{{ path('HgabkaMediaBundle_media_show', { mediaId: item.id}) }}" class="link--text table__actions__item" title="{{ 'kuma_admin_list.list.edit' | trans }}">
-                                <i class="fa fa-pencil-square-o"></i>
+                                <i class="fass fa-pencil-square-o"></i>
                             </a>
                         {% endif %}
                         {% if admin.hasAccess('delete') %}
                             <a href="{{ path('HgabkaMediaBundle_media_delete', { mediaId: item.id}) }}" class="link--text link--danger table__actions__item" title="{{ 'kuma_admin_list.list.delete' | trans }}">
-                                <i class="fa fa-trash-o"></i>
+                                <i class="fas fa-trash-o"></i>
                             </a>
                         {% endif %}
                     {% endif %}

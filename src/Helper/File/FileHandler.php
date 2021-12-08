@@ -5,9 +5,7 @@ namespace Hgabka\MediaBundle\Helper\File;
 use Gaufrette\Filesystem;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\File\FileType;
-use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mime\MimeTypes;
@@ -20,7 +18,7 @@ class FileHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const TYPE = 'file';
+    public const TYPE = 'file';
 
     /**
      * @var string
@@ -49,7 +47,7 @@ class FileHandler extends AbstractMediaHandler
      */
     private $blacklistedExtensions = [];
 
-    /** @var integer */
+    /** @var int */
     private $folderDepth;
 
     /**
@@ -312,7 +310,7 @@ class FileHandler extends AbstractMediaHandler
             $pattern = '%s/%s';
             $params = [$uuid, $filename];
         } else {
-            for ($i = 0; $i < min(5, $this->folderDepth); $i++) {
+            for ($i = 0; $i < min(5, $this->folderDepth); ++$i) {
                 $pattern .= '%s/';
                 $params[] = $uuid[$i];
             }
