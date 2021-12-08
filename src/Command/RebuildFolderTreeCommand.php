@@ -2,12 +2,26 @@
 
 namespace Hgabka\MediaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Doctrine\ORM\EntityManagerInterface;
+use Hgabka\MediaBundle\Entity\Folder;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RebuildFolderTreeCommand extends ContainerAwareCommand
+class RebuildFolderTreeCommand extends Command
 {
+    protected static $defaultName = 'hgabka:media:rebuild-folder-tree';
+    
+    /** @var EntityManagerInterface */
+    private $manager;
+
+    public function __construct(EntityManagerInterface $manager)
+    {
+        parent::__construct();
+
+        $this->manager = $manager;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -15,7 +29,7 @@ class RebuildFolderTreeCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('hgabka:media:rebuild-folder-tree')
+        $this->setName(static::$defaultName)
             ->setDescription('Rebuild the media folder tree.')
             ->setHelp('The <info>hgabka:media:rebuild-folder-tree</info> will loop over all media folders and update the media folder tree.');
     }
@@ -25,8 +39,7 @@ class RebuildFolderTreeCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $em->getRepository('HgabkaMediaBundle:Folder')->rebuildTree();
+        $this->manager->getRepository(Folder::class)->rebuildTree();
         $output->writeln('Updated all folders');
     }
 }
