@@ -10,8 +10,6 @@ parameters:
     hgabka_media.icon_font_manager.class: 'Hgabka\MediaBundle\Helper\IconFont\IconFontManager'
     hgabka_media.icon_font.default_loader.class: 'Hgabka\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
     hgabka_media.media_creator_service.class: 'Hgabka\MediaBundle\Helper\Services\MediaCreatorService'
-    hgabka_media.mimetype_guesser.factory.class: 'Hgabka\MediaBundle\Helper\MimeTypeGuesserFactory'
-    hgabka_media.extension_guesser.factory.class: 'Hgabka\MediaBundle\Helper\ExtensionGuesserFactory'
     hgabka_media.validator.has_guessable_extension.class: 'Hgabka\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator'
 
 services:
@@ -97,11 +95,6 @@ services:
         arguments: ['@hgabka_media.repository.folder']
         public: true
 
-    hgabka_media.mimetype_guesser.factory:
-        class: '%hgabka_media.mimetype_guesser.factory.class%'
-
-    hgabka_media.extension_guesser.factory:
-        class: '%hgabka_media.extension_guesser.factory.class%'
 
     hgabka_media.command.rebuildfoldertree:
         class: Hgabka\MediaBundle\Command\RebuildFolderTreeCommand
@@ -133,9 +126,8 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: has_guessable_extension }
         calls:
-            - [setMimeTypeGuesser, ['@hgabka_media.mimetype_guesser.factory']]
-            - [setExtensionGuesser, ['@hgabka_media.extension_guesser.factory']]
-
+            - [setGuesser, ['@mime_types']]
+  
     hgabka_media.media.twig.extension:
         class: Hgabka\MediaBundle\Twig\MediaTwigExtension
         arguments: ['@hgabka_media.media_manager', '@doctrine.orm.entity_manager']
