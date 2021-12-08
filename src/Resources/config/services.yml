@@ -101,10 +101,13 @@ services:
         autoconfigure: true
 
     Hgabka\MediaBundle\Command\CleanDeletedMediaCommand:
-        class: Hgabka\MediaBundle\Command\CleanDeletedMediaCommand
         autowire: true
         autoconfigure: true
 
+    Hgabka\MediaBundle\Command\RenameSoftDeletedCommand:
+        autowire: true
+        autoconfigure: true
+        
     hgabka_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
         arguments:
