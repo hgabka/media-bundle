@@ -33,7 +33,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
             'twig.form.resources',
             array_merge(
                 $container->getParameter('twig.form.resources'),
-                ['HgabkaMediaBundle:Form:formWidgets.html.twig']
+                ['@HgabkaMedia/Form/formWidgets.html.twig']
             )
         );
         $container->setParameter('hgabka_media.soundcloud_api_key', $config['soundcloud_api_key']);
