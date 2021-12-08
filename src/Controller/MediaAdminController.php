@@ -37,7 +37,7 @@ class MediaAdminController extends CRUDController
         }
 
         // @var MediaManager $mediaManager
-        $mediaManager = $this->get('hgabka_media.media_manager');
+        $mediaManager = $this->manager;
 
         $em = $this->getDoctrine();
         $repo = $em->getRepository(Folder::class);
