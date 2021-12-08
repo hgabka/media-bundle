@@ -3,7 +3,7 @@
 namespace Hgabka\MediaBundle\Helper;
 
 use Hgabka\MediaBundle\Helper\File\SVGMimeTypeGuesser;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Symfony\Component\Mime\MimeTypes;
 
 class MimeTypeGuesserFactory implements MimeTypeGuesserFactoryInterface
 {
@@ -16,8 +16,8 @@ class MimeTypeGuesserFactory implements MimeTypeGuesserFactoryInterface
      */
     public function get()
     {
-        $guesser = MimeTypeGuesser::getInstance();
-        $guesser->register(new SVGMimeTypeGuesser());
+        $guesser = new MimeTypes();
+        $guesser->registerGuesser(new SVGMimeTypeGuesser());
 
         return $guesser;
     }
