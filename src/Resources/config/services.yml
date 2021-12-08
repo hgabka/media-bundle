@@ -159,35 +159,35 @@ services:
         autoconfigure: true
         autowire: true
         calls:
-            - [setTemplateRegistry, ['sonata.admin.global_template_registry']]
+            - [setTemplateRegistry, ['@sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
 
     Hgabka\MediaBundle\Controller\FolderController:
         autoconfigure: true
         autowire: true
         calls:
-            - [setTemplateRegistry, ['sonata.admin.global_template_registry']]
+            - [setTemplateRegistry, ['@sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
 
     Hgabka\MediaBundle\Controller\MediaController:
         autoconfigure: true
         autowire: true
         calls:
-            - [setTemplateRegistry, ['sonata.admin.global_template_registry']]
+            - [setTemplateRegistry, ['@sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
 
     Hgabka\MediaBundle\Controller\MediaAdminController:
         autoconfigure: true
         autowire: true
         calls:
-            - [setTemplateRegistry, ['sonata.admin.global_template_registry']]
+            - [setTemplateRegistry, ['@sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
 
     Hgabka\MediaBundle\Controller\AviaryController:
         autoconfigure: true
         autowire: true
         calls:
-            - [setTemplateRegistry, ['sonata.admin.global_template_registry']]
+            - [setTemplateRegistry, ['@sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
         
     Hgabka\MediaBundle\Helper\SvgMimeTypeGuesser:
