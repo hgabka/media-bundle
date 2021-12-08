@@ -4,7 +4,7 @@ namespace Hgabka\MediaBundle\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Hgabka\MediaBundle\Entity\Folder;
 
 /**
