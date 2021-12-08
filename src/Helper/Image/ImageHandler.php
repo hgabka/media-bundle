@@ -7,6 +7,7 @@ use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
 use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mime\MimeTypes;
 
 /**
  * FileHandler.
@@ -19,9 +20,9 @@ class ImageHandler extends FileHandler
      * @param int    $priority
      * @param string $aviaryApiKey The aviary key
      */
-    public function __construct($priority, $aviaryApiKey)
+    public function __construct($priority, MimeTypes $mimeTypeGuesser, $aviaryApiKey)
     {
-        parent::__construct($priority);
+        parent::__construct($priority, $mimeTypeGuesser);
         $this->aviaryApiKey = $aviaryApiKey;
     }
 
