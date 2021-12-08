@@ -96,19 +96,14 @@ services:
         public: true
 
 
-    hgabka_media.command.rebuildfoldertree:
-        class: Hgabka\MediaBundle\Command\RebuildFolderTreeCommand
-        calls:
-            - [setContainer, ['@service_container'] ]
-        tags:
-            - { name: console.command }
+    Hgabka\MediaBundle\Command\RebuildFolderTreeCommand:
+        autowire: true
+        autoconfigure: true
 
-    hgabka_media.command.cleandeletedmedia:
+    Hgabka\MediaBundle\Command\CleanDeletedMediaCommand:
         class: Hgabka\MediaBundle\Command\CleanDeletedMediaCommand
-        calls:
-            - [setContainer, ['@service_container'] ]
-        tags:
-            - { name: console.command }
+        autowire: true
+        autoconfigure: true
 
     hgabka_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
