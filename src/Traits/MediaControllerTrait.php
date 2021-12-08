@@ -197,7 +197,7 @@ trait MediaControllerTrait
         return $pagerfanta;
     }
 
-    protected function getBaseTemplate()
+    protected function getBaseTemplate(): string
     {
         return $this->getParameter('sonata.admin.configuration.templates')['layout'];
     }
