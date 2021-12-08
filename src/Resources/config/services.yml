@@ -120,7 +120,7 @@ services:
     hgabka_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
         arguments:
-            - '%kernel.root_dir%/../web%hgabka_media.media_path%'
+            - '%kernel.project_dir%/public%hgabka_media.media_path%'
             - true
 
     hgabka_media.filesystem:
