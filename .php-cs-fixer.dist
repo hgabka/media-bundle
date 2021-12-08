@@ -1,24 +1,23 @@
 <?php
-$header = <<<'EOF'
-This file is part of PHP CS Fixer.
-(c) Fabien Potencier <fabien@symfony.com>
-    Dariusz Rumiński <dariusz.ruminski@gmail.com>
-This source file is subject to the MIT license that is bundled
-with this source code in the file LICENSE.
-EOF;
+$srcDir = __DIR__ . DIRECTORY_SEPARATOR . 'src';
+$finder = PhpCsFixer\Finder::create()
+    ->in([$srcDir])
+    // Skip auto generated migration files.
+    ->exclude('Migrations')
+;
 $config = new PhpCsFixer\Config();
 return $config
-    ->setRiskyAllowed(true)
     ->setRules([
         '@PHP73Migration' => true,
+        'psr_autoloading' => ['dir' => $srcDir],
         '@Symfony' => true,
         '@Symfony:risky' => true,
-        'align_multiline_comment' => true,
+                'align_multiline_comment' => true,
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_before_statement' => true,
         'combine_consecutive_unsets' => true,
-        // one should use PHPUnit methods to set up expected exception instead of annotations
-        'general_phpdoc_annotation_remove' => ['annotations' => ['expectedException', 'expectedExceptionMessage', 'expectedExceptionMessageRegExp']],
+        'concat_space' => ['spacing' => 'one'],
+                'general_phpdoc_annotation_remove' => ['annotations' => ['expectedException', 'expectedExceptionMessage', 'expectedExceptionMessageRegExp']],
         'header_comment' => ['header' => ''],
         'heredoc_to_nowdoc' => true,
         'list_syntax' => ['syntax' => 'short'],
@@ -41,11 +40,31 @@ return $config
         'single_line_comment_style' => ['comment_types' => ['hash']],
         'strict_comparison' => true,
         'strict_param' => true,
+        'no_php4_constructor' => true,
+        'ordered_imports' => true,
+        'no_unreachable_default_argument_value' => true,
+        'braces' => ['allow_single_line_closure' => true],
+        'phpdoc_order' => true,
+        // Problémát okozhat, ha törli nevet, pláne, ha többet szeretnénk megadni pl egy for ciklus előtt.
+        'phpdoc_var_without_name' => false,
+        // Nem szeretnénk '.'-ot minden doccomment végére
+        'phpdoc_summary' => false,
+        // Erre azért van szükség, mert pl a JMSTranslationBundle miatt elhelyezhetünk a kódon belül pl /** @Ignore */ -t
+        'phpdoc_to_comment' => false,
+        // Néha bizony van értelme behúzni a tömböknél az értéket, ezért kikapcsoljuk, hogy levágja a "szóközöket" a => operátor körül.
+        'binary_operator_spaces' => ['operators' => [
+            "=>" => null,
+            "=" => null,
+        ]],
+        'heredoc_to_nowdoc' => false,
+        'method_argument_space' => ['after_heredoc' => true],
+        'no_superfluous_phpdoc_tags' => false,
+        'native_function_invocation' => [
+            'include' => [],
+            'scope' => 'namespaced',
+            'strict' => false,
+        ],
     ])
-    ->setFinder(
-        PhpCsFixer\Finder::create()
-            ->exclude('tests/Fixtures')
-            ->in(__DIR__ . DIRECTORY_SEPARATOR . 'src')
-    )
+    ->setRiskyAllowed(true)
+    ->setFinder($finder)
 ;
-
