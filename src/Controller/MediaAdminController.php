@@ -8,12 +8,14 @@ use Hgabka\MediaBundle\Traits\MediaControllerTrait;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MediaAdminController extends CRUDController
 {
     use MediaControllerTrait;
 
-    public function listAction()
+    public function listAction(Request $request): Response
     {
         $request = $this->getRequest();
 
