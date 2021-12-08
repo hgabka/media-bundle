@@ -2,7 +2,7 @@
 
 namespace Hgabka\MediaBundle\Validator\Constraints;
 
-use Hgabka\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
+use Symfony\Component\Mime\MimeTypes;
 use Hgabka\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -17,14 +17,9 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 class HasGuessableExtensionValidator extends ConstraintValidator
 {
     /**
-     * @var ExtensionGuesserInterface
+     * @var MimeTypes
      */
-    private $extensionGuesser;
-
-    /**
-     * @var MimeTypeGuesserInterface
-     */
-    private $mimeTypeGuesser;
+    private $mimeTypes;
 
     /**
      * @param $value
@@ -51,10 +46,11 @@ class HasGuessableExtensionValidator extends ConstraintValidator
 
             return;
         }
-        $contentType = $this->mimeTypeGuesser->guess($value->getPathname());
+        $contentType = $this->mimeTypes->guess($value->getPathname());
         $pathInfo = pathinfo($value->getClientOriginalName());
         if (!\array_key_exists('extension', $pathInfo)) {
-            $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
+			$extensions = $this->mimeTypes->getExtensions($contentType);
+            $pathInfo['extension'] = empty($extensions) ? null : reset($extensions);
         }
 
         if (null === $pathInfo['extension']) {
@@ -64,13 +60,9 @@ class HasGuessableExtensionValidator extends ConstraintValidator
         }
     }
 
-    public function setExtensionGuesser(ExtensionGuesserFactoryInterface $extensionGuesserFactory)
+    public function setGuesser(MimeTypes $mimeTypes)
     {
-        $this->extensionGuesser = $extensionGuesserFactory->get();
+        $this->mimeTypes = $mimeTypes;
     }
 
-    public function setMimeTypeGuesser(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
-    {
-        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
-    }
 }
