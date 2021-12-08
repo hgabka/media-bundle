@@ -1,5 +1,5 @@
 {% block iconfont_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         <!-- Icon Chooser -->
         <div id="{{ id }}_widget" class="icon-chooser media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %} js-icon-chooser" data-css-link="{{ loader_object.cssLink }}" data-widget-id="{{ id }}">
             <input type="hidden" name="{{ full_name }}" value="{{ value|default('') }}" class="js-icon-chooser__input"/>
@@ -44,12 +44,12 @@
                 </div>
             </div>
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock iconfont_widget %}
 
 
 {% block media_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
             <!-- Hidden input -->
             <input id="{{ id }}" type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}">
@@ -131,11 +131,11 @@
                 </div>
             </div>
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
 
 {% block media_simple_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
             <!-- Hidden input -->
             {{ form_widget(form.id) }}
@@ -192,5 +192,5 @@
             {{ form_widget(form.file) }}
         </div>
 
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
