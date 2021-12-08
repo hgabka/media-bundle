@@ -106,7 +106,7 @@ class MediaAdminController extends CRUDController
             'filter' => $this->getFilterBuilder(),
         ];
 
-        return $this->render('@HgabkaMedia/Folder/show.html.twig', $params);
+        return $this->renderWithExtraParams('@HgabkaMedia/Folder/show.html.twig', $params);
     }
 
     private function createEmptyForm()
