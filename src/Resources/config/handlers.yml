@@ -38,7 +38,7 @@ services:
     hgabka_media.media_handlers.image:
         public: true
         class: '%hgabka_media.media_handler.image.class%'
-        arguments: [1, '%aviary_api_key%']
+        arguments: [1, '@mime_types', '%aviary_api_key%']
         calls:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
@@ -51,7 +51,7 @@ services:
     hgabka_media.media_handlers.file:
         public: true
         class: '%hgabka_media.media_handler.file.class%'
-        arguments: [0, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory', '']
+        arguments: [0, '@mime_types', '']
         calls:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
