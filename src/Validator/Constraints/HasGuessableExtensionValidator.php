@@ -46,7 +46,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
 
             return;
         }
-        $contentType = $this->mimeTypes->guess($value->getPathname());
+        $contentType = $this->mimeTypes->guessMimeType($value->getPathname());
         $pathInfo = pathinfo($value->getClientOriginalName());
         if (!\array_key_exists('extension', $pathInfo)) {
 	    $extensions = $this->mimeTypes->getExtensions($contentType);
