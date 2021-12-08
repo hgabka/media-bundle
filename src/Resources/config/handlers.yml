@@ -38,7 +38,7 @@ services:
     hgabka_media.media_handlers.image:
         public: true
         class: '%hgabka_media.media_handler.image.class%'
-        arguments: [1, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory', '%aviary_api_key%']
+        arguments: [1, '%aviary_api_key%']
         calls:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
