@@ -20,7 +20,7 @@ services:
         parent: hgabka_media.media_handlers.file
         arguments: [1, '@hgabka_media.mimetype_guesser.factory', '@hgabka_media.extension_guesser.factory']
         calls:
-            - [ setMediaPath, [ '%kernel.root_dir%' ] ]
+            - [ setMediaPath, [ '%kernel.project_dir%' ] ]
             - [ setPdfTransformer, [ '@hgabka_media.pdf_transformer' ]]
         tags:
             -  { name: 'hgabka_media.media_handler' }
