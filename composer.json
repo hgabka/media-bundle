@@ -19,7 +19,8 @@
         "babdev/pagerfanta-bundle": "~2.1",
         "liip/imagine-bundle": "^2.1",
         "knplabs/gaufrette": "^0.10",
-        "symfony/framework-bundle": "5.4.*"
+        "symfony/framework-bundle": "5.4.*",
+        "twig/intl-extra": "^^3.3"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",
