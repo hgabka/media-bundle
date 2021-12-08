@@ -11,14 +11,14 @@ use Sonata\AdminBundle\Event\ConfigureMenuEvent;
 class AdminMenuListener
 {
     public const ICONS = [
-        'default' => 'fas fa-file-o',
-        'offline' => 'fas fa-chain-broken',
-        'folder' => 'fas fa-folder-o',
-        'image' => 'fas fa-picture-o',
-        'files' => 'fas fa-files-o',
-        'slideshow' => 'fas fa-desktop',
-        'video' => 'fas fa-film',
-        'media' => 'fas fa-folder-o',
+        'default' => 'fa fa-file-o',
+        'offline' => 'fa fa-chain-broken',
+        'folder' => 'fa fa-folder-o',
+        'image' => 'fa fa-picture-o',
+        'files' => 'fa fa-files-o',
+        'slideshow' => 'fa fa-desktop',
+        'video' => 'fa fa-film',
+        'media' => 'fa fa-folder-o',
     ];
     /** @var MediaAdmin */
     protected $mediaAdmin;
