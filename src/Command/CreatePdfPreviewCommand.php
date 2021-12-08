@@ -3,12 +3,14 @@
 namespace Hgabka\MediaBundle\Command;
 
 use ImagickException;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreatePdfPreviewCommand extends ContainerAwareCommand
+class CreatePdfPreviewCommand extends Command
 {
+    protected static $defaultName = 'hgabka:media:create-pdf-previews';
+    
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Creating PDF preview images...');
@@ -53,7 +55,7 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('hgabka:media:create-pdf-previews')
+            ->setName(static::$defaultName)
             ->setDescription('Create preview images for PDFs that have already been uploaded')
             ->setHelp(
                 'The <info>hgabka:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded.'
