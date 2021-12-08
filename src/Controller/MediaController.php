@@ -28,7 +28,7 @@ class MediaController extends BaseMediaController
      *
      * @return Response
      */
-    public function showAction(Request $request, $mediaId)
+    public function show(Request $request, $mediaId)
     {
         $this->getAdmin()->checkAccess('edit');
 
@@ -82,7 +82,7 @@ class MediaController extends BaseMediaController
      *
      * @return RedirectResponse
      */
-    public function deleteAction(Request $request, $mediaId)
+    public function delete(Request $request, $mediaId)
     {
         $this->getAdmin()->checkAccess('delete');
 
@@ -122,7 +122,7 @@ class MediaController extends BaseMediaController
      *
      * @return array|RedirectResponse
      */
-    public function bulkUploadAction($folderId)
+    public function bulkUpload($folderId)
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -146,7 +146,7 @@ class MediaController extends BaseMediaController
      *
      * @return array|RedirectResponse
      */
-    public function bulkUploadSubmitAction($folderId)
+    public function bulkUploadSubmit($folderId)
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -287,7 +287,7 @@ class MediaController extends BaseMediaController
      *
      * @return array|RedirectResponse
      */
-    public function dropAction(Request $request, $folderId)
+    public function drop(Request $request, $folderId)
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -330,7 +330,7 @@ class MediaController extends BaseMediaController
      *
      * @return array|RedirectResponse
      */
-    public function createAction(Request $request, $folderId, $type)
+    public function create(Request $request, $folderId, $type)
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -356,7 +356,7 @@ class MediaController extends BaseMediaController
      *
      * @return array|RedirectResponse
      */
-    public function createModalAction(Request $request, $folderId, $type)
+    public function createModal(Request $request, $folderId, $type)
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -415,7 +415,7 @@ class MediaController extends BaseMediaController
      *
      * @return JsonResponse|Response
      */
-    public function bulkMoveAction(Request $request)
+    public function bulkMove(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $mediaRepo = $em->getRepository(Media::class);
