@@ -2,7 +2,7 @@
 
 namespace Hgabka\MediaBundle\Admin\Menu;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Helper\FolderManager;
@@ -31,7 +31,7 @@ class AdminMenuListener
      *
      * @param FolderManager $folderManager
      */
-    public function __construct(MediaAdmin $mediaAdmin, ManagerRegistry $doctrine)
+    public function __construct(MediaAdmin $mediaAdmin, Registry $doctrine)
     {
         $this->mediaAdmin = $mediaAdmin;
         $this->doctrine = $doctrine;
