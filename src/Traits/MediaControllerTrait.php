@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Traits;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry as DoctrineRegistry;
 use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
@@ -122,7 +123,7 @@ trait MediaControllerTrait
         return $this->requestStack;
     }
 
-    protected function getDoctrine()
+    protected function getDoctrine(): DoctrineRegistry
     {
         return $this->doctrine;
     }
