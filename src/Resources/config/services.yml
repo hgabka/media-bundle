@@ -146,7 +146,7 @@ services:
         class: Hgabka\MediaBundle\Admin\MediaAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: hg_media.group, icon: '<i class="fa fa-image"></i>', label: hg_media.admin.label, label_catalogue: 'HgabkaMediaBundle', label_translator_strategy: 'sonata.admin.label.strategy.underscore' }
-        arguments: [null, Hgabka\MediaBundle\Entity\Media, HgabkaMediaBundle:MediaAdmin]
+        arguments: [null, Hgabka\MediaBundle\Entity\Media, Hgabka\MediaBundle\Controller\MediaAdminController]
         calls:
           - [setManager, ["@hgabka_media.media_manager"]]
 
@@ -189,3 +189,8 @@ services:
         autoconfigure: true
         autowire: true
         tags: ['controller.service_arguments']
+
+    Hgabka\MediaBundle\Controller\MediaAdminController:
+        autoconfigure: true
+        autowire: true
+    
