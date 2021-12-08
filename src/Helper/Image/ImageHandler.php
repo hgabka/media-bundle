@@ -19,9 +19,9 @@ class ImageHandler extends FileHandler
      * @param int    $priority
      * @param string $aviaryApiKey The aviary key
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface, $aviaryApiKey)
+    public function __construct($priority, $aviaryApiKey)
     {
-        parent::__construct($priority, $mimeTypeGuesserFactory, $extensionGuesserFactoryInterface);
+        parent::__construct($priority);
         $this->aviaryApiKey = $aviaryApiKey;
     }
 
