@@ -56,7 +56,7 @@ trait MediaControllerTrait
     /**
      * MediaControllerTrait constructor.
      */
-    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack, ManagerRegistry $doctrine, templateRegistryInterface $globalTemplateRegistry)
+    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack, ManagerRegistry $doctrine)
     {
         $this->admin = $admin;
         $this->manager = $manager;
@@ -65,7 +65,6 @@ trait MediaControllerTrait
         $this->translator = $translator;
         $this->requestStack = $requestStack;
         $this->doctrine = $doctrine;
-        $this->globalTemplateRegistry = $globalTemplateRegistry;
     }
 
     /**
@@ -206,6 +205,11 @@ trait MediaControllerTrait
     protected function getBaseTemplate(): string
     {
         return $this->globalTemplateRegistry->getTemplate('layout');
+    }
+    
+    public function setTemplateRegistry(TemplateRegistryInterface $globalTemplateRegistry)
+    {
+        $this->globalTemplateRegistry = $globalTemplateRegistry;
     }
 
     protected function buildFilters()
