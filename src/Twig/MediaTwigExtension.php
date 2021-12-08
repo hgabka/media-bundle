@@ -27,14 +27,14 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
         $this->doctrine = $doctrine;
     }
 
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'mediaManager' => $this->mediaManager,
         ];
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('get_media_for_folder', [$this, 'getMediaForFolder']),
