@@ -28,6 +28,24 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
     }
+    
+    protected function configure()
+    {
+        parent::configure();
+
+        $this
+            ->setName(static::$defaultName)
+            ->setDescription('Rename physical files for soft-deleted media.')
+            ->setHelp(
+                'The <info>hgabka:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
+            )
+            ->addOption(
+                'original',
+                'o',
+                InputOption::VALUE_NONE,
+                'If set renames soft-deleted media to its original filename'
+            );
+    }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -77,23 +95,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         }
 
         $output->writeln('<info>' . $updates . ' soft-deleted media files have been renamed.</info>');
-    }
-
-    protected function configure()
-    {
-        parent::configure();
-
-        $this
-            ->setName(static::$defaultName)
-            ->setDescription('Rename physical files for soft-deleted media.')
-            ->setHelp(
-                'The <info>hgabka:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
-            )
-            ->addOption(
-                'original',
-                'o',
-                InputOption::VALUE_NONE,
-                'If set renames soft-deleted media to its original filename'
-            );
+        
+        return Command::SUCCESS;
     }
 }
