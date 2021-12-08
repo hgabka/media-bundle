@@ -252,7 +252,7 @@ class FileHandler extends AbstractMediaHandler
             }
             $media->setContent($data);
 
-            $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
+            $contentType = $this->mimeTypeGuesser->guessMimeType($media->getContent()->getPathname());
             $media->setContentType($contentType);
             $media->setFileSize($data->getSize());
             $media->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
