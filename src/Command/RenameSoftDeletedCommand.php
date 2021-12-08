@@ -50,8 +50,8 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
                 $handler = $manager->getHandler($media);
                 if ($media->isDeleted() && 'local' === $media->getLocation() && $handler instanceof FileHandler) {
                     $oldFileUrl = $media->getUrl();
-                    $newFileName = ($original ? $media->getOriginalFilename() : uniqid().'.'.pathinfo($oldFileUrl, \PATHINFO_EXTENSION));
-                    $newFileUrl = \dirname($oldFileUrl).'/'.$newFileName;
+                    $newFileName = ($original ? $media->getOriginalFilename() : uniqid() . '.' . pathinfo($oldFileUrl, \PATHINFO_EXTENSION));
+                    $newFileUrl = \dirname($oldFileUrl) . '/' . $newFileName;
                     $fileRenameQueue[] = [$oldFileUrl, $newFileUrl, $handler];
                     $media->setUrl($newFileUrl);
                     $em->persist($media);
@@ -62,7 +62,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
             $em->commit();
         } catch (\Exception $e) {
             $em->rollback();
-            $output->writeln('An error occured while updating soft-deleted media : <error>'.$e->getMessage().'</error>');
+            $output->writeln('An error occured while updating soft-deleted media : <error>' . $e->getMessage() . '</error>');
             $updates = 0;
             $fileRenameQueue = [];
         }
@@ -70,13 +70,13 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         foreach ($fileRenameQueue as $row) {
             [$oldFileUrl, $newFileUrl, $handler] = $row;
             $handler->fileSystem->rename(
-                preg_replace('~^'.preg_quote($handler->mediaPath, '~').'~', '/', $oldFileUrl),
-                preg_replace('~^'.preg_quote($handler->mediaPath, '~').'~', '/', $newFileUrl)
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $oldFileUrl),
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $newFileUrl)
             );
-            $output->writeln('Renamed <info>'.$oldFileUrl.'</info> to <info>'.basename($newFileUrl).'</info>');
+            $output->writeln('Renamed <info>' . $oldFileUrl . '</info> to <info>' . basename($newFileUrl) . '</info>');
         }
 
-        $output->writeln('<info>'.$updates.' soft-deleted media files have been renamed.</info>');
+        $output->writeln('<info>' . $updates . ' soft-deleted media files have been renamed.</info>');
     }
 
     protected function configure()

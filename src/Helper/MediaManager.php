@@ -198,7 +198,7 @@ class MediaManager
 
     public function getMediaPath(Media $media): string
     {
-        return $this->projectDir.'/public'.$media->getUrl();
+        return $this->projectDir . '/public' . $media->getUrl();
     }
 
     /**

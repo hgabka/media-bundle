@@ -153,14 +153,14 @@ class Media implements TranslatableInterface
     {
         $size = $this->filesize;
         if ($size < 1024) {
-            return $size.' B';
+            return $size . ' B';
         }
         $help = $size / 1024;
         if ($help < 1024) {
-            return round($help, 1).' kB';
+            return round($help, 1) . ' kB';
         }
 
-        return round(($help / 1024), 1).' MB';
+        return round(($help / 1024), 1) . ' MB';
     }
 
     /**

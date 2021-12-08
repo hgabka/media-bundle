@@ -152,7 +152,7 @@ class MediaController extends BaseMediaController
 
         // Make sure file is not cached (as it happens for example on iOS devices)
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
         header('Cache-Control: no-store, no-cache, must-revalidate');
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
@@ -163,7 +163,7 @@ class MediaController extends BaseMediaController
         } else {
             $tempDir = sys_get_temp_dir();
         }
-        $targetDir = rtrim($tempDir, '/').\DIRECTORY_SEPARATOR.'plupload';
+        $targetDir = rtrim($tempDir, '/') . \DIRECTORY_SEPARATOR . 'plupload';
         $cleanupTargetDir = true; // Remove old files
         $maxFileAge = 5 * 60 * 60; // Temp file age in seconds
 
@@ -180,7 +180,7 @@ class MediaController extends BaseMediaController
         } else {
             $fileName = uniqid('file_', false);
         }
-        $filePath = $targetDir.\DIRECTORY_SEPARATOR.$fileName;
+        $filePath = $targetDir . \DIRECTORY_SEPARATOR . $fileName;
 
         $chunk = 0;
         $chunks = 0;
@@ -199,7 +199,7 @@ class MediaController extends BaseMediaController
             }
 
             while (false !== ($file = readdir($dir))) {
-                $tmpFilePath = $targetDir.\DIRECTORY_SEPARATOR.$file;
+                $tmpFilePath = $targetDir . \DIRECTORY_SEPARATOR . $file;
 
                 // If temp file is current file proceed to the next
                 if ($tmpFilePath === "{$filePath}.part") {
@@ -210,7 +210,7 @@ class MediaController extends BaseMediaController
                 if (preg_match('/\.part$/', $file) && (filemtime($tmpFilePath) < time() - $maxFileAge)) {
                     $success = @unlink($tmpFilePath);
                     if (true !== $success) {
-                        return $this->returnJsonError('106', 'Could not remove temp file: '.$filePath);
+                        return $this->returnJsonError('106', 'Could not remove temp file: ' . $filePath);
                     }
                 }
             }
@@ -263,12 +263,12 @@ class MediaController extends BaseMediaController
             $media->setFolder($folder);
             $em->getRepository(Media::class)->save($media);
         } catch (\Exception $e) {
-            return $this->returnJsonError('104', 'Failed performing save on media-manager'.$e->getMessage());
+            return $this->returnJsonError('104', 'Failed performing save on media-manager' . $e->getMessage());
         }
 
         $success = unlink($filePath);
         if (true !== $success) {
-            return $this->returnJsonError('105', 'Could not remove temp file: '.$filePath);
+            return $this->returnJsonError('105', 'Could not remove temp file: ' . $filePath);
         }
 
         // Return Success JSON-RPC response

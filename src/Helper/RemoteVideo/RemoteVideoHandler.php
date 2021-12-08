@@ -110,10 +110,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
         switch ($video->getType()) {
             case 'youtube':
                 try {
-                    if (false === @fopen('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'r')) {
-                        $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/0.jpg');
+                    if (false === @fopen('https://img.youtube.com/vi/' . $code . '/maxresdefault.jpg', 'r')) {
+                        $video->setThumbnailUrl('https://img.youtube.com/vi/' . $code . '/0.jpg');
                     } else {
-                        $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg');
+                        $video->setThumbnailUrl('https://img.youtube.com/vi/' . $code . '/maxresdefault.jpg');
                     }
                 } catch (\Exception $e) {
                 }
@@ -121,7 +121,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 break;
             case 'vimeo':
                 try {
-                    $xml = simplexml_load_file('https://vimeo.com/api/v2/video/'.$code.'.xml');
+                    $xml = simplexml_load_file('https://vimeo.com/api/v2/video/' . $code . '.xml');
                     $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
                 } catch (\Exception $e) {
                 }
@@ -130,12 +130,12 @@ class RemoteVideoHandler extends AbstractMediaHandler
             case 'dailymotion':
                 try {
                     $json = json_decode(
-                        file_get_contents('https://api.dailymotion.com/video/'.$code.'?fields=thumbnail_large_url')
+                        file_get_contents('https://api.dailymotion.com/video/' . $code . '?fields=thumbnail_large_url')
                     );
                     $thumbnailUrl = $json->{'thumbnail_large_url'};
                     // dirty hack to fix urls for imagine
                     if (!$this->endsWith($thumbnailUrl, '.jpg') && !$this->endsWith($thumbnailUrl, '.png')) {
-                        $thumbnailUrl = $thumbnailUrl.'&ext=.jpg';
+                        $thumbnailUrl = $thumbnailUrl . '&ext=.jpg';
                     }
                     $video->setThumbnailUrl($thumbnailUrl);
                 } catch (\Exception $e) {
@@ -185,7 +185,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         $result = null;
         if (\is_string($data)) {
             if (0 !== strpos($data, 'http')) {
-                $data = 'http://'.$data;
+                $data = 'http://' . $data;
             }
             $parsedUrl = parse_url($data);
             switch ($parsedUrl['host']) {
@@ -196,7 +196,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setType('youtube');
                     $video->setCode($code);
                     $result = $video->getMedia();
-                    $result->setName('Youtube '.$code);
+                    $result->setName('Youtube ' . $code);
 
                     break;
                 case 'www.youtube.com':
@@ -208,7 +208,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setType('youtube');
                     $video->setCode($code);
                     $result = $video->getMedia();
-                    $result->setName('Youtube '.$code);
+                    $result->setName('Youtube ' . $code);
 
                     break;
                 case 'www.vimeo.com':
@@ -219,7 +219,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setType('vimeo');
                     $video->setCode($code);
                     $result = $video->getMedia();
-                    $result->setName('Vimeo '.$code);
+                    $result->setName('Vimeo ' . $code);
 
                     break;
                 case 'www.dailymotion.com':
@@ -230,7 +230,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     $video->setType('dailymotion');
                     $video->setCode($code);
                     $result = $video->getMedia();
-                    $result->setName('Dailymotion '.$code);
+                    $result->setName('Dailymotion ' . $code);
 
                     break;
             }

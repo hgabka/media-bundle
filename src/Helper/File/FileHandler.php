@@ -171,7 +171,7 @@ class FileHandler extends AbstractMediaHandler
                 $pathInfo['extension'] = empty($extensions) ? null : reset($extensions);
             }
 
-            $media->setOriginalFilename($this->hgabkaUtils->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
+            $media->setOriginalFilename($this->hgabkaUtils->slugify($pathInfo['filename']) . '.' . $pathInfo['extension']);
             $name = $media->getName();
 
             if (empty($name)) {
@@ -181,7 +181,7 @@ class FileHandler extends AbstractMediaHandler
 
         $media->setContentType($contentType);
         $media->setFileSize(filesize($media->getContent()));
-        $media->setUrl($this->mediaPath.$this->getFilePath($media));
+        $media->setUrl($this->mediaPath . $this->getFilePath($media));
         $media->setLocation('local');
     }
 
@@ -199,7 +199,7 @@ class FileHandler extends AbstractMediaHandler
         $folderPath = $this->getFileFolderPath($media);
         if ($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
             $allMyKeys = $adapter->keys();
-            $everythingfromdir = preg_grep('/'.$folderPath, $allMyKeys);
+            $everythingfromdir = preg_grep('/' . $folderPath, $allMyKeys);
 
             if (1 === \count($everythingfromdir)) {
                 $adapter->delete($folderPath);
@@ -293,13 +293,13 @@ class FileHandler extends AbstractMediaHandler
         $filename = str_replace(['/', '\\', '%'], '', $filename);
 
         if (!empty($this->blacklistedExtensions)) {
-            $filename = preg_replace('/\.('.implode('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
+            $filename = preg_replace('/\.(' . implode('|', $this->blacklistedExtensions) . ')$/', '.txt', $filename);
         }
 
         $parts = pathinfo($filename);
         $filename = $this->hgabkaUtils->slugify($parts['filename']);
         if (\array_key_exists('extension', $parts)) {
-            $filename .= '.'.strtolower($parts['extension']);
+            $filename .= '.' . strtolower($parts['extension']);
         }
 
         $uuid = md5($media->getUuid());

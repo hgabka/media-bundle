@@ -55,7 +55,7 @@ class DoctrineMediaListener
                 if ($deleted || $reverted) {
                     $oldFileUrl = $entity->getUrl();
                     $newFileName = ($reverted ? $entity->getOriginalFilename() : uniqid());
-                    $newFileUrl = \dirname($oldFileUrl).'/'.$newFileName.'.'.pathinfo($oldFileUrl, \PATHINFO_EXTENSION);
+                    $newFileUrl = \dirname($oldFileUrl) . '/' . $newFileName . '.' . pathinfo($oldFileUrl, \PATHINFO_EXTENSION);
                     $entity->setUrl($newFileUrl);
                     $this->fileUrlMap[$newFileUrl] = $oldFileUrl;
                 }
@@ -107,7 +107,7 @@ class DoctrineMediaListener
         $url = $entity->getUrl();
         $handler = $this->mediaManager->getHandler($entity);
         if (isset($this->fileUrlMap[$url]) && $handler instanceof FileHandler) {
-            $regex = '~^'.preg_quote($handler->mediaPath, '~').'~';
+            $regex = '~^' . preg_quote($handler->mediaPath, '~') . '~';
             $originalFileName = preg_replace($regex, '/', $this->fileUrlMap[$url]);
             // Check if file exists on filesystem.
             if ($handler->fileSystem->has($originalFileName)) {

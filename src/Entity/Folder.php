@@ -406,7 +406,7 @@ class Folder implements TranslatableInterface
         return str_repeat(
             '-',
             $this->getLevel()
-        ).' '.$this->getName();
+        ) . ' ' . $this->getName();
     }
 
     /**

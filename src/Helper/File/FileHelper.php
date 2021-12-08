@@ -132,7 +132,7 @@ class FileHelper
             $this->media->setContent($file);
             $this->media->setContentType($file->getMimeType());
             $this->media->setUrl(
-                '/uploads/media/'.$this->media->getUuid().'.'.$this->media->getContent()->getExtension()
+                '/uploads/media/' . $this->media->getUuid() . '.' . $this->media->getContent()->getExtension()
             );
         }
     }
@@ -160,7 +160,7 @@ class FileHelper
 
         $url = parse_url($effectiveUrl);
         $info = pathinfo($url['path']);
-        $filename = $info['filename'].'.'.$info['extension'];
+        $filename = $info['filename'] . '.' . $info['extension'];
 
         $upload = new UploadedFile($path, $filename);
         $this->getMedia()->setContent($upload);

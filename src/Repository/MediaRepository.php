@@ -82,7 +82,7 @@ class MediaRepository extends EntityRepository
                 ->setParameter('folder', $folder)
         ;
         if (null !== $orderByField) {
-            $qb->orderBy('m.'.$orderByField, $orderDirection);
+            $qb->orderBy('m.' . $orderByField, $orderDirection);
         }
 
         if (!$includeDeleted) {

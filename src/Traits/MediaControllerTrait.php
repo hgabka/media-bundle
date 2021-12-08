@@ -146,7 +146,7 @@ trait MediaControllerTrait
         if ('name' === $orderBy) {
             $orderBy = 'bt.name';
         } else {
-            $orderBy = 'b.'.$orderBy;
+            $orderBy = 'b.' . $orderBy;
         }
         $queryBuilder->orderBy($orderBy, $orderDirection);
         $type = $request->query->get('type');

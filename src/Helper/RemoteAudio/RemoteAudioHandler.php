@@ -105,7 +105,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
             case 'soundcloud':
                 $scData = json_decode(
                     file_get_contents(
-                        'http://api.soundcloud.com/tracks/'.$code.'.json?client_id='.$this->getSoundcloudApiKey()
+                        'http://api.soundcloud.com/tracks/' . $code . '.json?client_id=' . $this->getSoundcloudApiKey()
                     )
                 );
                 $artworkUrl = $scData->artwork_url;

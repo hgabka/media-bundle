@@ -29,7 +29,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof HasGuessableExtension) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\HasGuessableExtension');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\HasGuessableExtension');
         }
 
         if (!$value instanceof UploadedFile) {

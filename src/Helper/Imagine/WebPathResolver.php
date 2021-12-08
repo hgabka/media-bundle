@@ -60,7 +60,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         }
 
         $info = pathinfo($path);
-        $path = $info['dirname'].\DIRECTORY_SEPARATOR.$info['filename'].'.'.$format;
+        $path = $info['dirname'] . \DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
 
         return $path;
     }

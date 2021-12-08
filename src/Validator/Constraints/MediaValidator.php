@@ -18,7 +18,7 @@ class MediaValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Media) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Media');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Media');
         }
 
         if (!$value instanceof MediaObject) {
@@ -68,14 +68,14 @@ class MediaValidator extends ConstraintValidator
     public function getFileSizeText($size)
     {
         if ($size < 1024) {
-            return $size.' B';
+            return $size . ' B';
         }
         $help = $size / 1024;
         if ($help < 1024) {
-            return round($help, 1).' kB';
+            return round($help, 1) . ' kB';
         }
 
-        return round(($help / 1024), 1).' MB';
+        return round(($help / 1024), 1) . ' MB';
     }
 
     private function validateMimeType(MediaObject $value, $allowedMimeTypes)

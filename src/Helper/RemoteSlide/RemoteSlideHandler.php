@@ -84,7 +84,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                 try {
                     $json = json_decode(
                         file_get_contents(
-                            'https://www.slideshare.net/api/oembed/2?url=https://www.slideshare.net/slideshow/embed_code/key/'.$code.'&format=json'
+                            'https://www.slideshare.net/api/oembed/2?url=https://www.slideshare.net/slideshow/embed_code/key/' . $code . '&format=json'
                         )
                     );
                     $slide->setThumbnailUrl($json->thumbnail);
@@ -136,7 +136,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
         $result = null;
         if (\is_string($data)) {
             if (0 !== strpos($data, 'http')) {
-                $data = 'https://'.$data;
+                $data = 'https://' . $data;
             }
             $parsedUrl = parse_url($data);
             switch ($parsedUrl['host']) {
@@ -146,11 +146,11 @@ class RemoteSlideHandler extends AbstractMediaHandler
                     $slide = new RemoteSlideHelper($result);
                     $slide->setType('slideshare');
                     $json = json_decode(
-                        file_get_contents('https://www.slideshare.net/api/oembed/2?url='.$data.'&format=json')
+                        file_get_contents('https://www.slideshare.net/api/oembed/2?url=' . $data . '&format=json')
                     );
                     $slide->setCode($json->{'slideshow_id'});
                     $result = $slide->getMedia();
-                    $result->setName('SlideShare '.$data);
+                    $result->setName('SlideShare ' . $data);
 
                     break;
             }

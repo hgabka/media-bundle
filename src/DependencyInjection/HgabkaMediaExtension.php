@@ -27,7 +27,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $container->setParameter(
             'twig.form.resources',
@@ -54,7 +54,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('liip_imagine.cache.resolver.web_path.class', 'Hgabka\MediaBundle\Helper\Imagine\WebPathResolver');
         $container->setParameter('liip_imagine.controller.class', 'Hgabka\MediaBundle\Helper\Imagine\ImagineController');
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('imagine.xml');
     }
 
@@ -70,7 +70,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $twigConfig['globals']['mediamanager'] = '@hgabka_media.media_manager';
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $liipConfig = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/imagine_filters.yml'));
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());

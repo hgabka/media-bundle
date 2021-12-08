@@ -32,7 +32,7 @@ class DefaultIconFontLoader extends AbstractIconFontLoader
             throw new InvalidOptionsException(sprintf('The loader data requires a valid css file. "%s" given', $pathInfo['extension']));
         }
 
-        $cssPath = $this->rootPath.'/web/'.$this->cssPath;
+        $cssPath = $this->rootPath . '/web/' . $this->cssPath;
         if (!file_exists($cssPath)) {
             throw new InvalidOptionsException(sprintf('Could not find the css file with this path "%s"', $cssPath));
         }
@@ -43,7 +43,7 @@ class DefaultIconFontLoader extends AbstractIconFontLoader
      */
     public function getCssLink()
     {
-        return '/'.$this->cssPath;
+        return '/' . $this->cssPath;
     }
 
     /**
@@ -51,7 +51,7 @@ class DefaultIconFontLoader extends AbstractIconFontLoader
      */
     public function getCssClasses()
     {
-        $contents = file_get_contents($this->rootPath.'/web/'.$this->cssPath);
+        $contents = file_get_contents($this->rootPath . '/web/' . $this->cssPath);
 
         preg_match_all('/\.([a-zA-Z0-9-_]+):before[ ]*\{[ \n]*content:/', $contents, $matches);
 

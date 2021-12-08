@@ -54,7 +54,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuItem
                     ->setRoute('HgabkaMediaBundle_folder_show')
                     ->setRouteparams(['folderId' => $rootFolder->getId()])
-                    ->setUniqueId('folder-'.$rootFolder->getId())
+                    ->setUniqueId('folder-' . $rootFolder->getId())
                     ->setLabel($rootFolder->getName())
                     ->setParent(null)
                     ->setRole($rootFolder->getRel());
