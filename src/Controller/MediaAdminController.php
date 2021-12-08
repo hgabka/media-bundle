@@ -4,6 +4,7 @@ namespace Hgabka\MediaBundle\Controller;
 
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
+use Hgabka\MediaBundle\Helper\FolderManager;
 use Hgabka\MediaBundle\Traits\MediaControllerTrait;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -15,10 +16,19 @@ class MediaAdminController extends CRUDController
 {
     use MediaControllerTrait;
 
+    /** @var FolderManager */
+    protected $folderManager;
+    
+    /**
+     * @required
+     */
+    public function setFolderManager(FolderManager $folderManager)
+    {
+        $this->folderManager = $folderManager;
+    }
+    
     public function listAction(Request $request): Response
     {
-        $request = $this->getRequest();
-
         $this->admin->checkAccess('list');
 
         $preResponse = $this->preList($request);
@@ -81,7 +91,7 @@ class MediaAdminController extends CRUDController
         $this->getFilterBuilder()->bindRequest($request);
 
         $params = [
-            'foldermanager' => $this->get('hgabka_media.folder_manager'),
+            'foldermanager' => $this->folderManager,
             'mediamanager' => $mediaManager,
             'subform' => $subForm->createView(),
             'emptyform' => $emptyForm->createView(),
