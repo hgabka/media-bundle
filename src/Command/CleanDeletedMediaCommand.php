@@ -2,20 +2,36 @@
 
 namespace Hgabka\MediaBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Doctrine\ORM\EntityManagerInterface;
+use Hgabka\MediaBundle\Helper\MediaManager;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-class CleanDeletedMediaCommand extends ContainerAwareCommand
+class CleanDeletedMediaCommand extends Command
 {
+    protected static $defaultName = 'hgabka:media:clean-deleted-media';
+ 
+    /** @var EntityManagerInterface */
+    private $entityManager;
+ 
+    /** @var MediaManager */
+    private $mediaManager;
+    
+    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager)
+    {
+        parent::__construct();
+        
+        $this->entityManager = $entityManager;
+        $this->mediaManager = $mediaManager;
+    }
+   
     protected function configure()
     {
-        parent::configure();
-
         $this
-            ->setName('hgabka:media:clean-deleted-media')
+            ->setName(static::$defaultName)
             ->setDescription('Throw away all files from the file system that have been deleted in the database')
             ->setHelp(
                 'The <info>hgabka:media:clean-deleted-media</info> command can be used to clean up your file system after having deleted Media items using the backend.'
@@ -41,8 +57,8 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Removing all Media from the file system that have their status set to deleted in the database.</info>');
 
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaManager = $this->getContainer()->get('hgabka_media.media_manager');
+        $em = $this->entityManager;
+        $mediaManager = $this->mediaManager;
 
         $medias = $em->getRepository('HgabkaMediaBundle:Media')->findAllDeleted();
 
