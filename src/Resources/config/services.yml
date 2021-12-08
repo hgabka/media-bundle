@@ -199,4 +199,8 @@ services:
         calls:
             - [setTemplateRegistry, ['sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
+        
+    Hgabka\MediaBundle\Helper\SvgMimeTypeGuesser:
+        autowire: true
+        autoconfigure: true
     
