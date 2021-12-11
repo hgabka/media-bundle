@@ -48,7 +48,7 @@ class ChooserController extends BaseMediaController
 
         $fid = $request->get('folderid');
         if (empty($folderId) && !empty($fid)) {
-            $folder = $em->getRepository('HgabkaMediaBundle:Folder')->find($fid);
+            $folder = $em->getRepository(Folder::class)->find($fid);
             if ($folder) {
                 $folderId = $fid;
             }
@@ -56,7 +56,7 @@ class ChooserController extends BaseMediaController
         // Go to the last visited folder
         if (empty($folderId) && $session->get('last-media-folder')) {
             try {
-                $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($session->get('last-media-folder'));
+                $em->getRepository(Folder::class)->getFolder($session->get('last-media-folder'));
                 $folderId = $session->get('last-media-folder');
             } catch (EntityNotFoundException $e) {
                 $folderId = false;
@@ -66,7 +66,7 @@ class ChooserController extends BaseMediaController
         if (!$folderId) {
             // Redirect to the first top folder
             // @var Folder $firstFolder
-            $firstFolder = $em->getRepository('HgabkaMediaBundle:Folder')->getFirstTopFolder();
+            $firstFolder = $em->getRepository(Folder::class)->getFirstTopFolder();
             $folderId = $firstFolder->getId();
         }
 
