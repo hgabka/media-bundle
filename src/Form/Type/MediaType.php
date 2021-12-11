@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -22,7 +23,7 @@ class MediaType extends AbstractType
     protected $mediaManager;
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     protected $objectManager;
 
