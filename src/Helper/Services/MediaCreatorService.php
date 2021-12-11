@@ -39,7 +39,7 @@ class MediaCreatorService
     {
         $this->container = $container;
         $this->em = $container->get('doctrine')->getManager();
-        $this->folderRepository = $this->em->getRepository('HgabkaMediaBundle:Folder');
+        $this->folderRepository = $this->em->getRepository(Folder::class);
     }
 
     /**
