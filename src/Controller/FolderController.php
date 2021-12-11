@@ -54,7 +54,7 @@ class FolderController extends BaseMediaController
             );
             $folderId = $parentFolder->getId();
         } else {
-            $em->getRepository('HgabkaMediaBundle:Folder')->delete($folder);
+            $em->getRepository(Folder::class)->delete($folder);
             $this->addFlash(
                 'sonata_flash_success',
                 $this->getTranslator()->trans('hg_media.folder.delete.success.text', [
@@ -99,7 +99,7 @@ class FolderController extends BaseMediaController
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $parent
-        $parent = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $parent = $em->getRepository(Folder::class)->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
         $folder->setCurrentLocale($this->getUtils()->getCurrentLocale());
@@ -165,7 +165,7 @@ class FolderController extends BaseMediaController
         $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         $form = $this->createEmptyForm();
 
