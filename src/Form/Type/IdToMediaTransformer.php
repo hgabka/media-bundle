@@ -4,6 +4,7 @@ namespace Hgabka\MediaBundle\Form\Type;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\MediaBundle\Entity\Media;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -15,7 +16,7 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 class IdToMediaTransformer implements DataTransformerInterface
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $objectManager;
 
@@ -28,7 +29,7 @@ class IdToMediaTransformer implements DataTransformerInterface
      * @param ObjectManager         $objectManager         The object manager
      * @param CurrentValueContainer $currentValueContainer The current value container
      */
-    public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer)
+    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer)
     {
         $this->objectManager = $objectManager;
         $this->currentValueContainer = $currentValueContainer;
