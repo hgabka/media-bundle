@@ -49,7 +49,7 @@ class MediaController extends BaseMediaController
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
-                $em->getRepository('HgabkaMediaBundle:Media')->save($media);
+                $em->getRepository(Media::class)->save($media);
 
                 return new RedirectResponse($this->generateUrl(
                     'HgabkaMediaBundle_media_show',
@@ -89,11 +89,11 @@ class MediaController extends BaseMediaController
         $em = $this->getDoctrine()->getManager();
 
         // @var Media $media
-        $media = $em->getRepository('HgabkaMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository(Media::class)->getMedia($mediaId);
         $medianame = $media->getName();
         $folder = $media->getFolder();
 
-        $em->getRepository('HgabkaMediaBundle:Media')->delete($media);
+        $em->getRepository(Media::class)->delete($media);
 
         $this->addFlash(
             'sonata_flash_success',
@@ -308,7 +308,7 @@ class MediaController extends BaseMediaController
         $media = $this->getManager()->createNew($drop);
         if ($media) {
             $media->setFolder($folder);
-            $em->getRepository('HgabkaMediaBundle:Media')->save($media);
+            $em->getRepository(Media::class)->save($media);
 
             return new Response(json_encode(['status' => $this->getTranslator()->trans('kuma_admin.media.flash.drop_success')]));
         }
@@ -397,10 +397,10 @@ class MediaController extends BaseMediaController
         }
 
         $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository('HgabkaMediaBundle:Media');
+        $mediaRepo = $em->getRepository(Media::class);
 
         $media = $mediaRepo->getMedia($mediaId);
-        $folder = $em->getRepository('HgabkaMediaBundle:Folder')->getFolder($folderId);
+        $folder = $em->getRepository(Folder::class)->getFolder($folderId);
 
         $media->setFolder($folder);
         $mediaRepo->save($media);
@@ -499,7 +499,7 @@ class MediaController extends BaseMediaController
             if ($form->isSubmitted() && $form->isValid()) {
                 $media = $helper->getMedia();
                 $media->setFolder($folder);
-                $em->getRepository('HgabkaMediaBundle:Media')->save($media);
+                $em->getRepository(Media::class)->save($media);
 
                 $this->addFlash(
                     'sonata_flash_success',
