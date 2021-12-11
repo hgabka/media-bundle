@@ -247,7 +247,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'HgabkaMediaBundle:Media\RemoteVideo:show.html.twig';
+        return '@HgabkaMedia/Media/RemoteVideo/show.html.twig';
     }
 
     /**
