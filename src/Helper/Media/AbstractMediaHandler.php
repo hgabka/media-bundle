@@ -84,7 +84,7 @@ abstract class AbstractMediaHandler
 
     public function getShowTemplate(Media $media)
     {
-        return 'HgabkaMediaBundle:Media:show.html.twig';
+        return '@HgabkaMedia/Media/show.html.twig';
     }
 
     /**
