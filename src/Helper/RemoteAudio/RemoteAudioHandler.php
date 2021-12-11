@@ -144,7 +144,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
      */
     public function getShowTemplate(Media $media)
     {
-        return 'HgabkaMediaBundle:Media\RemoteAudio:show.html.twig';
+        return '@HgabkaMedia/Media/RemoteAudio/show.html.twig';
     }
 
     /**
