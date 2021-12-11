@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
@@ -23,7 +24,7 @@ class MediaSimpleType extends AbstractType
     protected $mediaManager;
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     protected $objectManager;
 
