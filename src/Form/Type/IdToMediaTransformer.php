@@ -78,7 +78,7 @@ class IdToMediaTransformer implements DataTransformerInterface
         if (!is_numeric($key)) {
             throw new UnexpectedTypeException($key, 'numeric');
         }
-        if (!($entity = $this->objectManager->getRepository('HgabkaMediaBundle:Media')->find($key))) {
+        if (!($entity = $this->objectManager->getRepository(Media::class)->find($key))) {
             throw new TransformationFailedException(sprintf('The entity with key "%s" could not be found', $key));
         }
         $this->currentValueContainer->setCurrentValue($entity);
