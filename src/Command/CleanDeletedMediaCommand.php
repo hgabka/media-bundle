@@ -76,7 +76,7 @@ class CleanDeletedMediaCommand extends Command
             $output->writeln('An error occured while trying to delete Media from the file system:');
             $output->writeln('<error>' . $e->getMessage() . '</error>');
         }
-        
+
         return Command::SUCCESS;
     }
 }
