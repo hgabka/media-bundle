@@ -47,6 +47,9 @@
     background-clip: padding-box;
     outline: 0;
 }
+.js-ajax-modal.fade.in {
+	display: block !important;
+}
 .close {
     float: right;
     font-size: 21px;
