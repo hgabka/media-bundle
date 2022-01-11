@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
@@ -35,7 +36,7 @@ class FileToMediaTransformer implements DataTransformerInterface
      * @param CurrentValueContainer $currentValueContainer The current value container
      * @param null|mixed            $mediaName
      */
-    public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null)
+    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null)
     {
         $this->objectManager = $objectManager;
         $this->folder = $folder;
@@ -87,6 +88,7 @@ class FileToMediaTransformer implements DataTransformerInterface
         if (!empty($value) && !empty($value['file'])) {
             if ($value['file']->isValid()) {
                 $entity = $this->mediaManager->createNew($value['file']);
+                $this->objectManager->persist($entity);
                 if (!empty($this->mediaName)) {
                     $entity->setName($this->mediaName);
                 }
