@@ -98,9 +98,9 @@ class FileToMediaTransformer implements DataTransformerInterface
                 return $entity;
             }
 
-            return $this->currentValueContainer->getCurrentValue();
+            return $value['ent'] ?? null;
         }
 
-        return empty($value['id']) ? null : $this->currentValueContainer->getCurrentValue();
+        return empty($value['id']) ? null : ($value['ent'] ?? null);
     }
 }
