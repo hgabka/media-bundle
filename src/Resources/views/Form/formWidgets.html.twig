@@ -87,6 +87,7 @@
         <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
             <!-- Hidden input -->
             <input id="{{ id }}" type="hidden" name="{{ form.id.vars.full_name }}" value="{{ form.id.vars.value }}">
+            {% do form.id.setRendered() %}
 
                 {% include '@HgabkaMedia/Form/_media_preview.html.twig'  %}
             <div style="max-width: 100%;overflow: hidden">
