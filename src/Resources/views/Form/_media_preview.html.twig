@@ -1,0 +1,48 @@
+<div class="media-chooser__preview">
+    <figure class="thumbnail">
+        {% if(value.ent is defined) %}
+            {% set media = value.ent %}
+            {% set handler = mediamanager.getHandler(media) %}
+            {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+            {% if imageurl is not empty and media.location == 'local' %}
+                {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                    {% set imageurlretina = imageurl %}
+                {% elseif imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
+                    {% set imageurlretina = imageurl %}
+                {% else %}
+                    {% set imageurlretina = asset(imageurl | imagine_filter(editor_filter_retina)) %}
+                    {% set imageurl = asset(imageurl | imagine_filter(editor_filter)) %}
+                {% endif %}
+            {% endif %}
+            {% if imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
+                <video controls width="210" height="150" preload="metadata">
+                    <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
+                </video>
+            {% elseif imageurl %}
+                <a style="text-decoration:none;outline: 0 none;" target="_blank" href="{{ asset(media.url) }}">
+                    <img src="{{ imageurl }}" srcset="" alt="{{ media.name }}" id="{{ id }}__preview__img"
+                         class="thumbnail-img media-chooser__preview__img">
+                </a>
+                <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
+                    {{ media.name }}
+                </figcaption>
+            {% else %}
+                <a style="text-decoration:none;outline:0 none;" target="_blank" href="{{ asset(media.url) }}">
+                    <i class="fa fa-file-o media-thumbnail__icon"></i>
+                </a>
+                <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
+                    {{ media.name }}
+                </figcaption>
+            {% endif %}
+        {% else %}
+            <img id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+            <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
+        {% endif %}
+    </figure>
+
+    <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
+        <i class="fa fa-trash-o"></i>
+    </button>
+</div>
+
+

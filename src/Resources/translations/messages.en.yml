@@ -148,6 +148,8 @@ hg_media:
         delete: Delete
         media_chooser: Media-chooser
         icon_chooser: Icon-chooser
+        choose_from_media: Choose from Media
+        choose_or: OR
 
     adminlist:
         configurator:

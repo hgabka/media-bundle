@@ -150,6 +150,8 @@ hg_media:
         delete: Törlés
         media_chooser: Média választó
         icon_chooser: Ikon választó
+        choose_from_media: Válassz a médiatárból
+        choose_or: VAGY
 
     adminlist:
         configurator:
