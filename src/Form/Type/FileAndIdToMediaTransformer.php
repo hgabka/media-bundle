@@ -84,7 +84,6 @@ class FileAndIdToMediaTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        dump($value);
         if (!empty($value) && !empty($value['file'])) {
             if ($value['file']->isValid()) {
                 $entity = $this->mediaManager->createNew($value['file']);
