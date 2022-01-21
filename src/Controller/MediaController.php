@@ -2,7 +2,7 @@
 
 namespace Hgabka\MediaBundle\Controller;
 
-use Hgabka\AdminBundle\FlashMessages\FlashTypes;
+use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\BulkMoveMediaType;
