@@ -308,7 +308,7 @@ class FileHandler extends AbstractMediaHandler
 
         if ($this->folderDepth <= 0) {
             $pattern = '%s/%s';
-            $params = [$uuid, $filename];
+            $params = [$media->getUuid(), $filename];
         } else {
             for ($i = 0; $i < min(5, $this->folderDepth); ++$i) {
                 $pattern .= '%s/';
