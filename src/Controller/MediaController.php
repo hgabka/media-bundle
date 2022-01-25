@@ -2,11 +2,11 @@
 
 namespace Hgabka\MediaBundle\Controller;
 
-use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\BulkMoveMediaType;
 use Hgabka\MediaBundle\Helper\MediaManager;
+use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
