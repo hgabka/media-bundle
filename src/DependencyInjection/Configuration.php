@@ -39,7 +39,6 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                 ->end()
                 ->integerNode('folder_depth')->defaultValue(4)->end()
-                ->booleanNode('multi_root')->defaultValue(false)->end()
             ->end();
 
         return $treeBuilder;
