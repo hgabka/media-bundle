@@ -68,7 +68,7 @@
                             {% endif %}
                         {% endif %}
 
-                        {% set cke = (app.request and app.request.get('CKEditorFuncNum')) %}
+                        {% set cke = (app.request and app.request.get('CKEditorFuncNum') is not null) %}
                         <a data-thumb-path="{{ imageurl }}" data-path="{{ item.url }}" data-title="{{ item.name }}" data-id="{{ item.id }}" href="javascript:void(0)" class="js-url-chooser-media-select"
                            data-cke="{% if cke %}true{% else %}false{% endif %}">
                             {{ 'hg_media.label.select' | trans }}
