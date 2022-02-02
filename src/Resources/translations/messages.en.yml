@@ -196,6 +196,8 @@ hg_media:
                 label: Description
             originalFilename:
                 label: Original filename
+            folder:
+                label: Folder
         remote_audio:
             type:
                 label: Type
