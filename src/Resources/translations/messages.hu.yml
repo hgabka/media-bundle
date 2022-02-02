@@ -198,6 +198,8 @@ hg_media:
                 label: Leírás
             originalFilename:
                 label: Eredeti fájlnév
+            folder:
+                label: Mappa
         remote_audio:
             type:
                 label: Típus
