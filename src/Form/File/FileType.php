@@ -104,6 +104,7 @@ class FileType extends AbstractType
                         'folder',
                         EntityType::class,
                         [
+                            'label' => 'hg_media.form.file.folder.label',
                             'class' => Folder::class,
                             'choice_label' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
