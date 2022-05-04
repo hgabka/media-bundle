@@ -2,6 +2,7 @@
 
 namespace Hgabka\MediaBundle\Traits;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
@@ -17,7 +18,6 @@ use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
