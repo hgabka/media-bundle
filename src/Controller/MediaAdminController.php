@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MediaAdminController extends CRUDController
 {
@@ -20,12 +21,27 @@ class MediaAdminController extends CRUDController
     /** @var FolderManager */
     protected $folderManager;
 
+    /** @var TranslatorInterface */
+    protected $translator;
+
     /**
      * @required
      */
     public function setFolderManager(FolderManager $folderManager)
     {
         $this->folderManager = $folderManager;
+    }
+
+    /**
+     * @required
+     * @param TranslatorInterface $translator
+     * @return MediaAdminController
+     */
+    public function setTranslator(TranslatorInterface $translator): self
+    {
+        $this->translator = $translator;
+
+        return $this;
     }
 
     public function listAction(Request $request): Response
@@ -72,7 +88,7 @@ class MediaAdminController extends CRUDController
 
                 $this->addFlash(
                     'sonata_flash_success',
-                    $this->get('translator')->trans('hg_media.folder.show.success.text', [
+                    $this->translator->trans('hg_media.folder.show.success.text', [
                         '%folder%' => $folder->getName(),
                     ])
                 );
