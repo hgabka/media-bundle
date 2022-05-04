@@ -31,7 +31,7 @@ class FolderController extends BaseMediaController
         $this->getAdmin()->checkAccess('delete');
 
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -95,7 +95,7 @@ class FolderController extends BaseMediaController
         $this->getAdmin()->checkAccess('create');
 
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Folder $parent
         $parent = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -160,7 +160,7 @@ class FolderController extends BaseMediaController
         $this->getAdmin()->checkAccess('delete');
 
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -218,7 +218,7 @@ class FolderController extends BaseMediaController
         $folders = [];
         $nodeIds = $request->get('nodes');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $repository = $em->getRepository(Folder::class);
 
         foreach ($nodeIds as $id) {
