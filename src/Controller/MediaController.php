@@ -8,7 +8,7 @@ use Hgabka\MediaBundle\Form\BulkMoveMediaType;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -282,8 +282,7 @@ class MediaController extends BaseMediaController
     /**
      * @param int $folderId
      *
-     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_media_drop_upload")
-     * @Method({"GET", "POST"})
+     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_media_drop_upload", methods={"GET", "POST"})
      *
      * @return array|RedirectResponse
      */
@@ -325,8 +324,7 @@ class MediaController extends BaseMediaController
      * @param int    $folderId The folder id
      * @param string $type     The type
      *
-     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_create")
-     * @Method({"GET", "POST"})
+     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_create", methods={"GET", "POST"})
      *
      * @return array|RedirectResponse
      */
@@ -350,8 +348,7 @@ class MediaController extends BaseMediaController
      * @param int    $folderId The folder id
      * @param string $type     The type
      *
-     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_modal_create")
-     * @Method({"GET", "POST"})
+     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_modal_create", methods={"GET", "POST"})
      * @Template()
      *
      * @return array|RedirectResponse
@@ -382,8 +379,7 @@ class MediaController extends BaseMediaController
     }
 
     /**
-     * @Route("move/", name="HgabkaMediaBundle_media_move")
-     * @Method({"POST"})
+     * @Route("move/", name="HgabkaMediaBundle_media_move", methods={"POST"})
      *
      * @return string
      */
