@@ -80,7 +80,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
     /**
      * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'hgabka_media';
     }
