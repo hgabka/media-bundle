@@ -17,6 +17,7 @@ use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -53,7 +54,7 @@ trait MediaControllerTrait
     /**
      * MediaControllerTrait constructor.
      */
-    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack)
+    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack, ManagerRegistry $doctrine)
     {
         $this->admin = $admin;
         $this->manager = $manager;
@@ -61,6 +62,7 @@ trait MediaControllerTrait
         $this->folderManager = $folderManager;
         $this->translator = $translator;
         $this->requestStack = $requestStack;
+        $this->doctrine = $doctrine;
     }
 
     /**
