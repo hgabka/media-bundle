@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -85,8 +85,7 @@ class FolderController extends BaseMediaController
     /**
      * @param int $folderId
      *
-     * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_sub_create")
-     * @Method({"GET", "POST"})
+     * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_sub_create", methods={"GET", "POST"})
      * @Template()
      *
      * @return Response
@@ -151,8 +150,7 @@ class FolderController extends BaseMediaController
     /**
      * @param int $folderId
      *
-     * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_empty")
-     * @Method({"GET", "POST"})
+     * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_empty", methods={"GET", "POST"})
      * @Template()
      *
      * @return Response
