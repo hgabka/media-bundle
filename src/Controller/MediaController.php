@@ -32,7 +32,7 @@ class MediaController extends BaseMediaController
     {
         $this->getAdmin()->checkAccess('edit');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Media $media
         $media = $em->getRepository(Media::class)->getMedia($mediaId);
@@ -86,7 +86,7 @@ class MediaController extends BaseMediaController
     {
         $this->getAdmin()->checkAccess('delete');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Media $media
         $media = $em->getRepository(Media::class)->getMedia($mediaId);
@@ -126,7 +126,7 @@ class MediaController extends BaseMediaController
     {
         $this->getAdmin()->checkAccess('create');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -250,7 +250,7 @@ class MediaController extends BaseMediaController
             rename("{$filePath}.part", $filePath);
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
         $file = new File($filePath);
@@ -290,7 +290,7 @@ class MediaController extends BaseMediaController
     {
         $this->getAdmin()->checkAccess('create');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -392,7 +392,7 @@ class MediaController extends BaseMediaController
             return new JsonResponse(['error' => ['title' => 'Missing media id or folder id']], 400);
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $mediaRepo = $em->getRepository(Media::class);
 
         $media = $mediaRepo->getMedia($mediaId);
@@ -413,7 +413,7 @@ class MediaController extends BaseMediaController
      */
     public function bulkMove(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
         $mediaRepo = $em->getRepository(Media::class);
         $form = $this->createForm(BulkMoveMediaType::class);
 
@@ -472,7 +472,7 @@ class MediaController extends BaseMediaController
      */
     private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->doctrine->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
