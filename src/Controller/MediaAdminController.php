@@ -2,6 +2,7 @@
 
 namespace Hgabka\MediaBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Helper\FolderManager;
@@ -19,12 +20,27 @@ class MediaAdminController extends CRUDController
     /** @var FolderManager */
     protected $folderManager;
 
+    /** @var ManagerRegistry */
+    protected $doctrine;
+
     /**
      * @required
      */
     public function setFolderManager(FolderManager $folderManager)
     {
         $this->folderManager = $folderManager;
+    }
+
+    /**
+     * @required
+     * @param ManagerRegistry $doctrine
+     * @return MediaAdminController
+     */
+    public function setDoctrine(ManagerRegistry $doctrine): MediaAdminController
+    {
+        $this->doctrine = $doctrine;
+
+        return $this;
     }
 
     public function listAction(Request $request): Response
@@ -49,7 +65,7 @@ class MediaAdminController extends CRUDController
         // @var MediaManager $mediaManager
         $mediaManager = $this->manager;
 
-        $em = $this->getDoctrine();
+        $em = $this->doctrine;
         $repo = $em->getRepository(Folder::class);
 
         $folderId = $request->query->get('folderId');
