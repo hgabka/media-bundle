@@ -134,7 +134,7 @@ trait MediaControllerTrait
     protected function getPager(Request $request, Folder $folder)
     {
         $queryBuilder = $this
-            ->getDoctrine()
+            ->doctrine
             ->getRepository(Media::class)
             ->createQueryBuilder('b')
             ->leftJoin('b.translations', 'bt', 'WITH', 'bt.locale = :locale')
