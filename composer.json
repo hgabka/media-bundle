@@ -15,11 +15,11 @@
     ],
     "require": {
         "php" : "~7.3",
-        "hgabka/utils-bundle": "^5.0",
+        "hgabka/utils-bundle": "^6.0",
         "babdev/pagerfanta-bundle": "~2.1",
         "liip/imagine-bundle": "^2.1",
         "knplabs/gaufrette": "^0.10",
-        "symfony/framework-bundle": "5.4.*",
+        "symfony/framework-bundle": "6.0.*",
         "twig/intl-extra": "^3.3"
     },
     "require-dev": {
