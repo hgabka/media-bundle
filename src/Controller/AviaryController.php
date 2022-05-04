@@ -5,6 +5,7 @@ namespace Hgabka\MediaBundle\Controller;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,9 +23,9 @@ class AviaryController extends BaseMediaController
      *
      * @return RedirectResponse
      */
-    public function indexAction(Request $request, $folderId, $mediaId)
+    public function indexAction(Request $request, ManagerRegistry $doctrine, $folderId, $mediaId)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
