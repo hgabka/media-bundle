@@ -20,27 +20,12 @@ class MediaAdminController extends CRUDController
     /** @var FolderManager */
     protected $folderManager;
 
-    /** @var ManagerRegistry */
-    protected $doctrine;
-
     /**
      * @required
      */
     public function setFolderManager(FolderManager $folderManager)
     {
         $this->folderManager = $folderManager;
-    }
-
-    /**
-     * @required
-     * @param ManagerRegistry $doctrine
-     * @return MediaAdminController
-     */
-    public function setDoctrine(ManagerRegistry $doctrine): MediaAdminController
-    {
-        $this->doctrine = $doctrine;
-
-        return $this;
     }
 
     public function listAction(Request $request): Response
