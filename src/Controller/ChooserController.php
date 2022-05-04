@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
@@ -23,11 +24,11 @@ class ChooserController extends BaseMediaController
      *
      * @return RedirectResponse
      */
-    public function chooserIndexAction(Request $request)
+    public function chooserIndexAction(Request $request, ManagerRegistry $doctrine)
     {
         $this->getAdmin()->checkAccess('list');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $session = $request->getSession();
         $folderId = false;
 
@@ -88,10 +89,10 @@ class ChooserController extends BaseMediaController
      *
      * @return array
      */
-    public function chooserShowFolderAction(Request $request, $folderId)
+    public function chooserShowFolderAction(Request $request, ManagerRegistry $doctrine, $folderId)
     {
         $this->getAdmin()->checkAccess('list');
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $session = $request->getSession();
 
         $type = $request->get('type');
@@ -112,7 +113,7 @@ class ChooserController extends BaseMediaController
         // @var MediaManager $mediaHandler
         $mediaHandler = $this->getManager();
 
-        $em = $this->getDoctrine();
+        $em = $doctrine;
         $repo = $em->getRepository(Folder::class);
 
         // @var Folder $folder
