@@ -45,7 +45,7 @@ class CleanDeletedMediaCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (true !== $input->getOption('force')) {
             $helper = $this->getHelper('question');
