@@ -15,8 +15,7 @@
     ],
     "require": {
         "php" : ">=8.0.2",
-        "hgabka/utils-bundle": "^6.0",
-        "babdev/pagerfanta-bundle": "~3.6",
+        "hgabka/utils-bundle": "^6.0"
         "liip/imagine-bundle": "^2.1",
         "knplabs/gaufrette": "^0.10",
         "symfony/framework-bundle": "6.0.*",
