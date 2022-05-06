@@ -29,7 +29,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         $this->mediaManager = $mediaManager;
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Renaming soft-deleted media...');
         /**
