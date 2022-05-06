@@ -5,14 +5,13 @@ namespace Hgabka\MediaBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * FolderController.

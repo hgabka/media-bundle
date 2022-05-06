@@ -10,9 +10,9 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * ChooserController.

@@ -2,7 +2,6 @@
 
 namespace Hgabka\MediaBundle\Controller;
 
-use Doctrine\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
 use Hgabka\MediaBundle\Helper\FolderManager;
@@ -34,7 +33,9 @@ class MediaAdminController extends CRUDController
 
     /**
      * @required
+     *
      * @param TranslatorInterface $translator
+     *
      * @return MediaAdminController
      */
     public function setTranslator(TranslatorInterface $translator): self

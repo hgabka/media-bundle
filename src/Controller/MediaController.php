@@ -7,14 +7,13 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\BulkMoveMediaType;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * MediaController.
