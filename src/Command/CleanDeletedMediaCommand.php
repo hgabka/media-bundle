@@ -52,7 +52,7 @@ class CleanDeletedMediaCommand extends Command
             $question = new ConfirmationQuestion('<question>Are you sure you want to remove all deleted Media from the file system?</question> ', false);
 
             if (!$helper->ask($input, $output, $question)) {
-                return;
+                return Command::SUCCESS;
             }
         }
 
