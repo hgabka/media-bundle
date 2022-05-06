@@ -35,7 +35,7 @@ class RebuildFolderTreeCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->manager->getRepository(Folder::class)->rebuildTree();
         $output->writeln('Updated all folders');
