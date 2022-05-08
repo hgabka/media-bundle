@@ -23,6 +23,7 @@ class FolderTranslation implements TranslationInterface
     /**
      * @Hgabka\Translatable(targetEntity="Hgabka\MediaBundle\Entity\Folder")
      */
+    #[Hgabka\Translatable(targetEntity: Folder::class)]
     private $translatable;
 
     /**
