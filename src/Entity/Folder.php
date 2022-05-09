@@ -33,7 +33,7 @@ class Folder implements TranslatableInterface
     protected ?Folder $parent = null;
 
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', fetch: 'LAZY')]
-    #[ORM\OrderBy(['lft', 'ASC'])]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
     protected Collection|array|null $children = null;
 
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'folder', fetch: 'LAZY')]
