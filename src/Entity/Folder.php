@@ -27,11 +27,9 @@ class Folder implements TranslatableInterface
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @Gedmo\TreeParent
-     */
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
+    #[Gedmo\TreeParent]
     protected ?Folder $parent = null;
 
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', fetch: 'LAZY')]
@@ -47,29 +45,14 @@ class Folder implements TranslatableInterface
     #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
     protected ?string $internalName = null;
 
-    /**
-     * @var int
-     *
-     * @Gedmo\TreeLeft
-     */
     #[ORM\Column(name: 'lft', type: 'integer', nullable: true)]
     #[Gedmo\TreeLeft]
     protected ?int $lft = null;
 
-    /**
-     * @var int
-     *
-     * @Gedmo\TreeLevel
-     */
     #[ORM\Column(name: 'lvl', type: 'integer', nullable: true)]
     #[Gedmo\TreeLevel]
     protected ?int $lvl = null;
 
-    /**
-     * @var int
-     *
-     * @Gedmo\TreeRight
-     */
     #[ORM\Column(name: 'rgt', type: 'integer', nullable: true)]
     #[Gedmo\TreeRight]
     protected ?int $rgt = null;
