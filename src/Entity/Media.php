@@ -337,9 +337,6 @@ class Media implements TranslatableInterface
         $this->removedFromFileSystem = $removedFromFileSystem;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
     #[ORM\PrePersist]
     public function prePersist()
     {
