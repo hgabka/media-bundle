@@ -3,114 +3,69 @@
 namespace Hgabka\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\TranslatableInterface;
+use Hgabka\MediaBundle\Repository\MediaRepository;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 
-/**
- * Media.
- *
- * @ORM\Entity(repositoryClass="Hgabka\MediaBundle\Repository\MediaRepository")
- * @ORM\Table(name="hg_media_media", indexes={
- *      @ORM\Index(name="idx_media_deleted", columns={"deleted"})
- * })
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: MediaRepository::class)]
+#[ORM\Table(name: 'hg_media_media')]
+#[ORM\Index(name: 'idx_media_deleted', columns: ['deleted'])]
 class Media implements TranslatableInterface
 {
     use TimestampableEntity;
     use TranslatableTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'bigint')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", unique=true, length=255)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $uuid;
+    #[ORM\Column(type: 'string', unique: true, length: 255)]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?string $uuid = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", name="location", nullable=true)
-     */
-    protected $location;
+    #[ORM\Column(name: 'location', type: 'string', nullable: true)]
+    protected ?string $location = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", name="content_type")
-     */
-    protected $contentType;
+    #[ORM\Column(name: 'content_type', type: 'string')]
+    protected ?string $contentType = null;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(type="array")
-     */
-    protected $metadata = [];
+    #[ORM\Column(name: 'metadata', type: 'array')]
+    protected ?array $metadata = [];
 
-    /**
-     * @var Folder
-     *
-     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="media")
-     * @ORM\JoinColumn(name="folder_id", referencedColumnName="id")
-     */
-    protected $folder;
+    #[ORM\ManyToOne(targetEntity: Folder::class, inversedBy: 'media')]
+    #[ORM\JoinColumn(name: 'folder_id', referencedColumnName: 'id')]
+    protected ?Folder $folder = null;
 
     /**
      * @var mixed
      */
     protected $content;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $filesize;
+    #[ORM\Column(name: 'filesize', type: 'integer', nullable: true)]
+    protected ?int $filesize = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $url;
+    #[ORM\Column(name: 'url', type: 'string', nullable: true)]
+    protected ?string $url = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true, name="original_filename")
-     */
-    protected $originalFilename;
+    #[ORM\Column(name: 'original_filename', type: 'string', nullable: true)]
+    protected ?string $originalFilename = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $deleted;
+    #[ORM\Column(name: 'deleted', type: 'boolean')]
+    protected ?bool $deleted = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", name="removed_from_file_system")
-     */
-    protected $removedFromFileSystem;
+    #[ORM\Column(name: 'removed_from_file_system', type: 'boolean')]
+    protected ?bool $removedFromFileSystem = null;
 
     /**
      * @Hgabka\Translations(targetEntity="Hgabka\MediaBundle\Entity\MediaTranslation")
      */
-    private $translations;
+    #[Hgabka\Translations(targetEntity: MediaTranslation::class)]
+    private Collection|array|null $translations = null;
 
     /**
      * constructor.
@@ -122,34 +77,19 @@ class Media implements TranslatableInterface
         $this->removedFromFileSystem = false;
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set id.
-     *
-     * @param int $id The unique identifier
-     *
-     * @return AbstractEntity
-     */
-    public function setId($id)
+    public function setId(?int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFileSize()
+    public function getFileSize(): ?string
     {
         $size = $this->filesize;
         if ($size < 1024) {
@@ -163,58 +103,31 @@ class Media implements TranslatableInterface
         return round(($help / 1024), 1) . ' MB';
     }
 
-    /**
-     * @return int
-     */
-    public function getFileSizeBytes()
+    public function getFileSizeBytes(): ?int
     {
         return $this->filesize;
     }
 
-    /**
-     * @param int $filesize
-     *
-     * @return Media
-     */
-    public function setFileSize($filesize)
+    public function setFileSize(?int $filesize): self
     {
         $this->filesize = $filesize;
 
         return $this;
     }
 
-    /**
-     * Set uuid.
-     *
-     * @param string $uuid
-     *
-     * @return Media
-     */
-    public function setUuid($uuid)
+    public function setUuid(?string $uuid): self
     {
         $this->uuid = $uuid;
 
         return $this;
     }
 
-    /**
-     * Get uuid.
-     *
-     * @return string
-     */
-    public function getUuid()
+    public function getUuid(): ?string
     {
         return $this->uuid;
     }
 
-    /**
-     * Set location.
-     *
-     * @param string $location
-     *
-     * @return Media
-     */
-    public function setLocation($location)
+    public function setLocation(?string $location): self
     {
         $this->location = $location;
 
@@ -226,7 +139,7 @@ class Media implements TranslatableInterface
      *
      * @return string
      */
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
@@ -238,29 +151,19 @@ class Media implements TranslatableInterface
      *
      * @return Media
      */
-    public function setContentType($contentType)
+    public function setContentType(?string $contentType): self
     {
         $this->contentType = $contentType;
 
         return $this;
     }
 
-    /**
-     * Get contentType.
-     *
-     * @return string
-     */
-    public function getContentType()
+    public function getContentType(): ?string
     {
         return $this->contentType;
     }
 
-    /**
-     * Get contentType.
-     *
-     * @return string
-     */
-    public function getContentTypeShort()
+    public function getContentTypeShort(): ?string
     {
         $contentType = $this->contentType;
         $array = explode('/', $contentType);
@@ -276,7 +179,7 @@ class Media implements TranslatableInterface
      *
      * @return Media
      */
-    public function setMetadata($metadata)
+    public function setMetadata(?array $metadata): self
     {
         $this->metadata = $metadata;
 
@@ -288,7 +191,7 @@ class Media implements TranslatableInterface
      *
      * @return array
      */
-    public function getMetadata()
+    public function getMetadata(): ?array
     {
         return $this->metadata;
     }
@@ -301,7 +204,7 @@ class Media implements TranslatableInterface
      *
      * @return Media
      */
-    public function setMetadataValue($key, $value)
+    public function setMetadataValue(string $key, mixed $value)
     {
         $this->metadata[$key] = $value;
 
@@ -315,7 +218,7 @@ class Media implements TranslatableInterface
      *
      * @return null|mixed
      */
-    public function getMetadataValue($key)
+    public function getMetadataValue(string $key): mixed
     {
         return $this->metadata[$key] ?? null;
     }
@@ -327,7 +230,7 @@ class Media implements TranslatableInterface
      *
      * @return Media
      */
-    public function setContent($content)
+    public function setContent(mixed $content): self
     {
         $this->content = $content;
         $this->setUpdatedAt(new \DateTime());
@@ -340,7 +243,7 @@ class Media implements TranslatableInterface
      *
      * @return mixed
      */
-    public function getContent()
+    public function getContent(): mixed
     {
         return $this->content;
     }
@@ -350,7 +253,7 @@ class Media implements TranslatableInterface
      *
      * @return Media
      */
-    public function setFolder(Folder $folder)
+    public function setFolder(Folder $folder): self
     {
         $this->folder = $folder;
 
@@ -362,7 +265,7 @@ class Media implements TranslatableInterface
      *
      * @return Folder
      */
-    public function getFolder()
+    public function getFolder(): ?Folder
     {
         return $this->folder;
     }
@@ -370,82 +273,50 @@ class Media implements TranslatableInterface
     /**
      * @return bool
      */
-    public function isDeleted()
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }
 
-    /**
-     * @param bool $deleted
-     *
-     * @return Media
-     */
-    public function setDeleted($deleted)
+    public function setDeleted(bool $deleted): self
     {
         $this->deleted = $deleted;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return Media
-     */
-    public function setUrl($url)
+    public function setUrl(?string $url): self
     {
         $this->url = $url;
 
         return $this;
     }
 
-    /**
-     * @param string     $copyright
-     * @param null|mixed $locale
-     *
-     * @return Media
-     */
-    public function setCopyright($copyright, $locale = null)
+    public function setCopyright(string $copyright, ?string $locale = null): self
     {
         $this->translate($locale)->setCopyright($copyright);
 
         return $this;
     }
 
-    /**
-     * @param null|mixed $locale
-     *
-     * @return string
-     */
-    public function getCopyright($locale = null)
+    public function getCopyright(?string $locale = null): ?string
     {
         return $this->translate($locale)->getCopyright();
     }
 
-    /**
-     * @param string $originalFilename
-     *
-     * @return Media
-     */
-    public function setOriginalFilename($originalFilename)
+    public function setOriginalFilename(?string $originalFilename): self
     {
         $this->originalFilename = $originalFilename;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOriginalFilename()
+    public function getOriginalFilename(): ?string
     {
         return $this->originalFilename;
     }
@@ -453,7 +324,7 @@ class Media implements TranslatableInterface
     /**
      * @return bool
      */
-    public function isRemovedFromFileSystem()
+    public function isRemovedFromFileSystem(): ?bool
     {
         return $this->removedFromFileSystem;
     }
@@ -461,7 +332,7 @@ class Media implements TranslatableInterface
     /**
      * @param bool $removedFromFileSystem
      */
-    public function setRemovedFromFileSystem($removedFromFileSystem)
+    public function setRemovedFromFileSystem(bool $removedFromFileSystem): self
     {
         $this->removedFromFileSystem = $removedFromFileSystem;
     }
@@ -469,6 +340,7 @@ class Media implements TranslatableInterface
     /**
      * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function prePersist()
     {
         if (empty($this->getName())) {
@@ -476,29 +348,29 @@ class Media implements TranslatableInterface
         }
     }
 
-    public static function getTranslationEntityClass()
+    public static function getTranslationEntityClass(): string
     {
         return MediaTranslation::class;
     }
 
-    public function getName($locale = null)
+    public function getName(?string $locale = null): ?string
     {
         return $this->translate($locale)->getName();
     }
 
-    public function setName($name, $locale = null)
+    public function setName(?string $name, ?string $locale = null): self
     {
         $this->translate($locale)->setName($name);
 
         return $this;
     }
 
-    public function getDescription($locale = null)
+    public function getDescription(?string $locale = null): ?string
     {
         return $this->translate($locale)->getDescription();
     }
 
-    public function setDescription($description, $locale = null)
+    public function setDescription(?string $description, ?string $locale = null): self
     {
         $this->translate($locale)->setDescription($description);
 

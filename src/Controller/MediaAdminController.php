@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MediaAdminController extends CRUDController
@@ -23,21 +24,13 @@ class MediaAdminController extends CRUDController
     /** @var TranslatorInterface */
     protected $translator;
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setFolderManager(FolderManager $folderManager)
     {
         $this->folderManager = $folderManager;
     }
 
-    /**
-     * @required
-     *
-     * @param TranslatorInterface $translator
-     *
-     * @return MediaAdminController
-     */
+    #[Required]
     public function setTranslator(TranslatorInterface $translator): self
     {
         $this->translator = $translator;

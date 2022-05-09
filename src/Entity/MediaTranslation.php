@@ -6,71 +6,47 @@ use Doctrine\ORM\Mapping as ORM;
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\Entity\TranslationTrait;
 use Hgabka\Doctrine\Translatable\TranslationInterface;
+use Symfony\Contracts\Translation\TranslatableInterface;
 
-/**
- * @ORM\Table(name="hg_media_media_translation")
- * @ORM\Entity
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'hg_media_media_translation')]
 class MediaTranslation implements TranslationInterface
 {
     use TranslationTrait;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $name;
+    #[ORM\Column(name: 'name', type: 'string', nullable: true)]
+    protected ?string $name = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $description;
+    #[ORM\Column(name: 'description', type: 'string', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="copyright", type="string", nullable=true)
-     */
-    protected $copyright;
+    #[ORM\Column(name: 'copyright', type: 'string', nullable: true)]
+    protected ?string $copyright = null;
 
     /**
      * @Hgabka\Translatable(targetEntity="Hgabka\MediaBundle\Entity\Media")
      */
-    private $translatable;
+    #[Hgabka\Translatable(targetEntity: Media::class)]
+    private ?TranslatableInterface $translatable = null;
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     *
-     * @return MediaTranslation
-     */
-    public function setName($name)
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param mixed $description
-     *
-     * @return MediaTranslation
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -80,17 +56,12 @@ class MediaTranslation implements TranslationInterface
     /**
      * @return string
      */
-    public function getCopyright()
+    public function getCopyright(): ?string
     {
         return $this->copyright;
     }
 
-    /**
-     * @param string $copyright
-     *
-     * @return MediaTranslation
-     */
-    public function setCopyright($copyright)
+    public function setCopyright(?string $copyright): self
     {
         $this->copyright = $copyright;
 
