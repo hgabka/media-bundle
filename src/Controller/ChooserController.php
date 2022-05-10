@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Hgabka\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
-use Hgabka\MediaBundle\Form\FolderType;
+use Hgabka\MediaBundle\Form\SubFolderType;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -134,7 +134,7 @@ class ChooserController extends BaseMediaController
         $sub = new Folder();
         $sub->setParent($folder);
         $sub->setCurrentLocale($this->getUtils()->getCurrentLocale());
-        $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
+        $subForm = $this->createForm(SubFolderType::class, $sub, ['folder' => $sub]);
 
         $linkChooserLink = null;
         if (!empty($linkChooser)) {

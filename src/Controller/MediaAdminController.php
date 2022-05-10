@@ -4,6 +4,7 @@ namespace Hgabka\MediaBundle\Controller;
 
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\FolderType;
+use Hgabka\MediaBundle\Form\SubFolderType;
 use Hgabka\MediaBundle\Helper\FolderManager;
 use Hgabka\MediaBundle\Traits\MediaControllerTrait;
 use Sonata\AdminBundle\Controller\CRUDController;
@@ -58,7 +59,7 @@ class MediaAdminController extends CRUDController
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
+        $subForm = $this->createForm(SubFolderType::class, $sub, ['folder' => $sub]);
 
         $emptyForm = $this->createEmptyForm();
 

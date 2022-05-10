@@ -7,6 +7,7 @@ parameters:
     hgabka_media.form.type.media_simple.class: 'Hgabka\MediaBundle\Form\Type\MediaSimpleType'
     hgabka_media.form.type.media_multi.class: 'Hgabka\MediaBundle\Form\Type\MediaMultiType'
     hgabka_media.form.type.folder.class: 'Hgabka\MediaBundle\Form\FolderType'
+    hgabka_media.form.type.subfolder.class: 'Hgabka\MediaBundle\Form\SubFolderType'
     hgabka_media.form.type.iconfont.class: 'Hgabka\MediaBundle\Form\Type\IconFontType'
     hgabka_media.icon_font_manager.class: 'Hgabka\MediaBundle\Helper\IconFont\IconFontManager'
     hgabka_media.icon_font.default_loader.class: 'Hgabka\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
@@ -62,6 +63,15 @@ services:
 
     form.type.folder:
         class: '%hgabka_media.form.type.folder.class%'
+        arguments:
+            - '@hgabka_utils.hgabka_utils'
+            - '@security.authorization_checker'
+        tags:
+            - { name: form.type}
+        public: true
+
+    form.type.subfolder:
+        class: '%hgabka_media.form.type.subfolder.class%'
         arguments:
             - '@hgabka_utils.hgabka_utils'
             - '@security.authorization_checker'
@@ -204,4 +214,3 @@ services:
     Hgabka\MediaBundle\Helper\SvgMimeTypeGuesser:
         autowire: true
         autoconfigure: true
-    

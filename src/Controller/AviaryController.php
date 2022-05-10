@@ -6,9 +6,9 @@ use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller class which Aviary can use to upload the edited image and add it to the database.

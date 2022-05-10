@@ -4,7 +4,7 @@ namespace Hgabka\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Hgabka\MediaBundle\Entity\Folder;
-use Hgabka\MediaBundle\Form\FolderType;
+use Hgabka\MediaBundle\Form\SubFolderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -103,7 +103,7 @@ class FolderController extends BaseMediaController
         $folder = new Folder();
         $folder->setParent($parent);
         $folder->setCurrentLocale($this->getUtils()->getCurrentLocale());
-        $form = $this->createForm(FolderType::class, $folder);
+        $form = $this->createForm(SubFolderType::class, $folder);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
