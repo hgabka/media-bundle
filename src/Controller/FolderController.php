@@ -4,8 +4,7 @@ namespace Hgabka\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Hgabka\MediaBundle\Entity\Folder;
-use Hgabka\MediaBundle\Form\FolderType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Hgabka\MediaBundle\Form\SubFolderType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,14 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FolderController extends BaseMediaController
 {
-    /**
-     * @param int $folderId
-     *
-     * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_delete")
-     *
-     * @return RedirectResponse
-     */
-    public function deleteAction($folderId)
+    #[Route(
+        '/delete/{folderId}',
+        name: 'HgabkaMediaBundle_folder_delete',
+        requirements: ['folderId' => '\d+']
+    )]
+    public function deleteAction(int $folderId)
     {
         $this->getAdmin()->checkAccess('delete');
 
@@ -81,15 +78,13 @@ class FolderController extends BaseMediaController
         );
     }
 
-    /**
-     * @param int $folderId
-     *
-     * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_sub_create", methods={"GET", "POST"})
-     * @Template()
-     *
-     * @return Response
-     */
-    public function subCreateAction(Request $request, $folderId)
+    #[Route(
+        '/subcreate/{folderId}',
+        name: 'HgabkaMediaBundle_folder_sub_create',
+        requirements: ['folderId' => '\d+'],
+        methods: ['GET', 'POST']
+    )]
+    public function subCreateAction(Request $request, int $folderId): Response
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -101,7 +96,7 @@ class FolderController extends BaseMediaController
         $folder = new Folder();
         $folder->setParent($parent);
         $folder->setCurrentLocale($this->getUtils()->getCurrentLocale());
-        $form = $this->createForm(FolderType::class, $folder);
+        $form = $this->createForm(SubFolderType::class, $folder);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -146,15 +141,13 @@ class FolderController extends BaseMediaController
         );
     }
 
-    /**
-     * @param int $folderId
-     *
-     * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_empty", methods={"GET", "POST"})
-     * @Template()
-     *
-     * @return Response
-     */
-    public function emptyAction(Request $request, $folderId)
+    #[Route(
+        '/empty/{folderId}',
+        name: 'HgabkaMediaBundle_folder_empty',
+        requirements: ['folderId' => '\d+'],
+        methods: ['GET', 'POST']
+    )]
+    public function emptyAction(Request $request, int $folderId): Response
     {
         $this->getAdmin()->checkAccess('delete');
 
@@ -206,12 +199,11 @@ class FolderController extends BaseMediaController
         );
     }
 
-    /**
-     * @Route("/reorder", name="HgabkaMediaBundle_folder_reorder")
-     *
-     * @return JsonResponse
-     */
-    public function reorderAction(Request $request)
+    #[Route(
+        '/reorder',
+        name: 'HgabkaMediaBundle_folder_reorder'
+    )]
+    public function reorderAction(Request $request): Response
     {
         $this->getAdmin()->checkAccess('edit');
         $folders = [];

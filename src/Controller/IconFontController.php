@@ -2,9 +2,9 @@
 
 namespace Hgabka\MediaBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -12,13 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class IconFontController extends AbstractController
 {
-    /**
-     * @Route("/chooser", name="HgabkaMediaBundle_icon_font_chooser")
-     * @Template()
-     *
-     * @return array
-     */
-    public function iconFontChooserAction(Request $request)
+    #[Route(
+        '/chooser-icon',
+        name: 'HgabkaMediaBundle_icon_font_chooser'
+    )]
+    public function iconFontChooserAction(Request $request): Response
     {
         $loader = $request->query->get('loader');
         $loaderData = json_decode($request->query->get('loader_data'), true);
@@ -31,8 +29,8 @@ class IconFontController extends AbstractController
         }
         $loader->setData($loaderData);
 
-        return [
+        return $this->render('@HgabkaMedia/IconFont/iconFontChooser.html.twig', [
             'loader' => $loader,
-        ];
+        ]);
     }
 }

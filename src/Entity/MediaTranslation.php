@@ -5,8 +5,8 @@ namespace Hgabka\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\Entity\TranslationTrait;
-use Hgabka\Doctrine\Translatable\TranslationInterface;
 use Hgabka\Doctrine\Translatable\TranslatableInterface;
+use Hgabka\Doctrine\Translatable\TranslationInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'hg_media_media_translation')]

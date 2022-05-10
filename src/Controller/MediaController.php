@@ -7,7 +7,6 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\BulkMoveMediaType;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,14 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MediaController extends BaseMediaController
 {
-    /**
-     * @param int $mediaId
-     *
-     * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="HgabkaMediaBundle_media_show")
-     *
-     * @return Response
-     */
-    public function show(Request $request, $mediaId)
+    #[Route(
+        '/{mediaId}',
+        name: 'HgabkaMediaBundle_media_show',
+        requirements: ['mediaId' => '\d+']
+    )]
+    public function show(Request $request, int $mediaId): Response
     {
         $this->getAdmin()->checkAccess('edit');
 
@@ -74,14 +71,12 @@ class MediaController extends BaseMediaController
         );
     }
 
-    /**
-     * @param int $mediaId
-     *
-     * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="HgabkaMediaBundle_media_delete")
-     *
-     * @return RedirectResponse
-     */
-    public function delete(Request $request, $mediaId)
+    #[Route(
+        '/delete/{mediaId}',
+        name: 'HgabkaMediaBundle_media_delete',
+        requirements: ['mediaId' => '\d+'],
+    )]
+    public function delete(Request $request, int $mediaId): Response
     {
         $this->getAdmin()->checkAccess('delete');
 
@@ -113,15 +108,12 @@ class MediaController extends BaseMediaController
         return new RedirectResponse($redirectUrl);
     }
 
-    /**
-     * @param int $folderId
-     *
-     * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_media_bulk_upload")
-     * @Template()
-     *
-     * @return array|RedirectResponse
-     */
-    public function bulkUpload($folderId)
+    #[Route(
+        'bulkupload/{folderId}',
+        name: 'HgabkaMediaBundle_media_bulk_upload',
+        requirements: ['folderId' => '\d+'],
+    )]
+    public function bulkUpload(int $folderId): Response
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -138,14 +130,12 @@ class MediaController extends BaseMediaController
         ]);
     }
 
-    /**
-     * @param int $folderId
-     *
-     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_media_bulk_upload_submit")
-     *
-     * @return array|RedirectResponse
-     */
-    public function bulkUploadSubmit($folderId)
+    #[Route(
+        'bulkuploadsubmit/{folderId}',
+        name: 'HgabkaMediaBundle_media_bulk_upload_submit',
+        requirements: ['folderId' => '\d+'],
+    )]
+    public function bulkUploadSubmit(int $folderId): Response
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -278,14 +268,13 @@ class MediaController extends BaseMediaController
         ]);
     }
 
-    /**
-     * @param int $folderId
-     *
-     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_media_drop_upload", methods={"GET", "POST"})
-     *
-     * @return array|RedirectResponse
-     */
-    public function drop(Request $request, $folderId)
+    #[Route(
+        'drop/{folderId}',
+        name: 'HgabkaMediaBundle_media_drop_upload',
+        requirements: ['folderId' => '\d+'],
+        methods: ['GET', 'POST'],
+    )]
+    public function drop(Request $request, int $folderId): Response
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -319,15 +308,13 @@ class MediaController extends BaseMediaController
         return new Response(json_encode(['status' => $this->getTranslator()->trans('kuma_admin.media.flash.drop_unrecognized')]));
     }
 
-    /**
-     * @param int    $folderId The folder id
-     * @param string $type     The type
-     *
-     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_create", methods={"GET", "POST"})
-     *
-     * @return array|RedirectResponse
-     */
-    public function create(Request $request, $folderId, $type)
+    #[Route(
+        'create/{folderId}/{type}',
+        name: 'HgabkaMediaBundle_media_create',
+        requirements: ['folderId' => '\d+', 'type' => '.+'],
+        methods: ['GET', 'POST'],
+    )]
+    public function create(Request $request, int $folderId, string $type): Response
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -343,16 +330,13 @@ class MediaController extends BaseMediaController
         return $this->render('@HgabkaMedia/Media/create.html.twig', $params);
     }
 
-    /**
-     * @param int    $folderId The folder id
-     * @param string $type     The type
-     *
-     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="HgabkaMediaBundle_media_modal_create", methods={"GET", "POST"})
-     * @Template()
-     *
-     * @return array|RedirectResponse
-     */
-    public function createModal(Request $request, $folderId, $type)
+    #[Route(
+        'create/modal/{folderId}/{type}',
+        name: 'HgabkaMediaBundle_media_modal_create',
+        requirements: ['folderId' => '\d+', 'type' => '.+'],
+        methods: ['GET', 'POST'],
+    )]
+    public function createModal(Request $request, int $folderId, string $type): Response
     {
         $this->getAdmin()->checkAccess('create');
 
@@ -367,7 +351,7 @@ class MediaController extends BaseMediaController
             $extraParams['linkChooser'] = $linkChooser;
         }
 
-        return $this->createAndRedirect(
+        $params = $this->createAndRedirect(
             $request,
             $folderId,
             $type,
@@ -375,14 +359,20 @@ class MediaController extends BaseMediaController
             $extraParams,
             true
         );
+
+        if ($params instanceof Response) {
+            return $params;
+        }
+
+        throw $this->createNotFoundException('Error');
     }
 
-    /**
-     * @Route("move/", name="HgabkaMediaBundle_media_move", methods={"POST"})
-     *
-     * @return string
-     */
-    public function moveMedia(Request $request)
+    #[Route(
+        'move/',
+        name: 'HgabkaMediaBundle_media_move',
+        methods: ['POST'],
+    )]
+    public function moveMedia(Request $request): Response
     {
         $mediaId = $request->request->get('mediaId');
         $folderId = $request->request->get('folderId');
@@ -403,14 +393,11 @@ class MediaController extends BaseMediaController
         return new JsonResponse();
     }
 
-    /**
-     * @Route("/bulk-move", name="HgabkaMediaBundle_media_bulk_move")
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     *
-     * @return JsonResponse|Response
-     */
-    public function bulkMove(Request $request)
+    #[Route(
+        '/bulk-move',
+        name: 'HgabkaMediaBundle_media_bulk_move',
+    )]
+    public function bulkMove(Request $request): Response
     {
         $em = $this->doctrine->getManager();
         $mediaRepo = $em->getRepository(Media::class);
@@ -448,7 +435,7 @@ class MediaController extends BaseMediaController
         );
     }
 
-    private function returnJsonError($code, $message)
+    private function returnJsonError(?string $code, ?string $message): JsonResponse
     {
         return new JsonResponse([
             'jsonrpc' => '2.0',
@@ -469,7 +456,7 @@ class MediaController extends BaseMediaController
      *
      * @return array
      */
-    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false)
+    private function createAndRedirect(Request $request, int $folderId, string $type, string $redirectUrl, array $extraParams = [], bool $isInModal = false): array|Response
     {
         $em = $this->doctrine->getManager();
 
