@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Form\RemoteVideo;
 
 use Hgabka\MediaBundle\Form\AbstractRemoteType;
+use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +22,7 @@ class RemoteVideoType extends AbstractRemoteType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
@@ -43,7 +44,7 @@ class RemoteVideoType extends AbstractRemoteType
      *
      * @return string The name of this type
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'hgabka_mediabundle_videotype';
     }
@@ -53,11 +54,11 @@ class RemoteVideoType extends AbstractRemoteType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
+                'data_class' => RemoteVideoHandler::class,
                 'configuration' => [],
             ]
         );

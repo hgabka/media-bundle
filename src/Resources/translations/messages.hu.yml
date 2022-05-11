@@ -22,6 +22,7 @@ hg_media:
     admin:
         label: Médiatár
         list: Adminisztráció
+        model_name: Média
     aviary:
         title: Aviary
         nothing: Nincs megjeleníthető elem
@@ -223,3 +224,4 @@ hg_media:
         prev_message: '&larr; Előző'
         next_message: 'Következő &rarr;'
 
+    group:  Médiatár

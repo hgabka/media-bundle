@@ -22,6 +22,7 @@ hg_media:
     admin:
         label: Media
         list: Administration
+        model_name: Media
     aviary:
         title: Aviary
         nothing: Nothing to see here.
@@ -207,5 +208,4 @@ hg_media:
         remote_video:
             type:
                 label: Type
-
-
+    group:  Media
