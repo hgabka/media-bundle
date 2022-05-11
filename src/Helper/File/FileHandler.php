@@ -122,7 +122,7 @@ class FileHandler extends AbstractMediaHandler
     {
         if ($object instanceof File ||
             ($object instanceof Media &&
-            (is_file($object->getContent()) || 'local' === $object->getLocation()))
+            ((!empty($object->getContent()) && is_file($object->getContent())) || 'local' === $object->getLocation()))
         ) {
             return true;
         }
