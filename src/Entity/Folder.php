@@ -3,71 +3,115 @@
 namespace Hgabka\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\TranslatableInterface;
-use Hgabka\MediaBundle\Repository\FolderRepository;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
 
-#[ORM\Entity(repositoryClass: FolderRepository::class)]
-#[ORM\Table(name: 'hg_media_folders')]
-#[ORM\Index(name: 'idx_folder_internal_name', columns: ['internal_name'])]
-#[ORM\Index(name: 'idx_folder_deleted', columns: ['deleted'])]
-#[Gedmo\Tree(type: 'nested')]
+/**
+ * Class that defines a folder from the MediaBundle in the database.
+ *
+ * @ORM\Entity(repositoryClass="Hgabka\MediaBundle\Repository\FolderRepository")
+ * @ORM\Table(name="hg_media_folders", indexes={
+ *      @ORM\Index(name="idx_folder_internal_name", columns={"internal_name"}),
+ *      @ORM\Index(name="idx_folder_deleted", columns={"deleted"})
+ * })
+ * @Gedmo\Tree(type="nested")
+ */
 class Folder implements TranslatableInterface
 {
     use TimestampableEntity;
     use TranslatableTrait;
 
-    #[ORM\Id]
-    #[ORM\Column(type: 'bigint')]
-    #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="bigint")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', fetch: 'LAZY')]
-    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
-    #[Gedmo\TreeParent]
-    protected ?Folder $parent = null;
+    /**
+     * @var Folder
+     *
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children", fetch="LAZY")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     * @Gedmo\TreeParent
+     */
+    protected $parent;
 
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', fetch: 'LAZY')]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
-    protected Collection|array|null $children = null;
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="LAZY")
+     * @ORM\OrderBy({"lft" = "ASC"})
+     */
+    protected $children;
 
-    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'folder', fetch: 'LAZY')]
-    protected Collection|array|null $media = null;
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="folder", fetch="LAZY")
+     */
+    protected $media;
 
-    #[ORM\Column(name: 'rel', type: 'string', nullable: true)]
-    protected ?string $rel = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $rel;
 
-    #[ORM\Column(name: 'internal_name', type: 'string', nullable: true)]
-    protected ?string $internalName = null;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="internal_name", nullable=true)
+     */
+    protected $internalName;
 
-    #[ORM\Column(name: 'lft', type: 'integer', nullable: true)]
-    #[Gedmo\TreeLeft]
-    protected ?int $lft = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="lft", type="integer", nullable=true)
+     * @Gedmo\TreeLeft
+     */
+    protected $lft;
 
-    #[ORM\Column(name: 'lvl', type: 'integer', nullable: true)]
-    #[Gedmo\TreeLevel]
-    protected ?int $lvl = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="lvl", type="integer", nullable=true)
+     * @Gedmo\TreeLevel
+     */
+    protected $lvl;
 
-    #[ORM\Column(name: 'rgt', type: 'integer', nullable: true)]
-    #[Gedmo\TreeRight]
-    protected ?int $rgt = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rgt", type="integer", nullable=true)
+     * @Gedmo\TreeRight
+     */
+    protected $rgt;
 
-    #[ORM\Column(name: 'deleted', type: 'boolean')]
-    protected ?bool $deleted = null;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleted;
 
-    #[ORM\Column(name: 'internal', type: 'boolean')]
-    protected ?bool $internal = false;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $internal = false;
 
     /**
      * @Hgabka\Translations(targetEntity="Hgabka\MediaBundle\Entity\FolderTranslation")
      */
-    #[Hgabka\Translations(targetEntity: FolderTranslation::class)]
-    private Collection|array|null $translations = null;
+    private $translations;
 
     /**
      * constructor.
@@ -80,24 +124,40 @@ class Folder implements TranslatableInterface
         $this->deleted = false;
     }
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function setId(?int $id): self
+    /**
+     * @param mixed $id
+     *
+     * @return Folder
+     */
+    public function setId($id)
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function getRel(): ?string
+    /**
+     * @return string
+     */
+    public function getRel()
     {
         return $this->rel;
     }
 
-    public function setRel(?string $rel): self
+    /**
+     * @param string $rel
+     *
+     * @return Folder
+     */
+    public function setRel($rel)
     {
         $this->rel = $rel;
 
@@ -107,7 +167,7 @@ class Folder implements TranslatableInterface
     /**
      * @return Folder[]:
      */
-    public function getParents(): array
+    public function getParents()
     {
         $parent = $this->getParent();
         $parents = [];
@@ -119,19 +179,38 @@ class Folder implements TranslatableInterface
         return array_reverse($parents);
     }
 
-    public function getParent(): ?self
+    /**
+     * Get parent.
+     *
+     * @return Folder
+     */
+    public function getParent()
     {
         return $this->parent;
     }
 
-    public function setParent(?self $parent = null): self
+    /**
+     * Set parent.
+     *
+     * @param Folder $parent
+     *
+     * @return Folder
+     */
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
 
         return $this;
     }
 
-    public function addChild(self $child): self
+    /**
+     * Add a child.
+     *
+     * @param Folder $child
+     *
+     * @return Folder
+     */
+    public function addChild(self $child)
     {
         $this->children[] = $child;
         $child->setParent($this);
@@ -139,14 +218,26 @@ class Folder implements TranslatableInterface
         return $this;
     }
 
-    public function addMedia(Media $media): self
+    /**
+     * Add file.
+     *
+     * @return Folder
+     */
+    public function addMedia(Media $media)
     {
         $this->media[] = $media;
 
         return $this;
     }
 
-    public function getMedia(?bool $includeDeleted = false): Collection|array|null
+    /**
+     * Get media.
+     *
+     * @param bool $includeDeleted
+     *
+     * @return ArrayCollection
+     */
+    public function getMedia($includeDeleted = false)
     {
         if ($includeDeleted) {
             return $this->media;
@@ -163,7 +254,12 @@ class Folder implements TranslatableInterface
         );
     }
 
-    public function hasActive(?int $id): bool
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function hasActive($id)
     {
         foreach ($this->getChildren() as $child) {
             if ($child->hasActive($id) || $child->getId() === $id) {
@@ -174,7 +270,14 @@ class Folder implements TranslatableInterface
         return false;
     }
 
-    public function getChildren(?bool $includeDeleted = false): Collection|array|null
+    /**
+     * Get child folders.
+     *
+     * @param bool $includeDeleted
+     *
+     * @return ArrayCollection
+     */
+    public function getChildren($includeDeleted = false)
     {
         if ($includeDeleted) {
             return $this->children;
@@ -191,69 +294,114 @@ class Folder implements TranslatableInterface
         );
     }
 
-    public function setChildren(Collection|array|null $children): self
+    /**
+     * @param ArrayCollection $children
+     *
+     * @return Folder
+     */
+    public function setChildren($children)
     {
         $this->children = $children;
 
         return $this;
     }
 
-    public function isDeleted(): bool
+    /**
+     * @return bool
+     */
+    public function isDeleted()
     {
         return $this->deleted;
     }
 
-    public function setDeleted(bool $deleted): self
+    /**
+     * @param bool $deleted
+     *
+     * @return Folder
+     */
+    public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
 
         return $this;
     }
 
-    public function getInternalName(): ?string
+    /**
+     * @return string
+     */
+    public function getInternalName()
     {
         return $this->internalName;
     }
 
-    public function setInternalName(?string $internalName): self
+    /**
+     * @param string $internalName
+     *
+     * @return Folder
+     */
+    public function setInternalName($internalName)
     {
         $this->internalName = $internalName;
 
         return $this;
     }
 
-    public function setLeft(?int $lft): self
+    /**
+     * @param int $lft
+     *
+     * @return Folder
+     */
+    public function setLeft($lft)
     {
         $this->lft = $lft;
 
         return $this;
     }
 
-    public function getLeft(): ?int
+    /**
+     * @return int
+     */
+    public function getLeft()
     {
         return $this->lft;
     }
 
-    public function setLevel(?int $lvl): self
+    /**
+     * @param int $lvl
+     *
+     * @return Folder
+     */
+    public function setLevel($lvl)
     {
         $this->lvl = $lvl;
 
         return $this;
     }
 
-    public function setRight(?int $rgt): self
+    /**
+     * @param int $rgt
+     *
+     * @return Folder
+     */
+    public function setRight($rgt)
     {
         $this->rgt = $rgt;
 
         return $this;
     }
 
-    public function getRight(): ?int
+    /**
+     * @return int
+     */
+    public function getRight()
     {
         return $this->rgt;
     }
 
-    public function getOptionLabel(): string
+    /**
+     * @return string
+     */
+    public function getOptionLabel()
     {
         return str_repeat(
             '-',
@@ -264,22 +412,22 @@ class Folder implements TranslatableInterface
     /**
      * @return int
      */
-    public function getLevel(): ?int
+    public function getLevel()
     {
         return $this->lvl;
     }
 
-    public static function getTranslationEntityClass(): string
+    public static function getTranslationEntityClass()
     {
         return FolderTranslation::class;
     }
 
-    public function getName(?string $locale = null): ?string
+    public function getName($locale = null)
     {
         return $this->translate($locale)->getName();
     }
 
-    public function setName(?string $name, ?string $locale = null): self
+    public function setName($name, $locale = null)
     {
         $this->translate($locale)->setName($name);
 
@@ -291,7 +439,12 @@ class Folder implements TranslatableInterface
         return $this->internal;
     }
 
-    public function setInternal(bool $internal): self
+    /**
+     * @param bool $internal
+     *
+     * @return Folder
+     */
+    public function setInternal($internal)
     {
         $this->internal = $internal;
 

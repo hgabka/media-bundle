@@ -30,7 +30,7 @@ abstract class AbstractRemoteType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(

@@ -28,7 +28,7 @@ class FolderRepository extends NestedTreeRepository
      *
      * @throws \Exception
      */
-    public function save(Folder $folder): void
+    public function save(Folder $folder)
     {
         $em = $this->getEntityManager();
         $parent = $folder->getParent();
@@ -50,7 +50,7 @@ class FolderRepository extends NestedTreeRepository
         }
     }
 
-    public function delete(Folder $folder): void
+    public function delete(Folder $folder)
     {
         $em = $this->getEntityManager();
 
@@ -64,7 +64,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * @param bool $alsoDeleteFolders
      */
-    public function emptyFolder(Folder $folder, bool $alsoDeleteFolders = false): void
+    public function emptyFolder(Folder $folder, $alsoDeleteFolders = false)
     {
         $em = $this->getEntityManager();
         $this->deleteMedia($folder);
@@ -79,7 +79,7 @@ class FolderRepository extends NestedTreeRepository
      *
      * @return array
      */
-    public function getAllFolders($limit = null): mixed
+    public function getAllFolders($limit = null)
     {
         $qb = $this->createQueryBuilder('folder')
             ->select('folder')
@@ -100,7 +100,7 @@ class FolderRepository extends NestedTreeRepository
      *
      * @return object
      */
-    public function getFolder($folderId): Folder
+    public function getFolder($folderId)
     {
         $folder = $this->find($folderId);
         if (!$folder) {
@@ -110,7 +110,7 @@ class FolderRepository extends NestedTreeRepository
         return $folder;
     }
 
-    public function getFirstTopFolder(): Folder
+    public function getFirstTopFolder()
     {
         $folder = $this->findOneBy(['parent' => null]);
         if (!$folder) {
@@ -120,7 +120,7 @@ class FolderRepository extends NestedTreeRepository
         return $folder;
     }
 
-    public function getParentIds(Folder $folder): mixed
+    public function getParentIds(Folder $folder)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->getPathQueryBuilder($folder)
@@ -135,7 +135,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * {@inheritdoc}
      */
-    public function getPathQueryBuilder($node): QueryBuilder
+    public function getPathQueryBuilder($node)
     {
         /** @var QueryBuilder $qb */
         $qb = parent::getPathQueryBuilder($node);
@@ -147,8 +147,9 @@ class FolderRepository extends NestedTreeRepository
     /**
      * {@inheritdoc}
      */
-    public function getRootNodesQueryBuilder($sortByField = null, $direction = 'asc'): QueryBuilder
+    public function getRootNodesQueryBuilder($sortByField = null, $direction = 'asc')
     {
+        /** @var QueryBuilder $qb */
         $qb = parent::getRootNodesQueryBuilder($sortByField, $direction);
         $qb->andWhere('node.deleted != true');
 
@@ -164,7 +165,8 @@ class FolderRepository extends NestedTreeRepository
         $sortByField = null,
         $direction = 'ASC',
         $includeNode = false
-    ): QueryBuilder {
+    ) {
+        /** @var QueryBuilder $qb */
         $qb = parent::childrenQueryBuilder($node, $direct, $sortByField, $direction, $includeNode);
         $qb->andWhere('node.deleted != true');
 
@@ -174,8 +176,9 @@ class FolderRepository extends NestedTreeRepository
     /**
      * {@inheritdoc}
      */
-    public function getLeafsQueryBuilder($root = null, $sortByField = null, $direction = 'ASC'): QueryBuilder
+    public function getLeafsQueryBuilder($root = null, $sortByField = null, $direction = 'ASC')
     {
+        /** @var QueryBuilder $qb */
         $qb = parent::getLeafsQueryBuilder($root, $sortByField, $direction);
         $qb->andWhere('node.deleted != true');
 
@@ -185,7 +188,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * {@inheritdoc}
      */
-    public function getNextSiblingsQueryBuilder($node, $includeSelf = false): QueryBuilder
+    public function getNextSiblingsQueryBuilder($node, $includeSelf = false)
     {
         /** @var QueryBuilder $qb */
         $qb = parent::getNextSiblingsQueryBuilder($node, $includeSelf);
@@ -197,7 +200,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * {@inheritdoc}
      */
-    public function getPrevSiblingsQueryBuilder($node, $includeSelf = false): QueryBuilder
+    public function getPrevSiblingsQueryBuilder($node, $includeSelf = false)
     {
         /** @var QueryBuilder $qb */
         $qb = parent::getPrevSiblingsQueryBuilder($node, $includeSelf);
@@ -212,9 +215,10 @@ class FolderRepository extends NestedTreeRepository
     public function getNodesHierarchyQueryBuilder(
         $node = null,
         $direct = false,
-        $options = [],
+        array $options = [],
         $includeNode = false
-    ): QueryBuilder {
+    ) {
+        /** @var QueryBuilder $qb */
         $qb = parent::getNodesHierarchyQueryBuilder($node, $direct, $options, $includeNode);
         $qb->leftJoin($qb->getRootAliases()[0] . '.translations', 'ft');
         $qb->addSelect('ft');
@@ -226,7 +230,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * {@inheritdoc}
      */
-    public function getNodesHierarchy($node = null, $direct = false, $options = [], $includeNode = false): array
+    public function getNodesHierarchy($node = null, $direct = false, array $options = [], $includeNode = false)
     {
         $query = $this->getNodesHierarchyQuery($node, $direct, $options, $includeNode);
         $query->setHint(
@@ -240,7 +244,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * Rebuild the nested tree.
      */
-    public function rebuildTree(): void
+    public function rebuildTree()
     {
         $em = $this->getEntityManager();
 
@@ -281,7 +285,14 @@ class FolderRepository extends NestedTreeRepository
         $em->flush();
     }
 
-    public function selectFolderQueryBuilder(?Folder $ignoreSubtree = null): QueryBuilder
+    /**
+     * Used as querybuilder for Folder entity selectors.
+     *
+     * @param Folder $ignoreSubtree Folder (with children) that has to be filtered out (optional)
+     *
+     * @return QueryBuilder
+     */
+    public function selectFolderQueryBuilder(Folder $ignoreSubtree = null)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('f');
@@ -302,7 +313,15 @@ class FolderRepository extends NestedTreeRepository
         return $qb;
     }
 
-    public function selectParentFolderQueryBuilder(?Folder $parent = null, bool $includeParent = true): QueryBuilder
+    /**
+     * Used as querybuilder for Folder entity selectors under $parent.
+     *
+     * @param Folder $parent        Folder used as root
+     * @param mixed  $includeParent
+     *
+     * @return QueryBuilder
+     */
+    public function selectParentFolderQueryBuilder($parent = null, $includeParent = true)
     {
         if (\is_string($parent)) {
             $parentFolder = $this->findOneByInternalName($parent);
@@ -314,6 +333,7 @@ class FolderRepository extends NestedTreeRepository
             return $this->selectFolderQueryBuilder();
         }
 
+        /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('f');
         $qb->where('f.deleted != true');
         if ($includeParent) {
@@ -336,7 +356,7 @@ class FolderRepository extends NestedTreeRepository
         return $qb;
     }
 
-    private function deleteMedia(Folder $folder): void
+    private function deleteMedia(Folder $folder)
     {
         $em = $this->getEntityManager();
 
@@ -347,7 +367,7 @@ class FolderRepository extends NestedTreeRepository
         }
     }
 
-    private function deleteChildren(Folder $folder): void
+    private function deleteChildren(Folder $folder)
     {
         $em = $this->getEntityManager();
 
@@ -365,7 +385,7 @@ class FolderRepository extends NestedTreeRepository
     /**
      * @param $parent
      */
-    private function persistInOrderedTree(Folder $folder, object $parent): void
+    private function persistInOrderedTree(Folder $folder, $parent)
     {
         // Find where to insert the new item
         $children = $parent->getChildren(true);

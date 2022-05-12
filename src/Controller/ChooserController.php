@@ -3,31 +3,31 @@
 namespace Hgabka\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\Persistence\ManagerRegistry;
+use Hgabka\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\SubFolderType;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
-use Symfony\Component\Form\FormView;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * ChooserController.
  */
 class ChooserController extends BaseMediaController
 {
-    #[Route(
-        '/chooser',
-        name: 'HgabkaMediaBundle_chooser'
-    )]
-    public function chooserIndexAction(Request $request, ManagerRegistry $doctrine): Response
+    /**
+     * @Route("/chooser", name="HgabkaMediaBundle_chooser")
+     *
+     * @return RedirectResponse
+     */
+    public function chooserIndexAction(Request $request)
     {
         $this->getAdmin()->checkAccess('list');
 
-        $em = $doctrine->getManager();
+        $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
         $folderId = false;
 
@@ -81,15 +81,17 @@ class ChooserController extends BaseMediaController
         return $this->redirect($this->generateUrl('HgabkaMediaBundle_chooser_show_folder', $params));
     }
 
-    #[Route(
-        '/chooser/{folderId}',
-        name: 'HgabkaMediaBundle_chooser_show_folder',
-        requirements: ['folderId' => '\d+']
-    )]
-    public function chooserShowFolderAction(Request $request, ManagerRegistry $doctrine, int $folderId): Response
+    /**
+     * @param int $folderId The folder id
+     *
+     * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_chooser_show_folder")
+     *
+     * @return array
+     */
+    public function chooserShowFolderAction(Request $request, $folderId)
     {
         $this->getAdmin()->checkAccess('list');
-        $em = $doctrine->getManager();
+        $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
 
         $type = $request->get('type');
@@ -110,7 +112,7 @@ class ChooserController extends BaseMediaController
         // @var MediaManager $mediaHandler
         $mediaHandler = $this->getManager();
 
-        $em = $doctrine;
+        $em = $this->getDoctrine();
         $repo = $em->getRepository(Folder::class);
 
         // @var Folder $folder
@@ -122,7 +124,12 @@ class ChooserController extends BaseMediaController
             $handler = $mediaHandler->getHandlerForType($type);
         }
 
+        // @var MediaManager $mediaManager
         $mediaManager = $this->getManager();
+
+        /*       $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
+               $adminList = $this->get('hgabka_adminlist.factory')->createList($adminListConfigurator);
+               $adminList->bindRequest($request);*/
 
         $sub = new Folder();
         $sub->setParent($folder);
@@ -177,7 +184,12 @@ class ChooserController extends BaseMediaController
         return $this->render('@HgabkaMedia/Chooser/chooserShowFolder.html.twig', $viewVariabels);
     }
 
-    private function createTypeFormView(MediaManager $mediaManager, string $type): FormView
+    /**
+     * @param string $type
+     *
+     * @return \Symfony\Component\Form\FormView
+     */
+    private function createTypeFormView(MediaManager $mediaManager, $type)
     {
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();

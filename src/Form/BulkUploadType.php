@@ -23,7 +23,7 @@ class BulkUploadType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             'files',
@@ -40,7 +40,7 @@ class BulkUploadType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefault('accept', null);
     }
@@ -50,7 +50,7 @@ class BulkUploadType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return 'hgabka_mediabundle_bulkupload';
     }

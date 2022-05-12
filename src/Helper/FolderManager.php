@@ -4,18 +4,23 @@ namespace Hgabka\MediaBundle\Helper;
 
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Repository\FolderRepository;
+use Symfony\Component\Security\Core\Security;
 
 class FolderManager
 {
     /** @var \Hgabka\MediaBundle\Repository\FolderRepository */
     private $repository;
 
+    /** @var Security */
+    private $security;
+
     /**
      * @var \Hgabka\MediaBundle\Repository\FolderRepository
      */
-    public function __construct(FolderRepository $repository)
+    public function __construct(FolderRepository $repository, Security $security)
     {
         $this->repository = $repository;
+        $this->security = $security;
     }
 
     /**
@@ -50,5 +55,22 @@ class FolderManager
     public function getParents(Folder $folder)
     {
         return $this->repository->getPath($folder);
+    }
+
+    public function isFolderTraversable($folder): bool
+    {
+        if (!$folder instanceof Folder) {
+            $folder = $this->repository->find($folder);
+        }
+
+        if (!$folder) {
+            return false;
+        }
+
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return $folder->getLevel() > 1;
+        }
+
+        return !$folder->isInternal();
     }
 }

@@ -5,7 +5,9 @@ namespace Hgabka\MediaBundle\Twig;
 use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
+use Hgabka\MediaBundle\Helper\FolderManager;
 use Hgabka\MediaBundle\Helper\MediaManager;
+use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 use Twig\TwigFunction;
@@ -18,13 +20,17 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
     /** @var EntityManagerInterface */
     protected $doctrine;
 
+    /** @var Security */
+    protected $security;
+
     /**
      * MediaTwigExtension constructor.
      */
-    public function __construct(MediaManager $mediaManager, EntityManagerInterface $doctrine)
+    public function __construct(MediaManager $mediaManager, EntityManagerInterface $doctrine, Security $security)
     {
         $this->mediaManager = $mediaManager;
         $this->doctrine = $doctrine;
+        $this->security = $security;
     }
 
     public function getGlobals(): array
@@ -40,6 +46,7 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('get_media_for_folder', [$this, 'getMediaForFolder']),
             new TwigFunction('get_last_media_for_folder', [$this, 'getLastMediaForFolder']),
             new TwigFunction('get_folder_by_internal_name', [$this, 'getFolderByInternalName']),
+            new TwigFunction('is_folder_traversable', [$this, 'isFolderTraversable']),
         ];
     }
 
@@ -58,5 +65,22 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
     public function getFolderByInternalName($internalName)
     {
         return $this->doctrine->getRepository(Folder::class)->findOneByInternalName($internalName);
+    }
+
+    public function isFolderTraversable($folder): bool
+    {
+        if (!$folder instanceof Folder) {
+            $folder = $this->doctrine->getRepository(Folder::class)->find($folder);
+        }
+
+        if (!$folder) {
+            return false;
+        }
+
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return $folder->getLevel() > 1;
+        }
+
+        return !$folder->isInternal();
     }
 }

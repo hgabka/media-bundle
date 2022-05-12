@@ -8,7 +8,6 @@ use Hgabka\MediaBundle\Helper\MediaManager;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -16,12 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AviaryController extends BaseMediaController
 {
-    #[Route(
-        '/aviary/{folderId}/{mediaId}',
-        name: 'HgabkaMediaBundle_aviary',
-        requirements: ['folderId' => '\d+', 'mediaId' => '\d+']
-    )]
-    public function indexAction(Request $request, ManagerRegistry $doctrine, int $folderId, int $mediaId): Response
+    /**
+     * @param int $folderId The id of the Folder
+     * @param int $mediaId  The id of the image
+     *
+     * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="HgabkaMediaBundle_aviary")
+     *
+     * @return RedirectResponse
+     */
+    public function indexAction(Request $request, ManagerRegistry $doctrine, $folderId, $mediaId)
     {
         $em = $doctrine->getManager();
 

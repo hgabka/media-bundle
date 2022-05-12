@@ -34,7 +34,8 @@
     </div>
 
     <!-- Tree -->
-    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('HgabkaMediaBundle_folder_reorder') }}">
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('HgabkaMediaBundle_folder_reorder') }}"
+         data-moving-confirmation="{{ "hg_media.folder.movingconfirmation"|trans }}">
         <ul>
             {% set parentIds = foldermanager.getParentIds(folder) %}
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}

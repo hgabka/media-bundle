@@ -22,7 +22,6 @@ hg_media:
     admin:
         label: Médiatár
         list: Adminisztráció
-        model_name: Média
     aviary:
         title: Aviary
         nothing: Nincs megjeleníthető elem
@@ -59,6 +58,7 @@ hg_media:
         new: Új hozzáadása
 
     folder:
+        movingconfirmation: Biztos, hogy áthelyezi a mappát?
         bulk_move:
             helper: Kijelölés
             action: Tömeges média áthelyezés
@@ -223,5 +223,3 @@ hg_media:
     pagerfanta:
         prev_message: '&larr; Előző'
         next_message: 'Következő &rarr;'
-
-    group:  Médiatár

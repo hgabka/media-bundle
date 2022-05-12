@@ -3,7 +3,6 @@
 namespace Hgabka\MediaBundle\Form\File;
 
 use Hgabka\MediaBundle\Entity\Folder;
-use Hgabka\MediaBundle\Helper\File\FileHelper;
 use Hgabka\MediaBundle\Repository\FolderRepository;
 use Hgabka\MediaBundle\Validator\Constraints\HasGuessableExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -34,7 +33,7 @@ class FileType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             'name',
@@ -125,7 +124,7 @@ class FileType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return 'hgabka_mediabundle_filetype';
     }
@@ -135,11 +134,11 @@ class FileType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                'data_class' => FileHelper::class,
+                'data_class' => 'Hgabka\MediaBundle\Helper\File\FileHelper',
             ]
         );
     }

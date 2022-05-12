@@ -5,30 +5,40 @@ namespace Hgabka\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Hgabka\Doctrine\Translatable\Annotation as Hgabka;
 use Hgabka\Doctrine\Translatable\Entity\TranslationTrait;
-use Hgabka\Doctrine\Translatable\TranslatableInterface;
 use Hgabka\Doctrine\Translatable\TranslationInterface;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'hg_media_folder_translation')]
+/**
+ * @ORM\Table(name="hg_media_folder_translation")
+ * @ORM\Entity
+ */
 class FolderTranslation implements TranslationInterface
 {
     use TranslationTrait;
 
-    #[ORM\Column(name: 'name', type: 'string', nullable: true)]
-    protected ?string $name = null;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $name;
 
     /**
      * @Hgabka\Translatable(targetEntity="Hgabka\MediaBundle\Entity\Folder")
      */
-    #[Hgabka\Translatable(targetEntity: Folder::class)]
-    private ?TranslatableInterface $translatable = null;
+    private $translatable;
 
-    public function getName(): ?string
+    /**
+     * @return mixed
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    /**
+     * @param mixed $name
+     *
+     * @return MediaTranslation
+     */
+    public function setName($name)
     {
         $this->name = $name;
 

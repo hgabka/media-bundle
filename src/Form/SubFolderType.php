@@ -4,8 +4,8 @@ namespace Hgabka\MediaBundle\Form;
 
 class SubFolderType extends FolderType
 {
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
-        return 'hgabka_mediabundle_subfolderType';
+        return 'hgabka_mediabundle_subFolderType';
     }
 }

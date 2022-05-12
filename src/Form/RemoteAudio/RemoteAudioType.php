@@ -24,7 +24,7 @@ class RemoteAudioType extends AbstractRemoteType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
@@ -46,7 +46,7 @@ class RemoteAudioType extends AbstractRemoteType
      *
      * @return string The name of this type
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return 'hgabka_mediabundle_audiotype';
     }
@@ -56,7 +56,7 @@ class RemoteAudioType extends AbstractRemoteType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [

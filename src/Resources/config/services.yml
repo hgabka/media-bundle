@@ -113,7 +113,7 @@ services:
 
     hgabka_media.folder_manager:
         class: '%hgabka_media.folder_manager.class%'
-        arguments: ['@hgabka_media.repository.folder']
+        arguments: ['@hgabka_media.repository.folder', '@security.helper']
         public: true
 
 
@@ -147,16 +147,11 @@ services:
         calls:
             - [setGuesser, ['@mime_types']]
   
-    hgabka_media.media.twig.extension:
-        class: Hgabka\MediaBundle\Twig\MediaTwigExtension
-        arguments: ['@hgabka_media.media_manager', '@doctrine.orm.entity_manager']
-        tags:
-            - { name: twig.extension }
-
     hg_media.admin.media:
         class: Hgabka\MediaBundle\Admin\MediaAdmin
         tags:
-            - { name: sonata.admin, model_class: Hgabka\MediaBundle\Entity\Media, controller: Hgabka\MediaBundle\Controller\MediaAdminController, manager_type: orm, group: hg_media.group, icon: '<i class="fas fa-image"></i>', translation_domain: 'messages', label: hg_media.admin.label, label_translator_strategy: 'sonata.admin.label.strategy.underscore' }
+            - { name: sonata.admin, manager_type: orm, group: hg_media.group, icon: '<i class="fas fa-image"></i>', label: hg_media.admin.label, label_catalogue: 'HgabkaMediaBundle', label_translator_strategy: 'sonata.admin.label.strategy.underscore' }
+        arguments: [null, Hgabka\MediaBundle\Entity\Media, Hgabka\MediaBundle\Controller\MediaAdminController]
         calls:
           - [setManager, ["@hgabka_media.media_manager"]]
 
@@ -213,3 +208,9 @@ services:
     Hgabka\MediaBundle\Helper\SvgMimeTypeGuesser:
         autowire: true
         autoconfigure: true
+
+    hgabka_media.media.twig.extension:
+        class: Hgabka\MediaBundle\Twig\MediaTwigExtension
+        arguments: [ '@hgabka_media.media_manager', '@doctrine.orm.entity_manager', '@security.helper']
+        tags:
+            - { name: twig.extension }

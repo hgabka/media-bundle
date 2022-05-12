@@ -22,7 +22,6 @@ hg_media:
     admin:
         label: Media
         list: Administration
-        model_name: Media
     aviary:
         title: Aviary
         nothing: Nothing to see here.
@@ -59,6 +58,7 @@ hg_media:
         new: Add media to "%folder%"
 
     folder:
+        movingconfirmation: Are you sure you want to move this folder?
         bulk_move:
             helper: Select media
             action: Bulk move media
@@ -208,4 +208,3 @@ hg_media:
         remote_video:
             type:
                 label: Type
-    group:  Media

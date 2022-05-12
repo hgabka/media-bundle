@@ -18,9 +18,11 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class FolderType extends AbstractType
 {
-    protected HgabkaUtils $utils;
+    /** @var HgabkaUtils */
+    protected $utils;
 
-    protected AuthorizationCheckerInterface $authChecker;
+    /** @var AuthorizationCheckerInterface */
+    protected $authChecker;
 
     /**
      * FolderType constructor.
@@ -42,7 +44,7 @@ class FolderType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $folder = $options['folder'];
         $builder
@@ -119,7 +121,7 @@ class FolderType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return 'hgabka_mediabundle_FolderType';
     }
@@ -129,7 +131,7 @@ class FolderType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [

@@ -25,7 +25,7 @@ class BulkMoveMediaType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
@@ -52,7 +52,7 @@ class BulkMoveMediaType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return 'hgabka_mediabundle_folder_bulk_move';
     }

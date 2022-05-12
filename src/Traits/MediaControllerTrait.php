@@ -2,7 +2,6 @@
 
 namespace Hgabka\MediaBundle\Traits;
 
-use Doctrine\Persistence\ManagerRegistry;
 use Hgabka\MediaBundle\Admin\MediaAdmin;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Entity\Media;
@@ -54,7 +53,7 @@ trait MediaControllerTrait
     /**
      * MediaControllerTrait constructor.
      */
-    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack, ManagerRegistry $doctrine)
+    public function __construct(MediaAdmin $admin, MediaManager $manager, HgabkaUtils $utils, FolderManager $folderManager, TranslatorInterface $translator, RequestStack $requestStack)
     {
         $this->admin = $admin;
         $this->manager = $manager;
@@ -62,7 +61,6 @@ trait MediaControllerTrait
         $this->folderManager = $folderManager;
         $this->translator = $translator;
         $this->requestStack = $requestStack;
-        $this->doctrine = $doctrine;
     }
 
     /**
@@ -134,7 +132,7 @@ trait MediaControllerTrait
     protected function getPager(Request $request, Folder $folder)
     {
         $queryBuilder = $this
-            ->doctrine
+            ->getDoctrine()
             ->getRepository(Media::class)
             ->createQueryBuilder('b')
             ->leftJoin('b.translations', 'bt', 'WITH', 'bt.locale = :locale')

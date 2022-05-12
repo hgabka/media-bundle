@@ -5,29 +5,33 @@ namespace Hgabka\MediaBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Form\SubFolderType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * FolderController.
  */
 class FolderController extends BaseMediaController
 {
-    #[Route(
-        '/delete/{folderId}',
-        name: 'HgabkaMediaBundle_folder_delete',
-        requirements: ['folderId' => '\d+']
-    )]
-    public function deleteAction(int $folderId)
+    /**
+     * @param int $folderId
+     *
+     * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_delete")
+     *
+     * @return RedirectResponse
+     */
+    public function deleteAction($folderId)
     {
         $this->getAdmin()->checkAccess('delete');
 
         /** @var EntityManager $em */
-        $em = $this->doctrine->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -78,18 +82,21 @@ class FolderController extends BaseMediaController
         );
     }
 
-    #[Route(
-        '/subcreate/{folderId}',
-        name: 'HgabkaMediaBundle_folder_sub_create',
-        requirements: ['folderId' => '\d+'],
-        methods: ['GET', 'POST']
-    )]
-    public function subCreateAction(Request $request, int $folderId): Response
+    /**
+     * @param int $folderId
+     *
+     * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_sub_create")
+     * @Method({"GET", "POST"})
+     * @Template()
+     *
+     * @return Response
+     */
+    public function subCreateAction(Request $request, $folderId)
     {
         $this->getAdmin()->checkAccess('create');
 
         /** @var EntityManager $em */
-        $em = $this->doctrine->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         // @var Folder $parent
         $parent = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -141,18 +148,21 @@ class FolderController extends BaseMediaController
         );
     }
 
-    #[Route(
-        '/empty/{folderId}',
-        name: 'HgabkaMediaBundle_folder_empty',
-        requirements: ['folderId' => '\d+'],
-        methods: ['GET', 'POST']
-    )]
-    public function emptyAction(Request $request, int $folderId): Response
+    /**
+     * @param int $folderId
+     *
+     * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="HgabkaMediaBundle_folder_empty")
+     * @Method({"GET", "POST"})
+     * @Template()
+     *
+     * @return Response
+     */
+    public function emptyAction(Request $request, $folderId)
     {
         $this->getAdmin()->checkAccess('delete');
 
         /** @var EntityManager $em */
-        $em = $this->doctrine->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         // @var Folder $folder
         $folder = $em->getRepository(Folder::class)->getFolder($folderId);
@@ -199,17 +209,18 @@ class FolderController extends BaseMediaController
         );
     }
 
-    #[Route(
-        '/reorder',
-        name: 'HgabkaMediaBundle_folder_reorder'
-    )]
-    public function reorderAction(Request $request): Response
+    /**
+     * @Route("/reorder", name="HgabkaMediaBundle_folder_reorder")
+     *
+     * @return JsonResponse
+     */
+    public function reorderAction(Request $request)
     {
         $this->getAdmin()->checkAccess('edit');
         $folders = [];
         $nodeIds = $request->get('nodes');
 
-        $em = $this->doctrine->getManager();
+        $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Folder::class);
 
         foreach ($nodeIds as $id) {
