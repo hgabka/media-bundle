@@ -59,6 +59,7 @@ hg_media:
         new: Add media to "%folder%"
 
     folder:
+        movingconfirmation: Are you sure you want to move this folder?
         bulk_move:
             helper: Select media
             action: Bulk move media

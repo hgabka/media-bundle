@@ -113,7 +113,7 @@ services:
 
     hgabka_media.folder_manager:
         class: '%hgabka_media.folder_manager.class%'
-        arguments: ['@hgabka_media.repository.folder']
+        arguments: ['@hgabka_media.repository.folder', '@security.helper']
         public: true
 
 
@@ -149,7 +149,7 @@ services:
   
     hgabka_media.media.twig.extension:
         class: Hgabka\MediaBundle\Twig\MediaTwigExtension
-        arguments: ['@hgabka_media.media_manager', '@doctrine.orm.entity_manager']
+        arguments: ['@hgabka_media.media_manager', '@doctrine.orm.entity_manager', '@hgabka_media.folder_manager']
         tags:
             - { name: twig.extension }
 

@@ -59,6 +59,7 @@ hg_media:
         new: Új hozzáadása
 
     folder:
+        movingconfirmation: Biztos, hogy áthelyezi a mappát?
         bulk_move:
             helper: Kijelölés
             action: Tömeges média áthelyezés

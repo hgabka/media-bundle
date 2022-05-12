@@ -208,10 +208,10 @@ class FolderController extends BaseMediaController
         $this->getAdmin()->checkAccess('edit');
         $folders = [];
         $nodeIds = $request->get('nodes');
+        $changeParents = $request->get('parent');
 
         $em = $this->doctrine->getManager();
         $repository = $em->getRepository(Folder::class);
-        $changeParents = $request->get('parent');
 
         foreach ($nodeIds as $id) {
             // @var Folder $folder
@@ -219,17 +219,22 @@ class FolderController extends BaseMediaController
             $folders[] = $folder;
         }
 
-        foreach ($folders as $id => $folder) {
-            $newParentId = isset($changeParents[$folder->getId()]) ? $changeParents[$folder->getId()] : null;
-            if ($newParentId) {
-                $parent = $repository->find($newParentId);
-                $folder->setParent($parent);
-                $this->em->persist($folder);
-                $this->em->flush($folder);
+        if (!empty($changeParents)) {
+            foreach ($folders as $id => $folder) {
+                $newParentId = isset($changeParents[$folder->getId()]) ? $changeParents[$folder->getId()] : null;
+                if ($newParentId) {
+                    $parent = $repository->find($newParentId);
+                    if ($parent) {
+                        $folder->setParent($parent);
+                    }
+                }
             }
-            $repository->moveDown($folder, true);
+            $em->flush();
         }
 
+        foreach ($folders as $id => $folder) {
+            $repository->moveDown($folder, true);
+        }
 
         $em->flush();
 
