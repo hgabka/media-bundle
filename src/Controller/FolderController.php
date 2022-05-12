@@ -211,6 +211,7 @@ class FolderController extends BaseMediaController
 
         $em = $this->doctrine->getManager();
         $repository = $em->getRepository(Folder::class);
+        $changeParents = $request->get('parent');
 
         foreach ($nodeIds as $id) {
             // @var Folder $folder
@@ -219,8 +220,16 @@ class FolderController extends BaseMediaController
         }
 
         foreach ($folders as $id => $folder) {
+            $newParentId = isset($changeParents[$folder->getId()]) ? $changeParents[$folder->getId()] : null;
+            if ($newParentId) {
+                $parent = $repository->find($newParentId);
+                $folder->setParent($parent);
+                $this->em->persist($folder);
+                $this->em->flush($folder);
+            }
             $repository->moveDown($folder, true);
         }
+
 
         $em->flush();
 
