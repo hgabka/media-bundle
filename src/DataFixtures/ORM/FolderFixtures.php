@@ -32,6 +32,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal = new Folder();
         $subgal->setParent($gal);
         $subgal->setRel('image');
+        $subgal->translate('de')->setName('Bilder');
         $subgal->translate('en')->setName('Images');
         $subgal->translate('hu')->setName('Képek');
         $subgal->setInternal(true);
@@ -43,7 +44,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal = new Folder();
         $subgal->setParent($gal);
         $subgal->setRel('files');
-        $subgal->translate('de')->setName('Bilden');
+        $subgal->translate('de')->setName('Dateien');
         $subgal->translate('en')->setName('Files');
         $subgal->translate('hu')->setName('Fájlok');
         $subgal->setInternal(true);
