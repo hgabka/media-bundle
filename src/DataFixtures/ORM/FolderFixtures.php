@@ -20,6 +20,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
     {
         $gal = new Folder();
         $gal->setRel('media');
+        $gal->translate('de')->setName('Medien');
         $gal->translate('en')->setName('Media');
         $gal->translate('hu')->setName('Média');
         $gal->setInternal(true);
@@ -42,6 +43,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal = new Folder();
         $subgal->setParent($gal);
         $subgal->setRel('files');
+        $subgal->translate('de')->setName('Bilden');
         $subgal->translate('en')->setName('Files');
         $subgal->translate('hu')->setName('Fájlok');
         $subgal->setInternal(true);
@@ -53,6 +55,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal = new Folder();
         $subgal->setParent($gal);
         $subgal->setRel('slideshow');
+        $subgal->translate('de')->setName('Folien');
         $subgal->translate('en')->setName('Slides');
         $subgal->translate('hu')->setName('Bemutatók');
         $subgal->setInternal(true);
@@ -64,6 +67,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
         $subgal = new Folder();
         $subgal->setParent($gal);
         $subgal->setRel('video');
+        $subgal->translate('de')->setName('Videos');
         $subgal->translate('en')->setName('Videos');
         $subgal->translate('hu')->setName('Videók');
         $subgal->setInternal(true);
