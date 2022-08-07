@@ -110,3 +110,5 @@ hg_media:
     widget:
         choose: Auswählen
         delete: Löschen
+        
+    group:  Medien
