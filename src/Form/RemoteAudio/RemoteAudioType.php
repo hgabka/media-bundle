@@ -3,6 +3,7 @@
 namespace Hgabka\MediaBundle\Form\RemoteAudio;
 
 use Hgabka\MediaBundle\Form\AbstractRemoteType;
+use Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHelper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -60,7 +61,7 @@ class RemoteAudioType extends AbstractRemoteType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Hgabka\MediaBundle\Helper\RemoteAudio\RemoteAudioHelper',
+                'data_class' => RemoteAudioHelper::class,
             ]
         );
     }
