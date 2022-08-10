@@ -104,6 +104,19 @@ class FileHelper
         $this->media->setDescription($description);
     }
 
+    public function isProtected(): ?bool
+    {
+        return $this->media->isProtected();
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setProtected(?bool $protected)
+    {
+        $this->media->setProtected($protected);
+    }
+
     public function getOriginalFilename()
     {
         return $this->media->getOriginalFilename();

@@ -82,6 +82,7 @@ hg_media:
                 rel: Rel
                 parent: Szülő
                 internal_name: Belső név
+                protected: Védett
             success:
                 text: A(z) `%folder%` mappa sikeresen létrehozva
         empty:
@@ -184,6 +185,8 @@ hg_media:
                 label: Típus
             copyright:
                 label: Szerzői jog
+            protected:
+                label: Védett
             description:
                 label: Leírás
         bulk_upload:
@@ -198,6 +201,8 @@ hg_media:
                 label: Szerzői jog
             description:
                 label: Leírás
+            protected:
+                label: Védett
             originalFilename:
                 label: Eredeti fájlnév
             folder:

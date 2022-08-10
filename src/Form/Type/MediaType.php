@@ -87,6 +87,7 @@ class MediaType extends AbstractType
                 'folderid' => null,
                 'editor_filter' => 'media_list_thumbnail',
                 'editor_filter_retina' => 'media_list_thumbnail_retina',
+                'protected' => false,
            ]
         );
     }

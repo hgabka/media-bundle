@@ -7,7 +7,9 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Form\BulkMoveMediaType;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Hgabka\UtilsBundle\FlashMessages\FlashTypes;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -433,6 +435,24 @@ class MediaController extends BaseMediaController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    #[Route(
+        '/download/{media}',
+        name: 'HgabkaMediaBundle_admin_download_attachment',
+    )]
+    public function download(Media $media, ParameterBagInterface $params)
+    {
+        return $this->getDownloadResponse($media, $params);
+    }
+
+    #[Route(
+        '/download-inline/{media}',
+        name: 'HgabkaMediaBundle_admin_download_inline',
+    )]
+    public function inline(Media $media, ParameterBagInterface $params)
+    {
+        return $this->getDownloadResponse($media, $params, HeaderUtils::DISPOSITION_INLINE);
     }
 
     private function returnJsonError(?string $code, ?string $message): JsonResponse

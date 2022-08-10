@@ -94,7 +94,7 @@ class MediaMultiType extends AbstractType
         $builder->add('file', FileType::class);
 
         $builder->addViewTransformer(
-            new FileAndIdToMediaTransformer($this->objectManager, $options['current_value_container'], $this->mediaManager, $folder, $options['medianame']),
+            new FileAndIdToMediaTransformer($this->objectManager, $options['current_value_container'], $this->mediaManager, $folder, $options['medianame'], $options['protected']),
             true
         );
 
@@ -137,6 +137,7 @@ class MediaMultiType extends AbstractType
                 'error_bubbling' => false,
                 'editor_filter' => 'media_list_thumbnail',
                 'editor_filter_retina' => 'media_list_thumbnail_retina',
+                'protected' => false,
             ]
         );
     }

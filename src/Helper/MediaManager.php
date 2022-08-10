@@ -3,19 +3,19 @@
 namespace Hgabka\MediaBundle\Helper;
 
 use Hgabka\MediaBundle\Entity\Media;
+use Hgabka\MediaBundle\Helper\File\FileHandler;
 use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use SplFileInfo;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * MediaManager.
  */
 class MediaManager
 {
-    /** @var HgabkaUtils */
-    protected $utils;
-
     /**
      * @var AbstractMediaHandler[]
      */
@@ -26,16 +26,11 @@ class MediaManager
      */
     protected $defaultHandler;
 
-    /** @var string */
-    protected $projectDir;
-
     /**
      * MediaManager constructor.
      */
-    public function __construct(HgabkaUtils $utils, string $projectDir)
+    public function __construct(protected HgabkaUtils $utils, protected string $projectDir, protected string $mediaPath, protected string $protectedMediaPath)
     {
-        $this->utils = $utils;
-        $this->projectDir = $projectDir;
     }
 
     /**
@@ -185,6 +180,24 @@ class MediaManager
         return $file ? $file->getContent() : null;
     }
 
+    public function convertToProtected(Media $media)
+    {
+        $handler = $this->getHandler($media);
+
+        if ($handler instanceof FileHandler) {
+            $handler->convertToProtected($media);
+        }
+    }
+
+    public function convertToNonProtected(Media $media)
+    {
+        $handler = $this->getHandler($media);
+
+        if ($handler instanceof FileHandler) {
+            $handler->convertToNonProtected($media);
+        }
+    }
+
     /**
      * @return bool|string
      */
@@ -198,6 +211,10 @@ class MediaManager
 
     public function getMediaPath(Media $media): string
     {
+        if ($media->isProtected()) {
+            return $this->projectDir . '/' . $this->protectedMediaPath . '/' . $media->getUrl();
+        }
+
         return $this->projectDir . '/public' . $media->getUrl();
     }
 
@@ -238,5 +255,24 @@ class MediaManager
             'type' => $info[2],
             'attr' => $info[3],
         ];
+    }
+
+    public function getDownloadResponse(Media $media, string $disposition = HeaderUtils::DISPOSITION_ATTACHMENT): Response
+    {
+        $fileContent = $this->getMediaContent($media);
+
+        $response = new Response($fileContent);
+
+        $disposition = HeaderUtils::makeDisposition(
+            $disposition,
+            $media->getOriginalFilename()
+        );
+
+        $response->headers->set('Content-Type', $media->getContentType());
+        $response->headers->set('Content-Length', strlen($fileContent));
+
+        $response->headers->set('Content-Disposition', $disposition);
+
+        return $response;
     }
 }

@@ -80,6 +80,7 @@ hg_media:
                 rel: Rel
                 parent: Parent
                 internal_name: Internal name
+                protected: Protected
             success:
                 text: Folder '%folder%' has been created!
         empty:
@@ -182,6 +183,8 @@ hg_media:
                 label: Type
             copyright:
                 label: Copyright
+            protected:
+                label: Protected
             description:
                 label: Description
         bulk_upload:
@@ -196,6 +199,8 @@ hg_media:
                 label: Copyright
             description:
                 label: Description
+            protected:
+                label: Védett
             originalFilename:
                 label: Original filename
             folder:

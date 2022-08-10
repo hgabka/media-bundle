@@ -26,9 +26,19 @@ class FileHandler extends AbstractMediaHandler
     public $mediaPath;
 
     /**
+     * @var string
+     */
+    public $protectedMediaPath;
+
+    /**
      * @var Filesystem
      */
     public $fileSystem;
+
+    /**
+     * @var Filesystem
+     */
+    public $protectedFileSystem;
 
     /**
      * @var MimeTypeGuesserInterface
@@ -82,6 +92,21 @@ class FileHandler extends AbstractMediaHandler
     public function setMediaPath($mediaPath)
     {
         $this->mediaPath = $mediaPath;
+    }
+
+    /**
+     * Inject the path used in media urls.
+     *
+     * @param string $mediaPath
+     */
+    public function setProtectedMediaPath($mediaPath)
+    {
+        $this->protectedMediaPath = $mediaPath;
+    }
+
+    public function setProtectedFileSystem(Filesystem $fileSystem)
+    {
+        $this->protectedFileSystem = $fileSystem;
     }
 
     public function setFileSystem(Filesystem $fileSystem)
@@ -181,13 +206,14 @@ class FileHandler extends AbstractMediaHandler
 
         $media->setContentType($contentType);
         $media->setFileSize(filesize($media->getContent()));
-        $media->setUrl($this->mediaPath . $this->getFilePath($media));
+
+        $media->setUrl(($media->isProtected() ? $this->protectedMediaPath : $this->mediaPath) . $this->getFilePath($media));
         $media->setLocation('local');
     }
 
     public function removeMedia(Media $media)
     {
-        $adapter = $this->fileSystem->getAdapter();
+        $adapter = $this->getFileSystemForMedia($media)->getAdapter();
 
         // Remove the file from filesystem
         $fileKey = $this->getFilePath($media);
@@ -232,7 +258,54 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getOriginalFile(Media $media)
     {
-        return $this->fileSystem->get($this->getFilePath($media), true);
+        return $this->getFileSystemForMedia($media)->get($this->getFilePath($media), true);
+    }
+
+    public function getProtectedOriginalFile(Media $media, bool $create = false)
+    {
+        return $this->protectedFileSystem->get($this->getFilePath($media), $create);
+    }
+
+    public function getNonProtectedOriginalFile(Media $media, bool $create = false)
+    {
+        return $this->fileSystem->get($this->getFilePath($media), $create);
+    }
+
+    public function convertToProtected(Media $media): bool
+    {
+        try {
+            $original = $this->getNonProtectedOriginalFile($media);
+        } catch (\Throwable $e) {
+            return false;
+        }
+
+        $content = $original->getContent();
+
+        $protected = $this->getProtectedOriginalFile($media, true);
+        $protected->setContent($content);
+        $media->setUrl($this->protectedMediaPath . $this->getFilePath($media));
+
+        $original->delete();
+
+        return true;
+    }
+
+    public function convertToNonProtected(Media $media): bool
+    {
+        try {
+            $original = $this->getProtectedOriginalFile($media);
+        } catch (\Throwable $e) {
+            return false;
+        }
+
+        $content = $original->getContent();
+
+        $protected = $this->getNonProtectedOriginalFile($media, true);
+        $protected->setContent($content);
+        $media->setUrl($this->mediaPath . $this->getFilePath($media));
+        $original->delete();
+
+        return true;
     }
 
     /**
@@ -282,6 +355,11 @@ class FileHandler extends AbstractMediaHandler
                 'name' => 'hg_media.file.add',
             ],
         ];
+    }
+
+    protected function getFileSystemForMedia(Media $media): Filesystem
+    {
+        return $media->isProtected() ? $this->protectedFileSystem : $this->fileSystem;
     }
 
     /**

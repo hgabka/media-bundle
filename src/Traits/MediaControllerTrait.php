@@ -18,8 +18,11 @@ use Hgabka\UtilsBundle\Helper\HgabkaUtils;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait MediaControllerTrait
@@ -211,5 +214,14 @@ trait MediaControllerTrait
         $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'hg_media.adminlist.configurator.filter.type');
         $this->addFilter('updatedAt', new ORM\DateFilterType('updatedAt'), 'hg_media.adminlist.configurator.filter.updated_at');
         $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'hg_media.adminlist.configurator.filter.filesize');
+    }
+
+    protected function getDownloadResponse(Media $media, ParameterBagInterface $params, string $disposition = HeaderUtils::DISPOSITION_ATTACHMENT): Response
+    {
+        if ($media->isProtected()) {
+            $this->denyAccessUnlessGranted($params->get('hgabka_media.protected_media_download_role'));
+        }
+
+        return $this->manager->getDownloadResponse($media, $disposition);
     }
 }

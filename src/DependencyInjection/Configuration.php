@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                 ->end()
                 ->integerNode('folder_depth')->defaultValue(4)->end()
+                ->scalarNode('protected_media_download_role')->defaultValue('ROLE_MEDIA_ADMIN')->end()
             ->end();
 
         return $treeBuilder;

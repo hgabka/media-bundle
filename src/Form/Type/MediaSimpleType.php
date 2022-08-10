@@ -131,6 +131,7 @@ class MediaSimpleType extends AbstractType
                 'error_bubbling' => false,
                 'editor_filter' => 'media_list_thumbnail',
                 'editor_filter_retina' => 'media_list_thumbnail_retina',
+                'protected' => false,
             ]
         );
     }

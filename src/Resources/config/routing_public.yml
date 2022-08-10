@@ -1,0 +1,4 @@
+HgabkaMediaBundle_public:
+    resource: '@HgabkaMediaBundle/Controller/PublicController.php'
+    type:     annotation
+    prefix:   '/media/public'

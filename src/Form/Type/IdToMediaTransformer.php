@@ -25,6 +25,8 @@ class IdToMediaTransformer implements DataTransformerInterface
      */
     private $currentValueContainer;
 
+    private $protected = false;
+
     /**
      * @param ObjectManager         $objectManager         The object manager
      * @param CurrentValueContainer $currentValueContainer The current value container

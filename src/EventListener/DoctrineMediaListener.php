@@ -60,6 +60,19 @@ class DoctrineMediaListener
                     $this->fileUrlMap[$newFileUrl] = $oldFileUrl;
                 }
             }
+
+            if (isset($changeSet['protected'])) {
+                $protected = (!$changeSet['protected'][0] && $changeSet['protected'][1]);
+
+                if ($protected) {
+                    $this->mediaManager->convertToProtected($entity);
+                }
+                $nonProtected = ($changeSet['protected'][0] && !$changeSet['protected'][1]);
+
+                if ($nonProtected) {
+                    $this->mediaManager->convertToNonProtected($entity);
+                }
+            }
         }
     }
 

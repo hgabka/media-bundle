@@ -6,6 +6,7 @@ parameters:
     hgabka_media.media_handler.file.class: 'Hgabka\MediaBundle\Helper\File\FileHandler'
     aviary_api_key: null
     hgabka_media.media_path: '/uploads/media/'
+    hgabka_media.protected_media_path: 'data/media/'
 
 services:
     hgabka_media.media_handlers.remote_slide:
@@ -41,7 +42,9 @@ services:
         arguments: [1, '@mime_types', '%aviary_api_key%']
         calls:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
+            - [ setProtectedFileSystem, [ '@hgabka_media.filesystem_protected' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
+            - [ setProtectedMediaPath, [ '%hgabka_media.protected_media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
             - [ setHgabkaUtils, ['@hgabka_utils.hgabka_utils']]
             - [ setFolderDepth, ['%hgabka_media.folder_depth%']]
@@ -54,7 +57,9 @@ services:
         arguments: [0, '@mime_types', '']
         calls:
             - [ setFileSystem, [ '@hgabka_media.filesystem' ] ]
+            - [ setProtectedFileSystem, [ '@hgabka_media.filesystem_protected' ] ]
             - [ setMediaPath, [ '%hgabka_media.media_path%' ] ]
+            - [ setProtectedMediaPath, [ '%hgabka_media.protected_media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%hgabka_media.blacklisted_extensions%' ] ]
             - [ setHgabkaUtils, ['@hgabka_utils.hgabka_utils']]
             - [ setFolderDepth, ['%hgabka_media.folder_depth%']]

@@ -8,6 +8,7 @@ use Hgabka\MediaBundle\Repository\FolderRepository;
 use Hgabka\MediaBundle\Validator\Constraints\HasGuessableExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,6 +25,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class FileType extends AbstractType
 {
+    public function __construct(protected Security $security)
+    {
+    }
+
     /**
      * Builds the form.
      *
@@ -69,6 +75,17 @@ class FileType extends AbstractType
                 'required' => false,
             ]
         );
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            $builder
+                ->add(
+                    'protected',
+                    CheckboxType::class,
+                    [
+                        'label' => 'hg_media.form.file.protected.label',
+                        'required' => false,
+                    ]
+                );
+        }
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
