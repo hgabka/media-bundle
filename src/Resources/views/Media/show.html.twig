@@ -85,9 +85,9 @@
                             <dt>{{ 'hg_media.media.mediainfo.contenttype'|trans }}:</dt>
                             <dd>{{ media.contentType }}</dd>
                             <dt>{{ 'hg_media.media.mediainfo.createdat'|trans }}:</dt>
-                            <dd>{{ media.createdat|date|escape }}</dd>
+                            <dd>{{ media.createdat|format_datetime(null, null, 'yyyy.MMMM d. HH:mm:ss')|escape }}</dd>
                             <dt>{{ 'hg_media.media.mediainfo.updatedat'|trans }}:</dt>
-                            <dd>{{ media.updatedat|date|escape }}</dd>
+                            <dd>{{ media.updatedat|format_datetime(null, null, 'yyyy.MMMM d. HH:mm:ss')|escape }}</dd>
                         {% endblock %}
                     </dl>
                 </div>
