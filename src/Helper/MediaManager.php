@@ -257,15 +257,22 @@ class MediaManager
         ];
     }
 
-    public function getDownloadResponse(Media $media, string $disposition = HeaderUtils::DISPOSITION_ATTACHMENT): Response
+    public function getDownloadResponse(Media $media, string $disposition = HeaderUtils::DISPOSITION_ATTACHMENT, ?string $fileName = null, bool $addOriginalExtension = true): Response
     {
         $fileContent = $this->getMediaContent($media);
 
         $response = new Response($fileContent);
 
+        if (null === $fileName) {
+            $fileName = $media->getOriginalFilename();
+        } elseif ($addOriginalExtension) {
+            $extension = pathinfo($media->getOriginalFilename(), \PATHINFO_EXTENSION);
+            $fileName .= ('.' . $extension);
+        }
+
         $disposition = HeaderUtils::makeDisposition(
             $disposition,
-            $media->getOriginalFilename()
+            $fileName
         );
 
         $response->headers->set('Content-Type', $media->getContentType());

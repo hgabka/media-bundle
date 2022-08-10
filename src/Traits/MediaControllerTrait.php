@@ -216,12 +216,12 @@ trait MediaControllerTrait
         $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'hg_media.adminlist.configurator.filter.filesize');
     }
 
-    protected function getDownloadResponse(Media $media, ParameterBagInterface $params, string $disposition = HeaderUtils::DISPOSITION_ATTACHMENT): Response
+    protected function getDownloadResponse(Media $media, ParameterBagInterface $params, string $disposition = HeaderUtils::DISPOSITION_ATTACHMENT, ?string $fileName = null, bool $addOriginalExtension = true): Response
     {
         if ($media->isProtected()) {
             $this->denyAccessUnlessGranted($params->get('hgabka_media.protected_media_download_role'));
         }
 
-        return $this->manager->getDownloadResponse($media, $disposition);
+        return $this->manager->getDownloadResponse($media, $disposition, $fileName, $addOriginalExtension);
     }
 }
