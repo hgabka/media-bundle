@@ -54,7 +54,7 @@ class MediaSimpleType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $folder = null;
         $repo = $this->objectManager->getRepository(Folder::class);
@@ -102,12 +102,12 @@ class MediaSimpleType extends AbstractType
         $builder->setAttribute('editor_filter_retina', $options['editor_filter_retina']);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media_simple';
     }
@@ -117,7 +117,7 @@ class MediaSimpleType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -136,7 +136,7 @@ class MediaSimpleType extends AbstractType
         );
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['mediamanager'] = $this->mediaManager;
         $view->vars['foldername'] = $form->getConfig()->getAttribute('foldername');
