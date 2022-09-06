@@ -48,7 +48,7 @@ class MediaType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer(
             new IdToMediaTransformer($this->objectManager, $options['current_value_container']),
@@ -65,7 +65,7 @@ class MediaType extends AbstractType
     /**
      * @return string
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }
@@ -75,7 +75,7 @@ class MediaType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -97,7 +97,7 @@ class MediaType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media';
     }
@@ -105,7 +105,7 @@ class MediaType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
         $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
