@@ -56,7 +56,7 @@ class MediaMultiType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $folder = null;
         $repo = $this->objectManager->getRepository(Folder::class);
@@ -106,12 +106,12 @@ class MediaMultiType extends AbstractType
         $builder->setAttribute('editor_filter_retina', $options['editor_filter_retina']);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media_multi';
     }
@@ -121,7 +121,7 @@ class MediaMultiType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -142,7 +142,7 @@ class MediaMultiType extends AbstractType
         );
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
         $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
