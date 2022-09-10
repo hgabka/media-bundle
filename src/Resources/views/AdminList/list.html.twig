@@ -1,7 +1,7 @@
 {% set extraparams = app.request.query.all|merge({ 'folderId' : folder.id, 'orderBy': orderBy, 'orderDirection': orderDirection}) %}
 {% include '@HgabkaMedia/AdminList/filters.html.twig' %}
 {% if pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+    {{ pagerfanta(pagerfanta, 'twitter_bootstrap', {
         'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,
         'next_message' : 'hg_media.pagerfanta.next_message' | trans
     }) }}
@@ -101,7 +101,7 @@
     </div>
 </div>
 {% if pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+    {{ pagerfanta(pagerfanta, 'twitter_bootstrap', {
         'prev_message' : 'kuma_admin_list.pagerfanta.prev_message' | trans,
         'next_message' : 'kuma_admin_list.pagerfanta.next_message' | trans
     }) }}
