@@ -182,7 +182,7 @@
                         </div>
                         {% if pagerfanta.count > 0 %}
                             {% if pagerfanta.haveToPaginate() %}
-                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap', {
                                     'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,
                                     'next_message' : 'hg_media.pagerfanta.next_message' | trans
                                 }) }}
@@ -258,7 +258,7 @@
                                 {% endfor %}
                             </div>
                             {% if pagerfanta.haveToPaginate() %}
-                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap', {
                                     'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,
                                     'next_message' : 'hg_media.pagerfanta.next_message' | trans
                                 }) }}
