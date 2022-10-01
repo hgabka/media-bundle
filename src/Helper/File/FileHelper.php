@@ -28,9 +28,15 @@ class FileHelper
      */
     protected $path;
 
-    public function __construct(Media $media)
+    /**
+     * @var string
+     */
+    protected $mediaPath;
+
+    public function __construct(Media $media, string $mediaPath)
     {
         $this->media = $media;
+        $this->mediaPath = $mediaPath;
     }
 
     /**
@@ -132,7 +138,7 @@ class FileHelper
             $this->media->setContent($file);
             $this->media->setContentType($file->getMimeType());
             $this->media->setUrl(
-                '/uploads/media/' . $this->media->getUuid() . '.' . $this->media->getContent()->getExtension()
+                $this->mediaPath . $this->media->getUuid() . '.' . $this->media->getContent()->getExtension()
             );
         }
     }
