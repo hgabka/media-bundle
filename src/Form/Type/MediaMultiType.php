@@ -62,9 +62,16 @@ class MediaMultiType extends AbstractType
         $repo = $this->objectManager->getRepository(Folder::class);
         if (!empty($options['folderid'])) {
             $folder = $repo->getFolder($options['folderid']);
+            if ($folder && $folder->isDeleted()) {
+                $folder = null;
+            }
+
         }
         if (!$folder && !empty($options['foldername'])) {
             $folder = $repo->findOneByInternalName($options['foldername']);
+            if ($folder && $folder->isDeleted()) {
+                $folder = null;
+            }
         }
         if (!$folder && !empty($options['folder']) && $options['folder'] instanceof Folder) {
             $folder = $options['folder'];
@@ -83,6 +90,7 @@ class MediaMultiType extends AbstractType
                     ->setInternalName($options['foldername'])
                     ->setCurrentLocale($this->hgabkaUtils->getCurrentLocale())
                     ->setName($options['foldertitle'] ?? $options['foldername'])
+                    ->setRel('media')
                 ;
                 $this->objectManager->persist($folder);
                 $this->objectManager->flush();
