@@ -82,7 +82,7 @@ class MediaMultiType extends AbstractType
                     ->setParent($parentFolder)
                     ->setInternalName($options['foldername'])
                     ->setCurrentLocale($this->hgabkaUtils->getCurrentLocale())
-                    ->setName($options['foldername'])
+                    ->setName($options['foldertitle'] ?? $options['foldername'])
                 ;
                 $this->objectManager->persist($folder);
                 $this->objectManager->flush();
@@ -129,6 +129,7 @@ class MediaMultiType extends AbstractType
                 'chooser' => 'HgabkaMediaBundle_chooser',
                 'current_value_container' => new CurrentValueContainer(),
                 'foldername' => null,
+                'foldertitle' => null,
                 'medianame' => null,
                 'mediatype' => null,
                 'folderid' => null,
