@@ -80,7 +80,7 @@ class MediaSimpleType extends AbstractType
                     ->setParent($parentFolder)
                     ->setInternalName($options['foldername'])
                     ->setCurrentLocale($this->hgabkaUtils->getCurrentLocale())
-                    ->setName($options['foldername'])
+                    ->setName($options['foldertitle'] ?? $options['foldername'])
                 ;
                 $this->objectManager->persist($folder);
                 $this->objectManager->flush();
@@ -124,6 +124,7 @@ class MediaSimpleType extends AbstractType
                 'compound' => true,
                 'current_value_container' => new CurrentValueContainer(),
                 'foldername' => null,
+                'foldertitle' => null,
                 'medianame' => null,
                 'folderid' => null,
                 'folder' => null,
