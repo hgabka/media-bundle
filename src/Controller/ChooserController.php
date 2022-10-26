@@ -53,7 +53,6 @@ class ChooserController extends BaseMediaController
                 $folderId = $fid;
             }
         }
-        $folderConfig = $this->getParameter('hgabka_media.default_ckeditor_folders');
 
         // Go to the last visited folder
         if (empty($folderId) && $session->get('last-media-folder')) {
@@ -64,6 +63,8 @@ class ChooserController extends BaseMediaController
                 $folderId = false;
             }
         }
+
+        $folderConfig = $this->getParameter('hgabka_media.default_ckeditor_folders');
 
         if (!$folderId) {
             $folderConfig = $this->getParameter('hgabka_media.default_ckeditor_folders');
