@@ -38,6 +38,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         );
         $container->setParameter('hgabka_media.soundcloud_api_key', $config['soundcloud_api_key']);
         $container->setParameter('hgabka_media.remote_video', $config['remote_video']);
+        $container->setParameter('hgabka_media.default_ckeditor_folders', $config['default_ckeditor_folders']);
         $container->setParameter('hgabka_media.enable_pdf_preview', $config['enable_pdf_preview']);
         $container->setParameter('hgabka_media.blacklisted_extensions', $config['blacklisted_extensions']);
         $container->setParameter('hgabka_media.folder_depth', $config['folder_depth']);
