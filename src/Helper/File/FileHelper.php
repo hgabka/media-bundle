@@ -31,7 +31,7 @@ class FileHelper
     /**
      * @var string
      */
-    protected $mediaPath;    
+    protected $mediaPath;
 
     public function __construct(Media $media, string $mediaPath)
     {

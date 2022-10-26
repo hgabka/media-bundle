@@ -65,7 +65,6 @@ class MediaMultiType extends AbstractType
             if ($folder && $folder->isDeleted()) {
                 $folder = null;
             }
-
         }
         if (!$folder && !empty($options['foldername'])) {
             $folder = $repo->findOneByInternalName($options['foldername']);
@@ -76,6 +75,7 @@ class MediaMultiType extends AbstractType
         if (!$folder && !empty($options['folder']) && $options['folder'] instanceof Folder) {
             $folder = $options['folder'];
         }
+
         if (!$folder) {
             if (!empty($options['foldername']) && !empty($options['parentfolder'])) {
                 $parentFolder = $options['parentfolder'] instanceof Folder
