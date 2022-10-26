@@ -62,14 +62,32 @@ class ChooserController extends BaseMediaController
                 $folderId = false;
             }
         }
+        
+        $folderConfig = $this->getParameter('hgabka_media.default_ckeditor_folders');
 
         if (!$folderId) {
-            // Redirect to the first top folder
-            // @var Folder $firstFolder
-            $firstFolder = $em->getRepository(Folder::class)->getFirstTopFolder();
-            $folderId = $firstFolder->getId();
-        }
+            $folderConfig = $this->getParameter('hgabka_media.default_ckeditor_folders');
+            $defaultFolder = 'image' === $type ? $folderConfig['images'] : $folderConfig['files'];
 
+            $repo = $em->getRepository(Folder::class);
+            if (!empty($defaultFolder)) {
+                if (\is_int($defaultFolder)) {
+                    $folder = $repo->find($defaultFolder);
+                } else {
+                    $folder = $repo->findOneBy(['internalName' => $defaultFolder]);
+                }
+
+                $folderId = $folder ? $folder->getId() : null;
+            }
+
+            if (empty($folderId)) {
+                // Redirect to the first top folder
+                // @var Folder $firstFolder
+                $firstFolder = $repo->getFirstTopFolder();
+                $folderId = $firstFolder->getId();
+            }
+        }
+        
         $params = [
             'folderId' => $folderId,
             'type' => $type,
