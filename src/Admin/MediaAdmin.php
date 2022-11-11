@@ -7,14 +7,17 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 
 class MediaAdmin extends AbstractAdmin
 {
-    protected $baseRoutePattern = 'mediatar';
-
     /** @var MediaManager */
     private $manager;
 
     public function setManager(MediaManager $manager)
     {
         $this->manager = $manager;
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'mediatar';
     }
 
     protected function configureBatchActions(array $actions): array
