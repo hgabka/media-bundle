@@ -7,26 +7,17 @@ use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'hgabka:media:rename-soft-deleted', description: 'Renames physical files for soft-deleted media', hidden: false)]
 class RenameSoftDeletedCommand extends ContainerAwareCommand
 {
-    protected static $defaultName = 'hgabka:media:rename-soft-deleted';
-
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var MediaManager */
-    protected $mediaManager;
-
-    public function __construct(EntityManagerInterface $manager, MediaManager $mediaManager)
+    public function __construct(protected readonly EntityManagerInterface $manager, protected readonly MediaManager $mediaManager)
     {
         parent::__construct();
-
-        $this->entityManager = $entityManager;
-        $this->mediaManager = $mediaManager;
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -86,8 +77,6 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName(static::$defaultName)
-            ->setDescription('Rename physical files for soft-deleted media.')
             ->setHelp(
                 'The <info>hgabka:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
             )
