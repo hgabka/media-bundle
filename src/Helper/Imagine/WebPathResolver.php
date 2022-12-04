@@ -27,7 +27,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     /**
      * {@inheritdoc}
      */
-    public function resolve($path, $filter)
+    public function resolve($path, $filter): string
     {
         return sprintf(
             '%s/%s',
@@ -39,7 +39,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     /**
      * {@inheritdoc}
      */
-    protected function getFileUrl($path, $filter)
+    protected function getFileUrl($path, $filter): string
     {
         $filterConf = $this->filterConfig->get($filter);
         $path = $this->changeFileExtension($path, $filterConf['format']);
@@ -53,7 +53,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
      *
      * @return string
      */
-    private function changeFileExtension($path, $format)
+    private function changeFileExtension(string $path, string $format): string
     {
         if (!$format) {
             return $path;
