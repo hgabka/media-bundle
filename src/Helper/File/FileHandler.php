@@ -9,6 +9,7 @@ use Hgabka\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Mime\MimeTypes;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * FileHandler.
@@ -50,6 +51,8 @@ class FileHandler extends AbstractMediaHandler
      */
     public $extensionGuesser;
 
+    protected ?UrlGeneratorInterface $urlGenerator = null;
+
     /**
      * Files with a blacklisted extension will be converted to txt.
      *
@@ -75,6 +78,15 @@ class FileHandler extends AbstractMediaHandler
     {
         $this->folderDepth = $depth;
     }
+
+    public function setUrlGenerator(UrlGeneratorInterface $urlGenerator)
+    {
+        $this->urlGenerator = $urlGenerator;
+
+        return $this;
+    }
+
+
 
     /**
      * Inject the blacklisted.

@@ -257,7 +257,11 @@
                                                  <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
                                              </video>
                                         {% elseif imageurl %}
+                                            {% if not media.protected %}
                                             <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">
+                                            {% else %}
+                                                <i class="fa fa-image media-thumbnail__icon"></i>
+                                            {% endif %}
                                         {% else %}
                                             <i class="fa fa-file-o media-thumbnail__icon"></i>
                                         {% endif %}
