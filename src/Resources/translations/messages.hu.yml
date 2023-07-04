@@ -90,7 +90,7 @@ hg_media:
             action_short: Ürítés
             modal:
                 title: Mappa ürítése
-                text: Bitzos benne, hogy törölni akarja a(z) `%folder%` mappa tartalmát?
+                text: Biztos benne, hogy törölni akarja a(z) `%folder%` mappa tartalmát?
                 checkbox: Alkönyvtárak törlése is
                 save: Ürítés
             success:
