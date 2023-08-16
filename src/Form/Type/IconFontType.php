@@ -28,7 +28,7 @@ class IconFontType extends AbstractType
     /**
      * @return string
      */
-    public function getParent(): string
+    public function getParent(): ?string
     {
         return TextType::class;
     }
