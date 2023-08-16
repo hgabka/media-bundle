@@ -28,7 +28,7 @@ class IconFontType extends AbstractType
     /**
      * @return string
      */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }
@@ -36,7 +36,7 @@ class IconFontType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'iconfont';
     }
@@ -46,7 +46,7 @@ class IconFontType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -67,7 +67,7 @@ class IconFontType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (!$options['loader']) {
             $loader = $this->iconFontManager->getDefaultLoader();
@@ -84,7 +84,7 @@ class IconFontType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['loader'] = $form->getConfig()->getAttribute('loader');
         $view->vars['loader_object'] = $form->getConfig()->getAttribute('loader_object');
