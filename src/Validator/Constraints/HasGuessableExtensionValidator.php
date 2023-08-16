@@ -26,7 +26,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
      * @throws ConstraintDefinitionException
      * @throws UnexpectedTypeException
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof HasGuessableExtension) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\HasGuessableExtension');
