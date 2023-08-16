@@ -103,7 +103,7 @@ services:
     hgabka_media.repository.folder:
         class:            Hgabka\MediaBundle\Repository\FolderRepository
         factory:          ['@doctrine.orm.entity_manager', getRepository]
-        arguments:        ['HgabkaMediaBundle:Folder']
+        arguments:        ['\Hgabka\MediaBundle\Entity\Folder']
 
     hgabka_media.menu.adaptor:
         class: '%hgabka_media.menu.adaptor.class%'
