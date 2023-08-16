@@ -20,7 +20,7 @@ class RebuildFolderTreeCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setHelp('The <info>hgabka:media:rebuild-folder-tree</info> will loop over all media folders and update the media folder tree.');
