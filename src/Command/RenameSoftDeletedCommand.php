@@ -72,7 +72,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         return Command::SUCCESS;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
