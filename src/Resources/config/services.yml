@@ -129,6 +129,17 @@ services:
         autowire: true
         autoconfigure: true
         
+    Hgabka\MediaBundle\Helper\Imagine\WebPathResolver:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $webRootDir: '%hgabka_media.liip_imagine.web_root_dir%'
+            $cachePrefix: '%hgabka_media.liip_imagine.cache_prefix%'
+            $filterConfig: '@liip_imagine.filter.configuration'
+        tags:
+            - { name: liip_imagine.cache.resolver, resolver: hg_media}
+
+
     hgabka_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
         arguments:

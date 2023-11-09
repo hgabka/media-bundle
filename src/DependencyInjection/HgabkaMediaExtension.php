@@ -43,6 +43,8 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_media.blacklisted_extensions', $config['blacklisted_extensions']);
         $container->setParameter('hgabka_media.folder_depth', $config['folder_depth']);
         $container->setParameter('hgabka_media.protected_media_download_role', $config['protected_media_download_role']);
+        $container->setParameter('hgabka_media.liip_imagine.cache_prefix', $config['liip_imagine_cache_prefix']);
+        $container->setParameter('hgabka_media.liip_imagine.web_root_dir', $config['liip_imagine_web_root_dir']);
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');

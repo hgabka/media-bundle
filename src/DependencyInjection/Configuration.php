@@ -24,6 +24,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('liip_imagine_cache_prefix')->defaultValue('uploads/cache')->end()
+                ->scalarNode('liip_imagine_web_root_dir')->defaultValue('%kernel.project_dir%/public')->end()
                 ->scalarNode('soundcloud_api_key')->defaultValue('YOUR_CLIENT_ID')->end()
                 ->arrayNode('remote_video')
                     ->addDefaultsIfNotSet()
