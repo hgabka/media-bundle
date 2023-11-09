@@ -32,11 +32,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     {
         $path = $this->changeFileExtension($path, $filter);
 
-        return sprintf(
-            '%s/%s',
-            $this->getBaseUrl(),
-            $this->getFileUrl($path, $filter)
-        );
+        return parent::resolve($path, $filter);
     }
 
 
@@ -44,17 +40,14 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     {
         $path = $this->changeFileExtension($path, $filter);
 
-        return is_file($this->getFilePath($path, $filter));
+        return parent::isStored($path, $filter);
     }
 
     public function store(BinaryInterface $binary, $path, $filter)
     {
         $path = $this->changeFileExtension($path, $filter);
 
-        $this->filesystem->dumpFile(
-            $this->getFilePath($path, $filter),
-            $binary->getContent()
-        );
+        parent::store($binary, $path, $filter);
     }
 
     /**
