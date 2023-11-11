@@ -35,7 +35,6 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         return parent::resolve($path, $filter);
     }
 
-
     public function isStored($path, $filter)
     {
         $path = $this->changeFileExtension($path, $filter);
@@ -74,6 +73,6 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         // crude way of sanitizing URL scheme ("protocol") part
         $path = str_replace('://', '---', $path);
 
-        return $this->cachePrefix.'/'.$filter.'/'.ltrim($path, '/');
+        return $this->cachePrefix . '/' . $filter . '/' . ltrim($path, '/');
     }
 }

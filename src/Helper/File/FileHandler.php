@@ -86,8 +86,6 @@ class FileHandler extends AbstractMediaHandler
         return $this;
     }
 
-
-
     /**
      * Inject the blacklisted.
      */

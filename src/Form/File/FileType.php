@@ -7,6 +7,7 @@ use Hgabka\MediaBundle\Helper\File\FileHelper;
 use Hgabka\MediaBundle\Repository\FolderRepository;
 use Hgabka\MediaBundle\Validator\Constraints\HasGuessableExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
@@ -16,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
