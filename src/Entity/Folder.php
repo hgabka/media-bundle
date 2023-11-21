@@ -23,7 +23,7 @@ class Folder implements TranslatableInterface
     use TranslatableTrait;
 
     #[ORM\Id]
-    #[ORM\Column(type: 'bigint')]
+    #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
