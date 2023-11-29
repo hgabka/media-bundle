@@ -19,9 +19,15 @@
                 {{ url('HgabkaMediaBundle_admin_download_inline', { media: media.id}) }}
             </a>
         {% else %}
-        <a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}" target="_blank">
-            {{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}
-        </a>
+            {% if 'local' == media.location %}
+                <a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}" target="_blank">
+                    {{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}
+                </a>
+            {% else %}
+                <a href="{{ asset(media.url) }}" target="_blank">
+                    {{ asset(media.url) }}
+                </a>
+            {% endif %}
         {% endif %}
     </dd>
 {% endblock %}

@@ -58,10 +58,10 @@ class FileHandler extends AbstractMediaHandler
      *
      * @var array
      */
-    private $blacklistedExtensions = [];
+    protected $blacklistedExtensions = [];
 
     /** @var int */
-    private $folderDepth;
+    protected $folderDepth;
 
     /**
      * Constructor.
@@ -375,7 +375,7 @@ class FileHandler extends AbstractMediaHandler
     /**
      * @return string
      */
-    private function getFilePath(Media $media)
+    protected function getFilePath(Media $media)
     {
         $filename = $media->getOriginalFilename();
         $filename = str_replace(['/', '\\', '%'], '', $filename);
@@ -412,7 +412,7 @@ class FileHandler extends AbstractMediaHandler
     /**
      * @return string
      */
-    private function getFileFolderPath(Media $media)
+    protected function getFileFolderPath(Media $media)
     {
         return substr($this->getFilePath($media), 0, strrpos($this->getFilePath($media), $media->getOriginalFilename()));
     }

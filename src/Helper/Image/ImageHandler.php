@@ -79,7 +79,7 @@ class ImageHandler extends FileHandler
     public function getImageUrl(Media $media, $basepath)
     {
         if (!$media->isProtected()) {
-            return $basepath . $media->getUrl();
+            return 'local' === $media->getLocation() ? $basepath . $media->getUrl() : $media->getUrl();
         }
 
         return $this->urlGenerator->generate('HgabkaMediaBundle_admin_download_inline', ['media' => $media->getId()]);
