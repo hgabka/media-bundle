@@ -4,6 +4,7 @@ namespace Hgabka\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -17,7 +18,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TrreBuilder
     {
         $treeBuilder = new TreeBuilder('hgabka_media');
         $rootNode = $treeBuilder->getRootNode();
