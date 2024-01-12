@@ -57,7 +57,7 @@ class FileToMediaTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      */
-    public function transform($entity)
+    public function transform(mixed $entity): mixed
     {
         if (empty($entity)) {
             return [
@@ -87,7 +87,7 @@ class FileToMediaTransformer implements DataTransformerInterface
      *
      * @return Media
      */
-    public function reverseTransform($value)
+    public function reverseTransform(mixed $value): mixed
     {
         if (!empty($value) && !empty($value['file'])) {
             if ($value['file']->isValid()) {
