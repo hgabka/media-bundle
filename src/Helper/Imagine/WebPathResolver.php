@@ -35,14 +35,14 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         return parent::resolve($path, $filter);
     }
 
-    public function isStored($path, $filter)
+    public function isStored($path, $filter): bool
     {
         $path = $this->changeFileExtension($path, $filter);
 
         return parent::isStored($path, $filter);
     }
 
-    public function store(BinaryInterface $binary, $path, $filter)
+    public function store(BinaryInterface $binary, $path, $filter): void
     {
         $path = $this->changeFileExtension($path, $filter);
 
@@ -68,7 +68,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         return $path;
     }
 
-    private function getFullPath($path, $filter)
+    private function getFullPath($path, $filter): string
     {
         // crude way of sanitizing URL scheme ("protocol") part
         $path = str_replace('://', '---', $path);
