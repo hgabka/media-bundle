@@ -46,11 +46,11 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('hgabka_media.liip_imagine.cache_prefix', $config['liip_imagine_cache_prefix']);
         $container->setParameter('hgabka_media.liip_imagine.web_root_dir', $config['liip_imagine_web_root_dir']);
 
-        $loader->load('services.yml');
-        $loader->load('handlers.yml');
+        $loader->load('services.yaml');
+        $loader->load('handlers.yaml');
 
         if (true === $config['enable_pdf_preview']) {
-            $loader->load('pdf_preview.yml');
+            $loader->load('pdf_preview.yaml');
         }
 
         $container->setParameter('liip_imagine.filter.loader.background.class', 'Hgabka\MediaBundle\Helper\Imagine\BackgroundFilterLoader');
@@ -74,7 +74,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $twigConfig['globals']['mediamanager'] = '@hgabka_media.media_manager';
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yaml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());

@@ -4,7 +4,7 @@ namespace Hgabka\MediaBundle\Helper;
 
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Repository\FolderRepository;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class FolderManager
 {
