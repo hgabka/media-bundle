@@ -45,7 +45,7 @@ class IdToMediaTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the transformed representation
      */
-    public function transform($entity)
+    public function transform(mixed $entity): mixed
     {
         if (empty($entity)) {
             return '';
@@ -72,7 +72,7 @@ class IdToMediaTransformer implements DataTransformerInterface
      *
      * @return Media
      */
-    public function reverseTransform($key)
+    public function reverseTransform(mixed $key): mixed
     {
         if (empty($key)) {
             return null;
