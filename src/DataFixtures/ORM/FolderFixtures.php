@@ -16,7 +16,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
     /**
      * Load data fixtures with the passed EntityManager.
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $gal = new Folder();
         $gal->setRel('media');
@@ -83,7 +83,7 @@ class FolderFixtures extends Fixture implements OrderedFixtureInterface
      *
      * @return int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return 1;
     }
