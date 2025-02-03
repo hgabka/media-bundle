@@ -78,7 +78,7 @@ trait MediaControllerTrait
      */
     public function addFilter(
         $columnName,
-        FilterTypeInterface $type = null,
+        ?FilterTypeInterface $type = null,
         $filterName = null,
         array $options = []
     ) {
