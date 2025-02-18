@@ -237,7 +237,7 @@
                             {% set usedHandler = mediamanager.getHandler(media) %}
                             {% set imageurl =  usedHandler.getImageUrl(media, app.request.basePath) %}
                             {% if imageurl is not empty and media.location == 'local' %}
-                                {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
+                                {% if imageurl|lower|split('.')|last == 'svg' or is_svg(media) %}
                                     {% set imageurlretina = imageurl %}
                                 {% elseif imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
                                     {% set imageurlretina = imageurl %}    
@@ -250,13 +250,13 @@
                             {% set path = cKEditorFuncNum is not null ? media.url : ("[%s]" | format("M" ~ media.id)) %}
 
                             <div class="col-sm-6 col-md-4 col-lg-3">
-                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ path }}" data-title="{{ media.name }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum is not null %}true{% else %}false{% endif %}">
+                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-svg="{{ ('<div class="text-center media-thumbnail-svg-holder">' ~ render_svg_media(media) ~ '</div>')|e('html_attr') }}" data-thumb-path="{{ imageurl }}" data-path="{{ path }}" data-title="{{ media.name }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum is not null %}true{% else %}false{% endif %}">
                                     <figure>
                                         {% if imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
                                              <video controls width="200" height="140" preload="metadata">
                                                  <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
                                              </video>
-                                        {% elseif 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
+                                        {% elseif is_svg(media) %}
                                             <div class="text-center media-thumbnail-svg-holder">
                                                 {{ render_svg_media(media) }}
                                             </div>

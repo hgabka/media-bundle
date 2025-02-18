@@ -45,6 +45,7 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('get_folder_by_internal_name', $this->getFolderByInternalName(...)),
             new TwigFunction('is_folder_traversable', $this->isFolderTraversable(...)),
             new TwigFunction('render_svg_media', $this->renderSvgMedia(...), ['is_safe' => ['html']]),
+            new TwigFunction('is_svg', $this->isSvg(...)),
         ];
     }
 
@@ -72,6 +73,15 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
 
     public function renderSvgMedia(Media $media): string
     {
+        if (!$this->isSvg($media)) {
+            return '';
+        }
+
         return $this->mediaManager->getMediaContent($media);
+    }
+
+    public function isSvg(Media $media): bool
+    {
+        return in_array($media->getContentType(), ['image/svg+xml', 'image/svg']);
     }
 }

@@ -5,7 +5,7 @@
             {% set handler = mediamanager.getHandler(media) %}
             {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
             {% if imageurl is not empty and media.location == 'local' %}
-                {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                {% if imageurl|lower|split('.')|last == 'svg' or is_svg(media) %}
                     {% set imageurlretina = imageurl %}
                 {% elseif imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
                     {% set imageurlretina = imageurl %}
@@ -20,8 +20,14 @@
                 </video>
             {% elseif imageurl %}
                 <a style="text-decoration:none;outline: 0 none;" target="_blank" href="{{ asset(media.url) }}">
+            {% if is_svg(media) %}
+                <div class="text-center media-thumbnail-svg-holder">
+                    {{ render_svg_media(media) }}
+                </div>
+                {% else %}
                     <img src="{{ imageurl }}" srcset="" alt="{{ media.name }}" id="{{ id }}__preview__img"
                          class="thumbnail-img media-chooser__preview__img">
+                    {% endif %}
                 </a>
                 <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
                     {{ media.name }}
@@ -44,5 +50,3 @@
         <i class="fa fa-trash-o"></i>
     </button>
 </div>
-
-
