@@ -18,13 +18,13 @@
 {% block preview %}
     {% set imageurl = handler.getImageUrl(media, app.request.basePath) %}
     {% if imageurl is not empty and media.location == 'local' %}
-        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
+        {% if imageurl|lower|split('.')|last == 'svg' or is_svg(media) %}
             {% set imageurl = imageurl %}
         {% elseif not media.protected %}
             {% set imageurl = asset(imageurl | imagine_filter('media_detail_thumbnail')) %}
         {% endif %}
     {% endif %}
-    {% if 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
+    {% if is_svg(media) %}
         <div class="text-center media-thumbnail-svg-holder">
             {{ render_svg_media(media) }}
         </div>

@@ -192,7 +192,7 @@
                                     {% set handler = mediamanager.getHandler(media) %}
                                     {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                                     {% if imageurl is not empty and media.location == 'local' %}
-                                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
+                                        {% if imageurl|lower|split('.')|last == 'svg' or is_svg(media) %}
                                             {% set imageurlretina = imageurl %}
                                         {% elseif imageurl|lower|split('.')|last == 'mp4' or 'video/mp4' in media.contentType %}
                                             {% set imageurlretina = imageurl %}
@@ -209,7 +209,7 @@
                                                     <video controls width="200" height="140" preload="metadata">
                                                         <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
                                                     </video>
-                                                {% elseif 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
+                                                {% elseif is_svg(media) %}
                                                     <div class="text-center media-thumbnail-svg-holder">
                                                         {{ render_svg_media(media) }}
                                                     </div>
