@@ -211,7 +211,7 @@
                                                     </video>
                                                 {% elseif 'image/svg+xml'  in media.contentType %}
                                                     <div class="text-center svg-holder">
-                                                        {{ render_svg(media) }}
+                                                        {{ render_svg_media(media) }}
                                                     </div>
                                                 {% elseif imageurl %}
                                                     {% if not media.protected %}
