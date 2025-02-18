@@ -18,11 +18,17 @@
 {% block preview %}
     {% set imageurl = handler.getImageUrl(media, app.request.basePath) %}
     {% if imageurl is not empty and media.location == 'local' %}
-        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
             {% set imageurl = imageurl %}
         {% elseif not media.protected %}
             {% set imageurl = asset(imageurl | imagine_filter('media_detail_thumbnail')) %}
         {% endif %}
     {% endif %}
-    <img id="editimage" class="img-thumbnail" src="{{ imageurl }}" alt="{{ media.name }}">
+    {% if 'image/svg+xml' in media.contentType or 'image/svg' in media.contentType %}
+        <div class="text-center media-thumbnail-svg-holder">
+            {{ render_svg_media(media) }}
+        </div>
+    {% else %}
+        <img id="editimage" class="img-thumbnail" src="{{ imageurl }}" alt="{{ media.name }}">
+    {% endif %}
 {% endblock %}
