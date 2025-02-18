@@ -256,6 +256,10 @@
                                              <video controls width="200" height="140" preload="metadata">
                                                  <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
                                              </video>
+                                        {% elseif 'image/svg+xml'  in media.contentType %}
+                                            <div class="text-center svg-holder">
+                                                {{ render_svg_media(media) }}
+                                            </div>
                                         {% elseif imageurl %}
                                             {% if not media.protected %}
                                             <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">

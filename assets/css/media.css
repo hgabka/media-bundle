@@ -267,6 +267,13 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
     margin: 0 auto;
 }
 
+media-thumbnail-svg-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:20rem;
+}
+
 .media-thumbnail-bulk-move-helper, .media-thumbnail-del-helper {
     z-index: 2;
     position: absolute;
