@@ -91,12 +91,15 @@ class ImageHandler extends FileHandler
 
         if ($media->getContent()) {
             $imageInfo = getimagesize($media->getContent());
-            $width = $imageInfo[0];
-            $height = $imageInfo[1];
 
-            $media
-                ->setMetadataValue('original_width', $width)
-                ->setMetadataValue('original_height', $height);
+            if ($imageInfo) {
+                $width = $imageInfo[0];
+                $height = $imageInfo[1];
+
+                $media
+                    ->setMetadataValue('original_width', $width)
+                    ->setMetadataValue('original_height', $height);
+            }    
         }
     }
 }
