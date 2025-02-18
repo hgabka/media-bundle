@@ -40,10 +40,11 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_media_for_folder', [$this, 'getMediaForFolder']),
-            new TwigFunction('get_last_media_for_folder', [$this, 'getLastMediaForFolder']),
-            new TwigFunction('get_folder_by_internal_name', [$this, 'getFolderByInternalName']),
-            new TwigFunction('is_folder_traversable', [$this, 'isFolderTraversable']),
+            new TwigFunction('get_media_for_folder', $this->getMediaForFolder(...)),
+            new TwigFunction('get_last_media_for_folder', $this->getLastMediaForFolder(...)),
+            new TwigFunction('get_folder_by_internal_name', $this->getFolderByInternalName(...)),
+            new TwigFunction('is_folder_traversable', $this->isFolderTraversable(...)),
+            new TwigFunction('render_svg_media', $this->renderSvgMedia(...), ['is_safe' => ['html']]),
         ];
     }
 
@@ -67,5 +68,10 @@ class MediaTwigExtension extends AbstractExtension implements GlobalsInterface
     public function isFolderTraversable(Folder|int|string $folder): bool
     {
         return $this->folderManager->isFolderTraversable($folder);
+    }
+
+    public function renderSvgMedia(Media $media): string
+    {
+        return $this->mediaManager->getMediaContent($media);
     }
 }
