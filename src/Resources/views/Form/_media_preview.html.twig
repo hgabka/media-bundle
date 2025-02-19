@@ -20,13 +20,13 @@
                 </video>
             {% elseif imageurl %}
                 <a style="text-decoration:none;outline: 0 none;" target="_blank" href="{{ asset(media.url) }}">
-            {% if is_svg(media) %}
-                <div class="text-center media-thumbnail-svg-holder">
-                    {{ render_svg_media(media) }}
-                </div>
-                {% else %}
-                    <img src="{{ imageurl }}" srcset="" alt="{{ media.name }}" id="{{ id }}__preview__img"
-                         class="thumbnail-img media-chooser__preview__img">
+                    {% if is_svg(media) %}
+                        <div id="{{ id }}__svg_holder" class="text-center media-thumbnail-svg-holder">
+                            {{ render_svg_media(media) }}
+                        </div>
+                    {% else %}
+                        <img src="{{ imageurl }}" srcset="" alt="{{ media.name }}" id="{{ id }}__preview__img"
+                             class="thumbnail-img media-chooser__preview__img">
                     {% endif %}
                 </a>
                 <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
