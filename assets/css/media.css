@@ -271,7 +271,10 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
     display: flex;
     align-items: center;
     justify-content: center;
-    height:20rem;
+    height: 20rem;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .media-thumbnail-bulk-move-helper, .media-thumbnail-del-helper {
