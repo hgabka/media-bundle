@@ -338,6 +338,8 @@ class Media implements TranslatableInterface
     public function setRemovedFromFileSystem(bool $removedFromFileSystem): self
     {
         $this->removedFromFileSystem = $removedFromFileSystem;
+
+        return $this;
     }
 
     #[ORM\PrePersist]
