@@ -39,7 +39,7 @@ class FileToMediaTransformer implements DataTransformerInterface
      * @param CurrentValueContainer $currentValueContainer The current value container
      * @param null|mixed            $mediaName
      */
-    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null, bool $protected = false)
+    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, ?Folder $folder = null, $mediaName = null, bool $protected = false)
     {
         $this->objectManager = $objectManager;
         $this->folder = $folder;
