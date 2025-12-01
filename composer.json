@@ -18,7 +18,7 @@
         "hgabka/utils-bundle": "^6.0",
         "liip/imagine-bundle": "^2.1",
         "knplabs/gaufrette": "^0.10",
-        "symfony/framework-bundle": "6.0.*",
+        "symfony/framework-bundle": "^6.0",
         "twig/intl-extra": "^3.3"
     },
     "require-dev": {
