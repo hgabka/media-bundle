@@ -31,18 +31,22 @@ class FileToMediaTransformer implements DataTransformerInterface
     /** @var MediaManager */
     private $mediaManager;
 
+    /** @var bool */
+    private $protected = false;
+
     /**
      * @param ObjectManager         $objectManager         The object manager
      * @param CurrentValueContainer $currentValueContainer The current value container
      * @param null|mixed            $mediaName
      */
-    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null)
+    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null, bool $protected = false)
     {
         $this->objectManager = $objectManager;
         $this->folder = $folder;
         $this->currentValueContainer = $currentValueContainer;
         $this->mediaManager = $manager;
         $this->mediaName = $mediaName;
+        $this->protected = $protected;
     }
 
     /**
@@ -93,6 +97,7 @@ class FileToMediaTransformer implements DataTransformerInterface
                     $entity->setName($this->mediaName);
                 }
                 $entity->setFolder($this->folder);
+                $entity->setProtected($this->protected);
                 $this->currentValueContainer->setCurrentValue($entity);
 
                 return $entity;

@@ -15,7 +15,7 @@ class MediaValidator extends ConstraintValidator
      *
      * @throws ConstraintDefinitionException
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Media) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Media');

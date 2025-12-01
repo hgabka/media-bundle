@@ -28,9 +28,15 @@ class FileHelper
      */
     protected $path;
 
-    public function __construct(Media $media)
+    /**
+     * @var string
+     */
+    protected $mediaPath;
+
+    public function __construct(Media $media, string $mediaPath)
     {
         $this->media = $media;
+        $this->ediaPath = $mediaPath;
     }
 
     /**
@@ -104,6 +110,19 @@ class FileHelper
         $this->media->setDescription($description);
     }
 
+    public function isProtected(): ?bool
+    {
+        return $this->media->isProtected();
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setProtected(?bool $protected)
+    {
+        $this->media->setProtected($protected);
+    }
+
     public function getOriginalFilename()
     {
         return $this->media->getOriginalFilename();
@@ -132,7 +151,7 @@ class FileHelper
             $this->media->setContent($file);
             $this->media->setContentType($file->getMimeType());
             $this->media->setUrl(
-                '/uploads/media/' . $this->media->getUuid() . '.' . $this->media->getContent()->getExtension()
+                $this->mediaPath . $this->media->getUuid() . '.' . $this->media->getContent()->getExtension()
             );
         }
     }

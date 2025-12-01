@@ -14,7 +14,7 @@ class HgabkaMediaBundle extends Bundle
     /**
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

@@ -100,7 +100,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
         }
         $audio = new RemoteAudioHelper($media);
         $code = $audio->getCode();
-        //update thumbnail
+        // update thumbnail
         switch ($audio->getType()) {
             case 'soundcloud':
                 $scData = json_decode(

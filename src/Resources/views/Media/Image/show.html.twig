@@ -20,7 +20,7 @@
     {% if imageurl is not empty and media.location == 'local' %}
         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
             {% set imageurl = imageurl %}
-        {% else %}
+        {% elseif not media.protected %}
             {% set imageurl = asset(imageurl | imagine_filter('media_detail_thumbnail')) %}
         {% endif %}
     {% endif %}

@@ -20,7 +20,7 @@ class Media implements TranslatableInterface
     use TranslatableTrait;
 
     #[ORM\Id]
-    #[ORM\Column(type: 'bigint')]
+    #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
@@ -60,6 +60,9 @@ class Media implements TranslatableInterface
 
     #[ORM\Column(name: 'removed_from_file_system', type: 'boolean')]
     protected ?bool $removedFromFileSystem = null;
+
+    #[ORM\Column(name: 'protected', type: 'boolean')]
+    protected ?bool $protected = false;
 
     /**
      * @Hgabka\Translations(targetEntity="Hgabka\MediaBundle\Entity\MediaTranslation")
@@ -335,8 +338,8 @@ class Media implements TranslatableInterface
     public function setRemovedFromFileSystem(bool $removedFromFileSystem): self
     {
         $this->removedFromFileSystem = $removedFromFileSystem;
-
-        return $this;
+		
+		return $this;
     }
 
     #[ORM\PrePersist]
@@ -372,6 +375,26 @@ class Media implements TranslatableInterface
     public function setDescription(?string $description, ?string $locale = null): self
     {
         $this->translate($locale)->setDescription($description);
+
+        return $this;
+    }
+
+    /**
+     * @return null|bool
+     */
+    public function isProtected(): ?bool
+    {
+        return $this->protected;
+    }
+
+    /**
+     * @param null|bool $protected
+     *
+     * @return Media
+     */
+    public function setProtected(?bool $protected): self
+    {
+        $this->protected = $protected;
 
         return $this;
     }

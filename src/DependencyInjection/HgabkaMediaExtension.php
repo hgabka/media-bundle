@@ -22,7 +22,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
      * @param array            $configs   Configuration
      * @param ContainerBuilder $container Container
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -38,9 +38,13 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         );
         $container->setParameter('hgabka_media.soundcloud_api_key', $config['soundcloud_api_key']);
         $container->setParameter('hgabka_media.remote_video', $config['remote_video']);
+        $container->setParameter('hgabka_media.default_ckeditor_folders', $config['default_ckeditor_folders']);
         $container->setParameter('hgabka_media.enable_pdf_preview', $config['enable_pdf_preview']);
         $container->setParameter('hgabka_media.blacklisted_extensions', $config['blacklisted_extensions']);
         $container->setParameter('hgabka_media.folder_depth', $config['folder_depth']);
+        $container->setParameter('hgabka_media.protected_media_download_role', $config['protected_media_download_role']);
+        $container->setParameter('hgabka_media.liip_imagine.cache_prefix', $config['liip_imagine_cache_prefix']);
+        $container->setParameter('hgabka_media.liip_imagine.web_root_dir', $config['liip_imagine_web_root_dir']);
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');
@@ -58,7 +62,7 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $loader->load('imagine.xml');
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasParameter('hgabka_media.upload_dir')) {
             $container->setParameter('hgabka_media.upload_dir', '/uploads/media/');

@@ -22,6 +22,9 @@ class FileAndIdToMediaTransformer implements DataTransformerInterface
     /** @var Folder */
     private $folder;
 
+    /** @var bool */
+    private $protected = false;
+
     /**
      * @var CurrentValueContainer
      */
@@ -35,13 +38,14 @@ class FileAndIdToMediaTransformer implements DataTransformerInterface
      * @param CurrentValueContainer $currentValueContainer The current value container
      * @param null|mixed            $mediaName
      */
-    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null)
+    public function __construct(EntityManagerInterface $objectManager, CurrentValueContainer $currentValueContainer, MediaManager $manager, Folder $folder = null, $mediaName = null, bool $protected = false)
     {
         $this->objectManager = $objectManager;
         $this->folder = $folder;
         $this->currentValueContainer = $currentValueContainer;
         $this->mediaManager = $manager;
         $this->mediaName = $mediaName;
+        $this->protected = $protected;
     }
 
     /**
@@ -92,6 +96,7 @@ class FileAndIdToMediaTransformer implements DataTransformerInterface
                     $entity->setName($this->mediaName);
                 }
                 $entity->setFolder($this->folder);
+                $entity->setProtected($this->protected);
                 $this->currentValueContainer->setCurrentValue($entity);
 
                 return $entity;

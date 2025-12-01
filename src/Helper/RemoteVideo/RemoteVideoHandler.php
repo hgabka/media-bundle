@@ -106,7 +106,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         }
         $video = new RemoteVideoHelper($media);
         $code = $video->getCode();
-        //update thumbnail
+        // update thumbnail
         switch ($video->getType()) {
             case 'youtube':
                 try {

@@ -56,19 +56,26 @@ class MediaMultiType extends AbstractType
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $folder = null;
         $repo = $this->objectManager->getRepository(Folder::class);
         if (!empty($options['folderid'])) {
             $folder = $repo->getFolder($options['folderid']);
+            if ($folder && $folder->isDeleted()) {
+                $folder = null;
+            }
         }
         if (!$folder && !empty($options['foldername'])) {
             $folder = $repo->findOneByInternalName($options['foldername']);
+            if ($folder && $folder->isDeleted()) {
+                $folder = null;
+            }
         }
         if (!$folder && !empty($options['folder']) && $options['folder'] instanceof Folder) {
             $folder = $options['folder'];
         }
+
         if (!$folder) {
             if (!empty($options['foldername']) && !empty($options['parentfolder'])) {
                 $parentFolder = $options['parentfolder'] instanceof Folder
@@ -82,7 +89,8 @@ class MediaMultiType extends AbstractType
                     ->setParent($parentFolder)
                     ->setInternalName($options['foldername'])
                     ->setCurrentLocale($this->hgabkaUtils->getCurrentLocale())
-                    ->setName($options['foldername'])
+                    ->setName($options['foldertitle'] ?? $options['foldername'])
+                    ->setRel('media')
                 ;
                 $this->objectManager->persist($folder);
                 $this->objectManager->flush();
@@ -94,7 +102,7 @@ class MediaMultiType extends AbstractType
         $builder->add('file', FileType::class);
 
         $builder->addViewTransformer(
-            new FileAndIdToMediaTransformer($this->objectManager, $options['current_value_container'], $this->mediaManager, $folder, $options['medianame']),
+            new FileAndIdToMediaTransformer($this->objectManager, $options['current_value_container'], $this->mediaManager, $folder, $options['medianame'], $options['protected']),
             true
         );
 
@@ -106,12 +114,12 @@ class MediaMultiType extends AbstractType
         $builder->setAttribute('editor_filter_retina', $options['editor_filter_retina']);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'media_multi';
     }
@@ -121,7 +129,7 @@ class MediaMultiType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -129,6 +137,7 @@ class MediaMultiType extends AbstractType
                 'chooser' => 'HgabkaMediaBundle_chooser',
                 'current_value_container' => new CurrentValueContainer(),
                 'foldername' => null,
+                'foldertitle' => null,
                 'medianame' => null,
                 'mediatype' => null,
                 'folderid' => null,
@@ -137,11 +146,12 @@ class MediaMultiType extends AbstractType
                 'error_bubbling' => false,
                 'editor_filter' => 'media_list_thumbnail',
                 'editor_filter_retina' => 'media_list_thumbnail_retina',
+                'protected' => false,
             ]
         );
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
         $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');

@@ -101,7 +101,7 @@
             </li>
         {% endif %}
         <li class="tab__more dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#more">
                 {{ 'hg_media.form.button.dropdown.more' | trans }} <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
@@ -182,7 +182,7 @@
                         </div>
                         {% if pagerfanta.count > 0 %}
                             {% if pagerfanta.haveToPaginate() %}
-                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap', {
                                     'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,
                                     'next_message' : 'hg_media.pagerfanta.next_message' | trans
                                 }) }}
@@ -210,7 +210,11 @@
                                                         <source src="{{ asset(media.url) }}#t=0.1" type="video/mp4">
                                                     </video>
                                                 {% elseif imageurl %}
+                                                    {% if not media.protected %}
                                                     <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">
+                                                    {% else %}
+                                                        <i class="fa fa-image media-thumbnail__icon"></i>
+                                                    {% endif%}
                                                 {% else %}
                                                     <i class="fa fa-file-o media-thumbnail__icon"></i>
                                                 {% endif %}
@@ -258,7 +262,7 @@
                                 {% endfor %}
                             </div>
                             {% if pagerfanta.haveToPaginate() %}
-                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', {
+                                {{ pagerfanta(pagerfanta, 'twitter_bootstrap', {
                                     'prev_message' : 'hg_media.pagerfanta.prev_message' | trans,
                                     'next_message' : 'hg_media.pagerfanta.next_message' | trans
                                 }) }}

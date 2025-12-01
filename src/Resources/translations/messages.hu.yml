@@ -59,6 +59,7 @@ hg_media:
         new: Új hozzáadása
 
     folder:
+        movingconfirmation: Biztos, hogy áthelyezi a mappát?
         bulk_move:
             helper: Kijelölés
             action: Tömeges média áthelyezés
@@ -81,6 +82,7 @@ hg_media:
                 rel: Rel
                 parent: Szülő
                 internal_name: Belső név
+                protected: Védett
             success:
                 text: A(z) `%folder%` mappa sikeresen létrehozva
         empty:
@@ -88,7 +90,7 @@ hg_media:
             action_short: Ürítés
             modal:
                 title: Mappa ürítése
-                text: Bitzos benne, hogy törölni akarja a(z) `%folder%` mappa tartalmát?
+                text: Biztos benne, hogy törölni akarja a(z) `%folder%` mappa tartalmát?
                 checkbox: Alkönyvtárak törlése is
                 save: Ürítés
             success:
@@ -183,6 +185,8 @@ hg_media:
                 label: Típus
             copyright:
                 label: Szerzői jog
+            protected:
+                label: Védett
             description:
                 label: Leírás
         bulk_upload:
@@ -197,6 +201,8 @@ hg_media:
                 label: Szerzői jog
             description:
                 label: Leírás
+            protected:
+                label: Védett
             originalFilename:
                 label: Eredeti fájlnév
             folder:

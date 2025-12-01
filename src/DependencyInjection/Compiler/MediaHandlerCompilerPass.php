@@ -14,7 +14,7 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
     /**
      * You can modify the container here before it is dumped to PHP code.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if ($container->hasDefinition('hgabka_media.media_manager')) {
             $definition = $container->getDefinition('hgabka_media.media_manager');

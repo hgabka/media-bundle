@@ -100,7 +100,7 @@ class FolderController extends BaseMediaController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->getRepository('HgabkaMediaBundle:Folder')->save($folder);
+                $em->getRepository(Folder::class)->save($folder);
                 $this->addFlash(
                     'sonata_flash_success',
                     $this->getTranslator()->trans('hg_media.folder.addsub.success.text', [
@@ -127,10 +127,10 @@ class FolderController extends BaseMediaController
             }
         }
 
-        $galleries = $em->getRepository('HgabkaMediaBundle:Folder')->getAllFolders();
+        $galleries = $em->getRepository(Folder::class)->getAllFolders();
 
         return $this->render(
-            'HgabkaMediaBundle:Folder:addsub-modal.html.twig',
+            '@HgabkaMedia/Folder/addsub-modal.html.twig',
             [
                 'subform' => $form->createView(),
                 'galleries' => $galleries,
@@ -192,7 +192,7 @@ class FolderController extends BaseMediaController
         }
 
         return $this->render(
-            'HgabkaMediaBundle:Folder:empty-modal.html.twig',
+            '@HgabkaMedia/Folder/empty-modal.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -208,6 +208,7 @@ class FolderController extends BaseMediaController
         $this->getAdmin()->checkAccess('edit');
         $folders = [];
         $nodeIds = $request->get('nodes');
+        $changeParents = $request->get('parent');
 
         $em = $this->doctrine->getManager();
         $repository = $em->getRepository(Folder::class);
@@ -216,6 +217,19 @@ class FolderController extends BaseMediaController
             // @var Folder $folder
             $folder = $repository->find($id);
             $folders[] = $folder;
+        }
+
+        if (!empty($changeParents)) {
+            foreach ($folders as $id => $folder) {
+                $newParentId = isset($changeParents[$folder->getId()]) ? $changeParents[$folder->getId()] : null;
+                if ($newParentId) {
+                    $parent = $repository->find($newParentId);
+                    if ($parent) {
+                        $folder->setParent($parent);
+                    }
+                }
+            }
+            $em->flush();
         }
 
         foreach ($folders as $id => $folder) {

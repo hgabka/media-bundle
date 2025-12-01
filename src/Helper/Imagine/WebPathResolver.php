@@ -2,6 +2,7 @@
 
 namespace Hgabka\MediaBundle\Helper\Imagine;
 
+use Liip\ImagineBundle\Binary\BinaryInterface;
 use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\RequestContext;
@@ -27,24 +28,25 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     /**
      * {@inheritdoc}
      */
-    public function resolve($path, $filter)
+    public function resolve($path, $filter): string
     {
-        return sprintf(
-            '%s/%s',
-            $this->getBaseUrl(),
-            $this->getFileUrl($path, $filter)
-        );
+        $path = $this->changeFileExtension($path, $filter);
+
+        return parent::resolve($path, $filter);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getFileUrl($path, $filter)
+    public function isStored($path, $filter)
     {
-        $filterConf = $this->filterConfig->get($filter);
-        $path = $this->changeFileExtension($path, $filterConf['format']);
+        $path = $this->changeFileExtension($path, $filter);
 
-        return parent::getFileUrl($path, $filter);
+        return parent::isStored($path, $filter);
+    }
+
+    public function store(BinaryInterface $binary, $path, $filter)
+    {
+        $path = $this->changeFileExtension($path, $filter);
+
+        parent::store($binary, $path, $filter);
     }
 
     /**
@@ -53,8 +55,9 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
      *
      * @return string
      */
-    private function changeFileExtension($path, $format)
+    private function changeFileExtension(string $path, string $filter): string
     {
+        $format = $this->filterConfig->get($filter)['format'] ?? null;
         if (!$format) {
             return $path;
         }
@@ -63,5 +66,13 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         $path = $info['dirname'] . \DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
 
         return $path;
+    }
+
+    private function getFullPath($path, $filter)
+    {
+        // crude way of sanitizing URL scheme ("protocol") part
+        $path = str_replace('://', '---', $path);
+
+        return $this->cachePrefix . '/' . $filter . '/' . ltrim($path, '/');
     }
 }

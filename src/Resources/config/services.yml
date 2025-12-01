@@ -17,7 +17,7 @@ parameters:
 services:
     hgabka_media.media_manager:
         class: '%hgabka_media.media_manager.class%'
-        arguments: ['@hgabka_utils.hgabka_utils', '%kernel.project_dir%']
+        arguments: ['@hgabka_utils.hgabka_utils', '%kernel.project_dir%', '%hgabka_media.media_path%', '%hgabka_media.protected_media_path%']
         calls:
             - [ setDefaultHandler, [ '@hgabka_media.media_handlers.file' ] ]
         public: true
@@ -103,7 +103,7 @@ services:
     hgabka_media.repository.folder:
         class:            Hgabka\MediaBundle\Repository\FolderRepository
         factory:          ['@doctrine.orm.entity_manager', getRepository]
-        arguments:        ['HgabkaMediaBundle:Folder']
+        arguments:        ['\Hgabka\MediaBundle\Entity\Folder']
 
     hgabka_media.menu.adaptor:
         class: '%hgabka_media.menu.adaptor.class%'
@@ -113,7 +113,7 @@ services:
 
     hgabka_media.folder_manager:
         class: '%hgabka_media.folder_manager.class%'
-        arguments: ['@hgabka_media.repository.folder']
+        arguments: ['@hgabka_media.repository.folder', '@security.helper']
         public: true
 
 
@@ -129,16 +129,38 @@ services:
         autowire: true
         autoconfigure: true
         
+    Hgabka\MediaBundle\Helper\Imagine\WebPathResolver:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $webRootDir: '%hgabka_media.liip_imagine.web_root_dir%'
+            $cachePrefix: '%hgabka_media.liip_imagine.cache_prefix%'
+            $filterConfig: '@liip_imagine.filter.configuration'
+        tags:
+            - { name: liip_imagine.cache.resolver, resolver: hg_media}
+
+
     hgabka_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
         arguments:
             - '%kernel.project_dir%/public%hgabka_media.media_path%'
+            - true
+            
+    hgabka_media.filesystem_adapter_protected:
+        class: Gaufrette\Adapter\Local
+        arguments:
+            - '%kernel.project_dir%/%hgabka_media.protected_media_path%'
             - true
 
     hgabka_media.filesystem:
         class: Gaufrette\Filesystem
         arguments:
             - '@hgabka_media.filesystem_adapter'
+
+    hgabka_media.filesystem_protected:
+        class: Gaufrette\Filesystem
+        arguments:
+            - '@hgabka_media.filesystem_adapter_protected'
 
     hgabka_media.validator.has_guessable_extension:
         class: '%hgabka_media.validator.has_guessable_extension.class%'
@@ -149,7 +171,7 @@ services:
   
     hgabka_media.media.twig.extension:
         class: Hgabka\MediaBundle\Twig\MediaTwigExtension
-        arguments: ['@hgabka_media.media_manager', '@doctrine.orm.entity_manager']
+        arguments: ['@hgabka_media.media_manager', '@doctrine.orm.entity_manager', '@hgabka_media.folder_manager']
         tags:
             - { name: twig.extension }
 
@@ -196,6 +218,11 @@ services:
             - [setTemplateRegistry, ['@sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
 
+    Hgabka\MediaBundle\Controller\PublicController:
+        autoconfigure: true
+        autowire: true
+        tags: ['controller.service_arguments']
+
     Hgabka\MediaBundle\Controller\MediaAdminController:
         autoconfigure: true
         autowire: true
@@ -211,5 +238,9 @@ services:
         tags: ['controller.service_arguments']
         
     Hgabka\MediaBundle\Helper\SvgMimeTypeGuesser:
+        autowire: true
+        autoconfigure: true
+
+    Hgabka\MediaBundle\Form\File\FileType:
         autowire: true
         autoconfigure: true
