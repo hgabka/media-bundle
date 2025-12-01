@@ -39,6 +39,15 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')->end()
                 ->end()
                 ->integerNode('folder_depth')->defaultValue(4)->end()
+                ->scalarNode('protected_media_download_role')->defaultValue('ROLE_MEDIA_ADMIN')->end()
+                ->arrayNode('default_ckeditor_folders')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('images')->defaultValue('imageroot')->end()
+                        ->scalarNode('files')->defaultValue('fileroot')->end()
+                    ->end()
+                ->end()
+
             ->end();
 
         return $treeBuilder;
