@@ -34,7 +34,7 @@ class Media implements TranslatableInterface
     #[ORM\Column(name: 'content_type', type: 'string')]
     protected ?string $contentType = null;
 
-    #[ORM\Column(name: 'metadata', type: 'array')]
+    #[ORM\Column(name: 'metadata', type: 'json')]
     protected ?array $metadata = [];
 
     #[ORM\ManyToOne(targetEntity: Folder::class, inversedBy: 'media')]
