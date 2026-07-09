@@ -4,7 +4,7 @@ namespace Hgabka\MediaBundle\Form\Type;
 
 namespace Hgabka\MediaBundle\Form\Type;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\MediaBundle\Entity\Folder;
 use Hgabka\MediaBundle\Helper\MediaManager;
