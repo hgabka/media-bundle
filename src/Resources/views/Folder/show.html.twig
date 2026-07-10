@@ -171,7 +171,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         {% for field in orderByFields %}
                                             <li>
-                                                <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field, 'folderId' : folder.id})|merge({'orderDirection': app.request.get('orderDirection') != 'DESC' ? 'DESC': 'ASC'})) }}">
+                                                <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field, 'folderId' : folder.id})|merge({'orderDirection': app.request.query.get('orderDirection') != 'DESC' ? 'DESC': 'ASC'})) }}">
                                                     {{ ('hg_media.field.'~field)| trans }}
                                                 </a>
                                             </li>
