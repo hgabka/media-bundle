@@ -2,10 +2,10 @@
 
 namespace Hgabka\MediaBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
@@ -89,7 +89,7 @@ class DoctrineMediaListener
         $this->saveMedia($eventArgs->getObject());
     }
 
-    public function preRemove(LifecycleEventArgs $eventArgs)
+    public function preRemove(PreRemoveEventArgs $eventArgs)
     {
     }
 
