@@ -84,7 +84,7 @@ class FolderRepository extends NestedTreeRepository
         $qb = $this->createQueryBuilder('folder')
             ->select('folder')
             ->where('folder.parent is null AND folder.deleted != true')
-            ->orderBy('folder.name');
+            ->orderBy('folder.id');
 
         if (false === (null === $limit)) {
             $qb->setMaxResults($limit);
