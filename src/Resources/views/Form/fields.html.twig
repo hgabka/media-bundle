@@ -1,6 +1,8 @@
+{% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget, date_widget as base_date_widget, time_widget as base_time_widget %}
+
 {# Widgets #}
 {% block color_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]'>
             <input {{ block('widget_attributes') }} class="form-control" value="{{ value }}"/>
             <span class="input-group-addon"><i></i></span>
@@ -10,7 +12,7 @@
 
 
 {% block choice_widget_expanded %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div {{ block('widget_container_attributes') }}>
             {% for child in form %}
                 <div class="form-group">
@@ -24,7 +26,7 @@
 
 
 {% block choice_widget_collapsed %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
         <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}
                 {%- if attr.placeholder is defined %} data-placeholder="{{ attr.placeholder|trans({}, translation_domain) }}"{% endif %}>
@@ -46,7 +48,7 @@
 
 
 {% block form_widget_simple %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         {% set type = type|default('text') %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} {% if attr['maxlength'] is defined %}data-reinit-js='["charactersLeft"]' data-target="#counter-for-{{ form.vars.id }}"{% endif %}>
@@ -58,7 +60,7 @@
 
 
 {% block textarea_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
         {% set reInitMethods = [] %}
         {% if attr['maxlength'] is defined %}
@@ -76,7 +78,7 @@
 {% endblock textarea_widget %}
 
 {% block wysiwyg_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-rich-editor rich-editor form-control')|trim }) %}
         {% if attr['maxlength'] is defined %}
             {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
@@ -86,7 +88,7 @@
 {% endblock wysiwyg_widget %}
 
 {% block checkbox_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div class="checkbox">
             {% if required %}
                 {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -104,7 +106,7 @@
 
 
 {% block radio_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div class="radio">
             {% if required and not compound %}
                 {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
@@ -127,7 +129,7 @@
 
 {# Labels #}
 {% block form_label %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         {% if 'checkbox' not in block_prefixes and label is not same as(false) %}
             {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
             {% if not compound %}
@@ -153,7 +155,7 @@
 
 {# Rows #}
 {% block form_row %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div class="form-group{% if errors|length > 0 %} has-error{% endif %}{% if attr['nested_form'] is defined and attr['nested_form'] == true or 'textarea' in block_prefixes or 'wysiwyg' in block_prefixes or 'a2lix_translations' in block_prefixes %} form-group--no-max-width{% endif %}">
             {{ form_label(form) }}
 
@@ -246,7 +248,6 @@
 
 {# Misc #}
 {% block datetime_widget %}
-    {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
     <div class="form-group date-time-group">
         {{ block('base_datetime_widget') }}
     </div>
@@ -255,7 +256,6 @@
 
 {% block date_widget %}
     <div class="form--double-widget__col">
-        {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
         <div class="js-datepicker" data-format="DD/MM/YYYY" data-reinit-js='["datepicker"]'>
             {{ block('base_date_widget') }}
         </div>
@@ -266,7 +266,6 @@
 
 {% block time_widget %}
     <div class="form--double-widget__col">
-        {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
         {% set type = 'text' %}
         <div class="js-datepicker" data-format="HH:mm" data-reinit-js='["datepicker"]'>
             {{ block('base_time_widget') }}
@@ -276,7 +275,7 @@
 
 
 {% block form_errors %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         {% if errors|length > 0 %}
             {% for error in errors %}
                 <span class="help-block text-danger">{{
@@ -291,7 +290,7 @@
 
 
 {% block range_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div class="range">
             {{ form_widget(form, {'type' : 'range', 'attr' : attr }) }}
             <span class="range--value"></span>

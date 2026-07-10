@@ -1,5 +1,5 @@
 {% block iconfont_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <!-- Icon Chooser -->
         <div id="{{ id }}_widget" class="icon-chooser media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %} js-icon-chooser" data-css-link="{{ loader_object.cssLink }}" data-widget-id="{{ id }}">
             <input type="hidden" name="{{ full_name }}" value="{{ value|default('') }}" class="js-icon-chooser__input"/>
@@ -49,7 +49,7 @@
 
 
 {% block media_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
             <!-- Hidden input -->
             <input id="{{ id }}" type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}">
@@ -69,7 +69,7 @@
 {% endblock %}
 
 {% block media_simple_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
             <!-- Hidden input -->
             {{ form_widget(form.id) }}
@@ -83,7 +83,7 @@
 {% endblock %}
 
 {% block media_multi_widget %}
-    {% apply spaceless %}
+    {% apply hg_spaceless %}
         <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
             <!-- Hidden input -->
             <input id="{{ id }}" type="hidden" name="{{ form.id.vars.full_name }}" value="{{ form.id.vars.value }}">
