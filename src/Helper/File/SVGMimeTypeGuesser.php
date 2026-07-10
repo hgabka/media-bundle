@@ -2,9 +2,7 @@
 
 namespace Hgabka\MediaBundle\Helper\File;
 
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
+use Symfony\Component\Mime\MimeTypeGuesserInterface;
 
 /**
  * SVGMimeTypeGuesser.
@@ -18,27 +16,24 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
         'http://www.w3.org/2000/svg' => 'image/svg+xml',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function guess($path)
+    public function guessMimeType(string $path): ?string
     {
         if (!is_file($path)) {
-            throw new FileNotFoundException($path);
+            throw new \InvalidArgumentException(\sprintf('The "%s" file does not exist.', $path));
         }
 
         if (!is_readable($path)) {
-            throw new AccessDeniedException($path);
+            throw new \InvalidArgumentException(\sprintf('The "%s" file is not readable.', $path));
         }
 
-        if (!self::isSupported()) {
-            return;
+        if (!$this->isGuesserSupported()) {
+            return null;
         }
 
         $dom = new \DOMDocument();
         $xml = $dom->load($path, \LIBXML_NOERROR + \LIBXML_ERR_FATAL + \LIBXML_ERR_NONE);
         if (false === $xml) {
-            return;
+            return null;
         }
         $xpath = new \DOMXPath($dom);
         foreach ($xpath->query('namespace::*') as $node) {
@@ -46,14 +41,11 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
                 return $this->_MIMETYPE_NAMESPACES[$node->nodeValue];
             }
         }
+
+        return null;
     }
 
-    /**
-     * Returns whether this guesser is supported on the current OS.
-     *
-     * @return bool
-     */
-    public static function isSupported()
+    public function isGuesserSupported(): bool
     {
         return class_exists('DOMDocument') && class_exists('DOMXPath');
     }

@@ -41,7 +41,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
         if (null === $parent) {
             // Add menu item for root gallery
             $rootFolders = $this->repo->getRootNodes();
-            $currentId = $request->get('folderId');
+            $currentId = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'folderId');
             $currentFolder = null;
             if (isset($currentId)) {
                 // @var Folder $currentFolder

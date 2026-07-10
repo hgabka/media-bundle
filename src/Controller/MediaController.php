@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * MediaController.
@@ -292,7 +292,7 @@ class MediaController extends BaseMediaController
         } elseif ($request->files->get('file')) {
             $drop = $request->files->get('file');
         } else {
-            $drop = $request->get('text');
+            $drop = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'text');
         }
         $media = $this->getManager()->createNew($drop);
         if ($media) {
@@ -342,8 +342,8 @@ class MediaController extends BaseMediaController
     {
         $this->getAdmin()->checkAccess('create');
 
-        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser = $request->get('linkChooser');
+        $cKEditorFuncNum = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'CKEditorFuncNum');
+        $linkChooser = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'linkChooser');
 
         $extraParams = [];
         if (null !== $cKEditorFuncNum) {

@@ -58,8 +58,8 @@ class HgabkaMediaExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('liip_imagine.cache.resolver.web_path.class', 'Hgabka\MediaBundle\Helper\Imagine\WebPathResolver');
         $container->setParameter('liip_imagine.controller.class', 'Hgabka\MediaBundle\Helper\Imagine\ImagineController');
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('imagine.xml');
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('imagine.yaml');
     }
 
     public function prepend(ContainerBuilder $container): void

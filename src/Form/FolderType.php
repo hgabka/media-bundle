@@ -48,13 +48,15 @@ class FolderType extends AbstractType
         $builder
             ->add('translations', TranslationsType::class, [
                 'label' => false,
-                'locales' => $this->utils->getAvailableLocales(),
+                'translatable_class' => Folder::class,
+                'enabled_locales' => $this->utils->getAvailableLocales(),
                 'required' => false,
-                'fields' => [
+                'children_excluded' => '*',
+                'children' => [
                     'name' => [
                         'label' => 'hg_media.folder.addsub.form.name',
                         'required' => false,
-                        'field_type' => TextType::class,
+                        'child_type' => TextType::class,
                     ],
                 ],
             ])

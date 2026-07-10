@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Controller class which Aviary can use to upload the edited image and add it to the database.
@@ -35,7 +35,7 @@ class AviaryController extends BaseMediaController
         $media = clone $media;
         $handler = $mediaManager->getHandler($media);
         $fileHelper = $handler->getFormHelper($media);
-        $fileHelper->getMediaFromUrl($request->get('url'));
+        $fileHelper->getMediaFromUrl(\Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'url'));
         $media = $fileHelper->getMedia();
 
         $media->setUuid(null);

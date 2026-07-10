@@ -6,27 +6,24 @@ use Doctrine\ORM\EntityManagerInterface;
 use Hgabka\MediaBundle\Entity\Media;
 use Hgabka\MediaBundle\Helper\File\FileHandler;
 use Hgabka\MediaBundle\Helper\MediaManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(name: 'hgabka:media:rename-soft-deleted', description: 'Renames physical files for soft-deleted media', hidden: false)]
-class RenameSoftDeletedCommand extends ContainerAwareCommand
+class RenameSoftDeletedCommand extends Command
 {
     public function __construct(protected readonly EntityManagerInterface $manager, protected readonly MediaManager $mediaManager)
     {
         parent::__construct();
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Renaming soft-deleted media...');
-        /**
-         * @var EntityManager
-         */
-        $em = $this->entityManager;
+        $em = $this->manager;
 
         $original = $input->getOption('original');
         $medias = $em->getRepository(Media::class)->findAll();

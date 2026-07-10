@@ -237,7 +237,7 @@ services:
             - [setTemplateRegistry, ['@sonata.admin.global_template_registry']]
         tags: ['controller.service_arguments']
         
-    Hgabka\MediaBundle\Helper\SvgMimeTypeGuesser:
+    Hgabka\MediaBundle\Helper\File\SVGMimeTypeGuesser:
         autowire: true
         autoconfigure: true
 

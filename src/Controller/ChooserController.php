@@ -12,7 +12,7 @@ use Hgabka\MediaBundle\Helper\MediaManager;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * ChooserController.
@@ -31,11 +31,11 @@ class ChooserController extends BaseMediaController
         $session = $request->getSession();
         $folderId = false;
 
-        $type = $request->get('type', 'all');
-        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser = $request->get('linkChooser');
+        $type = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'type', 'all');
+        $cKEditorFuncNum = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'CKEditorFuncNum');
+        $linkChooser = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'linkChooser');
 
-        $folderName = $request->get('foldername');
+        $folderName = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'foldername');
 
         $folderId = false;
 
@@ -46,7 +46,7 @@ class ChooserController extends BaseMediaController
             }
         }
 
-        $fid = $request->get('folderid');
+        $fid = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'folderid');
         if (empty($folderId) && !empty($fid)) {
             $folder = $em->getRepository(Folder::class)->find($fid);
             if ($folder) {
@@ -111,9 +111,9 @@ class ChooserController extends BaseMediaController
         $em = $doctrine->getManager();
         $session = $request->getSession();
 
-        $type = $request->get('type');
-        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser = $request->get('linkChooser');
+        $type = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'type');
+        $cKEditorFuncNum = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'CKEditorFuncNum');
+        $linkChooser = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'linkChooser');
 
         // Remember the last visited folder in the session
         $session->set('last-media-folder', $folderId);

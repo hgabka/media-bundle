@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * FolderController.
@@ -113,7 +113,7 @@ class FolderController extends BaseMediaController
                     $redirect = 'admin_hgabka_media_media_list';
                 }
 
-                $type = $request->get('type');
+                $type = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'type');
 
                 return new RedirectResponse(
                     $this->generateUrl(
@@ -207,8 +207,8 @@ class FolderController extends BaseMediaController
     {
         $this->getAdmin()->checkAccess('edit');
         $folders = [];
-        $nodeIds = $request->get('nodes');
-        $changeParents = $request->get('parent');
+        $nodeIds = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'nodes');
+        $changeParents = \Hgabka\UtilsBundle\Helper\RequestHelper::get($request, 'parent');
 
         $em = $this->doctrine->getManager();
         $repository = $em->getRepository(Folder::class);
