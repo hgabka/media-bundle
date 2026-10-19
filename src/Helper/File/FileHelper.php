@@ -36,7 +36,7 @@ class FileHelper
     public function __construct(Media $media, string $mediaPath)
     {
         $this->media = $media;
-        $this->ediaPath = $mediaPath;
+        $this->mediaPath = $mediaPath;
     }
 
     /**

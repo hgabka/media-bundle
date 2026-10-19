@@ -80,6 +80,13 @@ class FileHandlerTest extends TestCase
         return new UploadedFile($path, $name, null, null, true);
     }
 
+    public function testFileHelperKeepsTheMediaPath(): void
+    {
+        $helper = $this->handler()->getFormHelper(new Media());
+
+        $this->assertSame('/uploads/media/', (new \ReflectionProperty($helper, 'mediaPath'))->getValue($helper));
+    }
+
     public function testBasicInformation(): void
     {
         $handler = $this->handler();

@@ -11,6 +11,7 @@ use Hgabka\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper;
 use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Hgabka\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
 use Hgabka\UtilsBundle\Helper\HgabkaUtils;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RemoteMediaTest extends TestCase
@@ -23,6 +24,31 @@ class RemoteMediaTest extends TestCase
         $handler->setHgabkaUtils($utils);
 
         return $handler;
+    }
+
+    public static function videoUrls(): array
+    {
+        return [
+            'youtu.be' => ['https://youtu.be/dQw4w9WgXcQ', 'youtube', 'dQw4w9WgXcQ', 'Youtube dQw4w9WgXcQ'],
+            'youtube watch' => ['https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=10', 'youtube', 'dQw4w9WgXcQ', 'Youtube dQw4w9WgXcQ'],
+            'youtube without www' => ['youtube.com/watch?v=abc123', 'youtube', 'abc123', 'Youtube abc123'],
+            'vimeo' => ['https://vimeo.com/123456', 'vimeo', '123456', 'Vimeo 123456'],
+            'vimeo www' => ['http://www.vimeo.com/98765', 'vimeo', '98765', 'Vimeo 98765'],
+            'dailymotion' => ['https://www.dailymotion.com/video/x7tgad0', 'dailymotion', 'x7tgad0', 'Dailymotion x7tgad0'],
+        ];
+    }
+
+    #[DataProvider('videoUrls')]
+    public function testVideoUrlsAreRecognised(string $url, string $type, string $code, string $name): void
+    {
+        $media = $this->videoHandler()->createNew($url);
+
+        $this->assertInstanceOf(Media::class, $media);
+        $helper = new RemoteVideoHelper($media);
+        $this->assertSame([$type, $code], [$helper->getType(), $helper->getCode()]);
+        $this->assertSame($name, $media->getName());
+        $this->assertSame('hu', $media->getCurrentLocale());
+        $this->assertSame(RemoteVideoHandler::CONTENT_TYPE, $media->getContentType());
     }
 
     public function testUnknownHostsAndNonStringsAreNotHandled(): void

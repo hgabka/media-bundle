@@ -192,6 +192,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 case 'youtu.be':
                     $code = substr($parsedUrl['path'], 1); // remove slash
                     $result = new Media();
+                    $result->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
                     $video = new RemoteVideoHelper($result);
                     $video->setType('youtube');
                     $video->setCode($code);
@@ -204,6 +205,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     parse_str($parsedUrl['query'], $queryFields);
                     $code = $queryFields['v'];
                     $result = new Media();
+                    $result->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
                     $video = new RemoteVideoHelper($result);
                     $video->setType('youtube');
                     $video->setCode($code);
@@ -215,6 +217,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 case 'vimeo.com':
                     $code = substr($parsedUrl['path'], 1);
                     $result = new Media();
+                    $result->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
                     $video = new RemoteVideoHelper($result);
                     $video->setType('vimeo');
                     $video->setCode($code);
@@ -226,6 +229,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 case 'dailymotion.com':
                     $code = substr($parsedUrl['path'], 7);
                     $result = new Media();
+                    $result->setCurrentLocale($this->hgabkaUtils->getCurrentLocale());
                     $video = new RemoteVideoHelper($result);
                     $video->setType('dailymotion');
                     $video->setCode($code);

@@ -50,6 +50,16 @@ class ManagersTest extends TestCase
         $this->assertSame(['Remote Video Handler' => $video], $manager->getHandlers());
     }
 
+    public function testCreateNewAsksEveryHandler(): void
+    {
+        $manager = $this->mediaManager()->setDefaultHandler(new FileHandler(0, new MimeTypes()));
+        $manager->addHandler(new FileHandler(0, new MimeTypes()))->addHandler(new RemoteVideoHandler(1, []));
+
+        $media = $manager->createNew('https://youtu.be/abc');
+
+        $this->assertSame('Youtube abc', $media->getName());
+    }
+
     public function testCreateNewReturnsNullWhenNoHandlerKnowsTheData(): void
     {
         $manager = $this->mediaManager()->setDefaultHandler(new FileHandler(0, new MimeTypes()));
