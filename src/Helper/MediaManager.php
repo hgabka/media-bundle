@@ -170,7 +170,7 @@ class MediaManager
     }
 
     /**
-     * @return bool|string
+     * @return null|string
      */
     public function getMediaContent(Media $media)
     {
