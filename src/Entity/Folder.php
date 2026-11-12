@@ -11,6 +11,7 @@ use Hgabka\Doctrine\Translatable\TranslatableInterface;
 use Hgabka\MediaBundle\Repository\FolderRepository;
 use Hgabka\UtilsBundle\Traits\TimestampableEntity;
 use Hgabka\UtilsBundle\Traits\TranslatableTrait;
+use SortDirection;
 
 #[ORM\Entity(repositoryClass: FolderRepository::class)]
 #[ORM\Table(name: 'hg_media_folders')]
@@ -33,7 +34,7 @@ class Folder implements TranslatableInterface
     protected ?Folder $parent = null;
 
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', fetch: 'LAZY')]
-    #[ORM\OrderBy(['lft' => 'ASC'])]
+    #[ORM\OrderBy(['lft' => SortDirection::Ascending])]
     protected Collection|array|null $children = null;
 
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'folder', fetch: 'LAZY')]
