@@ -1,6 +1,6 @@
 {
     "name": "hgabka/media-bundle",
-    "type": "Symfony bundle",
+    "type": "symfony-bundle",
     "description": "Media bundle",
     "keywords": [],
     "homepage": "https://github.com/hgabka/media-bundle",
