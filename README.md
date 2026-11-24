@@ -29,6 +29,21 @@ Az útvonalak: `/media/…` (média-műveletek, chooser), `/media/folder/…`, `
 
 Frontend: az `assets/` (JS, CSS) és a `package.json` a médiakezelő UI-hoz tartozik; a Webpack Encore konfigot (`webpack.config.js`) a projektbe kell illeszteni.
 
+### Repók
+
+A hgabka csomagok nem szerepelnek a Packagiten, ezért a projekt `composer.json`-jában fel kell venni a repóikat (a függőségek saját `repositories` mezőjét a Composer nem olvassa). A repók nyilvánosak, az `https` url-ekhez nem kell SSH kulcs. Aki GitHub SSH kulccsal dolgozik, használhatja a `git@github.com:hgabka/<név>.git` url-eket is. Kulcs nélkül az anonim GitHub API kérés-limit (60/óra) miatt a Composer előbb-utóbb tokent kérhet.
+
+```json
+"repositories": [
+    {"type": "vcs", "url": "https://github.com/hgabka/utils-bundle.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/doctrine-translatable.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/doctrine-translatable-bundle.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/acl-bundle.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/security-acl.git"},
+    {"type": "vcs", "url": "https://github.com/hgabka/media-bundle.git"}
+]
+```
+
 ## Konfiguráció
 
 ```yaml
@@ -100,3 +115,16 @@ A `MediaManager` hasznos metódusai: `saveMedia()`, `removeMedia()`, `createNew(
 | `hgabka:media:rebuild-folder-tree` | a mappafa (`lft`/`rgt`) újraépítése |
 | `hgabka:media:rename-soft-deleted` | a soft-deleted médiák fájljainak átnevezése |
 | `hgabka:media:clean-deleted-media` | az adatbázisban törölt médiák fizikai fájljainak törlése |
+
+## Tesztek
+
+A `require-dev` tartalmazza a szükséges csomagokat, a hgabka bundle-ök repóit a `composer.json` `repositories` szekciója adja, így a bundle önmagában is telepíthető és tesztelhető (a `git@github.com:...` url-ekhez SSH kulcs kell, kulcs nélkül cseréld őket `https://github.com/...`-ra):
+
+```bash
+composer install
+vendor/bin/phpunit
+```
+
+## Licenc
+
+MIT, lásd: [LICENSE](LICENSE).
