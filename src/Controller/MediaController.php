@@ -376,6 +376,8 @@ class MediaController extends BaseMediaController
     )]
     public function moveMedia(Request $request): Response
     {
+        $this->getAdmin()->checkAccess('edit');
+
         $mediaId = $request->request->get('mediaId');
         $folderId = $request->request->get('folderId');
 
@@ -401,6 +403,8 @@ class MediaController extends BaseMediaController
     )]
     public function bulkMove(Request $request): Response
     {
+        $this->getAdmin()->checkAccess('edit');
+
         $em = $this->doctrine->getManager();
         $mediaRepo = $em->getRepository(Media::class);
         $form = $this->createForm(BulkMoveMediaType::class);
