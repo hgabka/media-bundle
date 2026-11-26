@@ -40,6 +40,14 @@ class ManagersTest extends TestCase
         $this->assertSame($file, $manager->getHandlerForType('unknown'));
     }
 
+    public function testMediaPathOfAPublicAndAProtectedMedia(): void
+    {
+        $manager = $this->mediaManager();
+
+        $this->assertSame('/project/public/uploads/media/a/b/cv.pdf', $manager->getMediaPath((new Media())->setUrl('/uploads/media/a/b/cv.pdf')));
+        $this->assertSame('/project/data/media/a/b/cv.pdf', $manager->getMediaPath((new Media())->setProtected(true)->setUrl('data/media/a/b/cv.pdf')));
+    }
+
     public function testHandlersAreRegisteredByName(): void
     {
         $manager = $this->mediaManager();
