@@ -23,6 +23,8 @@ class AviaryController extends BaseMediaController
     )]
     public function indexAction(Request $request, ManagerRegistry $doctrine, int $folderId, int $mediaId): Response
     {
+        $this->getAdmin()->checkAccess('create');
+
         $em = $doctrine->getManager();
 
         // @var Folder $folder

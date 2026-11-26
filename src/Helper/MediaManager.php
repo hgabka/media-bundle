@@ -211,8 +211,9 @@ class MediaManager
 
     public function getMediaPath(Media $media): string
     {
+        // the url of a protected media already starts with the protected media path
         if ($media->isProtected()) {
-            return $this->projectDir . '/' . $this->protectedMediaPath . '/' . $media->getUrl();
+            return $this->projectDir . '/' . ltrim((string) $media->getUrl(), '/');
         }
 
         return $this->projectDir . '/public' . $media->getUrl();
